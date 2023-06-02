@@ -54,7 +54,7 @@ public class EmployeeController {
     public Employee create(@RequestBody Employee employee) throws SQLException {
         Employee theEmployee = this.employees.add(employee);
         if (theEmployee == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to create the specified Customer");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to create the specified Employee");
         }
         return theEmployee;
     }
