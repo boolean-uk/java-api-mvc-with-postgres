@@ -116,7 +116,8 @@ public class EmployeeRepository {
     }
 
     public Employee add(Employee employee) throws SQLException {
-        PreparedStatement ps = this.connection.prepareStatement("INSERT INTO Employees (name,jobName,salaryGrade,department) VALUES (?,?,?,?)");
+        String SQL = "INSERT INTO Employees (name,jobName,salaryGrade,department) VALUES (?,?,?,?)";
+        PreparedStatement ps = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, employee.getName());
         ps.setString(2, employee.getJobName());
         ps.setString(3, employee.getSalarygrade());
@@ -124,11 +125,11 @@ public class EmployeeRepository {
 
         int rowsAffected = ps.executeUpdate();
 
-        int newId = 0;
+        long newId = 0;
         if (rowsAffected > 0) {
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
-                    newId = rs.getInt(1);
+                    newId = rs.getLong(1);
                 }
             } catch (Exception e) {
                 System.out.println("Oops: " + e);
