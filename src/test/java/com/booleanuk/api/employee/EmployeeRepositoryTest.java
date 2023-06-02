@@ -1,9 +1,8 @@
 package com.booleanuk.api.employee;
 
+import com.booleanuk.api.repositories.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.SQLException;
 

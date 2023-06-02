@@ -1,6 +1,7 @@
-package com.booleanuk.api.employee;
+package com.booleanuk.api.repositories;
 
-import com.booleanuk.api.SQLConnection;
+import com.booleanuk.api.models.Employee;
+import com.booleanuk.api.sqlUtils.SQLConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

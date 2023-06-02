@@ -1,5 +1,7 @@
-package com.booleanuk.api.employee;
+package com.booleanuk.api.controllers;
 
+import com.booleanuk.api.repositories.EmployeeRepository;
+import com.booleanuk.api.models.Employee;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.booleanuk.api;
+package com.booleanuk.api.sqlUtils;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
