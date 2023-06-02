@@ -41,7 +41,7 @@ public class EmployeeController {
     public ResponseEntity<Employee> create(@RequestBody Employee employee) throws SQLException {
         return Optional.ofNullable(this.employees.add(employee))
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.badRequest().build());
     }
 
     @DeleteMapping("/{id}")
