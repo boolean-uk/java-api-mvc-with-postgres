@@ -349,6 +349,46 @@
       "operation": "migrate",
       "exception": null,
       "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1.0",
+      "targetSchemaVersion": "2.2.0",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "2.0.0",
+          "description": "create salaries and departments tables",
+          "type": "SQL",
+          "filepath": "C:\\Users\\Kermit\\Desktop\\Boolean UK\\JAVA   SQL\\java-api-mvc-with-postgres\\db\\migrations\\V2_0_0__create_salaries_and_departments_tables.sql",
+          "executionTime": 564
+        },
+        {
+          "category": "Versioned",
+          "version": "2.1.0",
+          "description": "populate salaries and departments tables",
+          "type": "SQL",
+          "filepath": "C:\\Users\\Kermit\\Desktop\\Boolean UK\\JAVA   SQL\\java-api-mvc-with-postgres\\db\\migrations\\V2_1_0__populate_salaries_and_departments_tables.sql",
+          "executionTime": 535
+        },
+        {
+          "category": "Versioned",
+          "version": "2.2.0",
+          "description": "refactor employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\Kermit\\Desktop\\Boolean UK\\JAVA   SQL\\java-api-mvc-with-postgres\\db\\migrations\\V2_2_0__refactor_employees_table.sql",
+          "executionTime": 461
+        }
+      ],
+      "migrationsExecuted": 3,
+      "success": true,
+      "flywayVersion": "9.19.1",
+      "database": "qduzwuty",
+      "warnings": [],
+      "timestamp": "2023-06-02T16:30:33.356530100",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
     }
   ]
 }
