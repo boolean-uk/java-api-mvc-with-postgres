@@ -1,0 +1,36 @@
+{
+  "individualResults": [
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": "1.1.0",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.0.0",
+          "description": "create employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\Kermit\\Desktop\\Boolean UK\\JAVA   SQL\\java-api-mvc-with-postgres\\db\\migrations\\V1_0_0__create_employees_table.sql",
+          "executionTime": 489
+        },
+        {
+          "category": "Versioned",
+          "version": "1.1.0",
+          "description": "populate employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\Kermit\\Desktop\\Boolean UK\\JAVA   SQL\\java-api-mvc-with-postgres\\db\\migrations\\V1_1_0__populate_employees_table.sql",
+          "executionTime": 468
+        }
+      ],
+      "migrationsExecuted": 2,
+      "success": true,
+      "flywayVersion": "9.19.1",
+      "database": "qduzwuty",
+      "warnings": [],
+      "timestamp": "2023-06-02T14:45:03.057378600",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    }
+  ]
+}
