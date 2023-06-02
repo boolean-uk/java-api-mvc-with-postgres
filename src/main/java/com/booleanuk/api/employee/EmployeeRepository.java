@@ -61,4 +61,7 @@ public class EmployeeRepository {
         return everyone;
     }
 
+
+    public Employee get()
+
 }

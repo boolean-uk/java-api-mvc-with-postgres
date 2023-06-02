@@ -19,9 +19,9 @@ public class Employee {
         String result = "";
         result += this.id + " - ";
         result += this.name + " - ";
-        result += this.jobName;
-        result += this.salarygrade;
-        result += this.department;
+        result += this.jobName + " - ";
+        result += this.salarygrade + " - ";
+        result += this.department + " - ";
         return result;
     }
 }
