@@ -349,6 +349,118 @@
       "operation": "migrate",
       "exception": null,
       "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": "2.2.0",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.0.0",
+          "description": "create employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V1_0_0__create_employees_table.sql",
+          "executionTime": 446
+        },
+        {
+          "category": "Versioned",
+          "version": "1.1.0",
+          "description": "populate employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V1_1_0__populate_employees_table.sql",
+          "executionTime": 426
+        },
+        {
+          "category": "Versioned",
+          "version": "2.0.0",
+          "description": "create salaries and departments tables",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V2_0_0__create_salaries_and_departments_tables.sql",
+          "executionTime": 516
+        },
+        {
+          "category": "Versioned",
+          "version": "2.1.0",
+          "description": "populate salaries and departments tables",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V2_1_0__populate_salaries_and_departments_tables.sql",
+          "executionTime": 488
+        },
+        {
+          "category": "Versioned",
+          "version": "2.2.0",
+          "description": "refactor employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V2_2_0__refactor_employees_table.sql",
+          "executionTime": 424
+        }
+      ],
+      "migrationsExecuted": 5,
+      "success": true,
+      "flywayVersion": "9.19.1",
+      "database": "luahgrjc",
+      "warnings": [],
+      "timestamp": "2023-06-02T16:39:21.128157100",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": "2.2.0",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.0.0",
+          "description": "create employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V1_0_0__create_employees_table.sql",
+          "executionTime": 476
+        },
+        {
+          "category": "Versioned",
+          "version": "1.1.0",
+          "description": "populate employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V1_1_0__populate_employees_table.sql",
+          "executionTime": 436
+        },
+        {
+          "category": "Versioned",
+          "version": "2.0.0",
+          "description": "create salaries and departments tables",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V2_0_0__create_salaries_and_departments_tables.sql",
+          "executionTime": 549
+        },
+        {
+          "category": "Versioned",
+          "version": "2.1.0",
+          "description": "populate salaries and departments tables",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V2_1_0__populate_salaries_and_departments_tables.sql",
+          "executionTime": 506
+        },
+        {
+          "category": "Versioned",
+          "version": "2.2.0",
+          "description": "refactor employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V2_2_0__refactor_employees_table.sql",
+          "executionTime": 442
+        }
+      ],
+      "migrationsExecuted": 5,
+      "success": true,
+      "flywayVersion": "9.19.1",
+      "database": "luahgrjc",
+      "warnings": [],
+      "timestamp": "2023-06-02T16:46:40.164373700",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
     }
   ]
 }
