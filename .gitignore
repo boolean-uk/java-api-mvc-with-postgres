@@ -37,6 +37,6 @@ out/
 .vscode/
 
 ### Personal Settings ###
-*.properties
+*.archive
 report.html.html
 report.html.json
