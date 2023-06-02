@@ -37,7 +37,7 @@ public class EmployeeController {
         return ResponseEntity.ok(this.employees.update(id, customer));
     }
 
-    @PostMapping("/{id}")
+    @PostMapping
     public ResponseEntity<Employee> create(@RequestBody Employee customer) throws SQLException {
         return Optional.ofNullable(this.employees.add(customer))
                 .map(ResponseEntity::ok)
