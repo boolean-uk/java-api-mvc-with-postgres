@@ -48,91 +48,80 @@ public class DepartmentRepository {
     }
 
 
-    public List<Salary> getAll() throws SQLException {
-        List<Salary> allSalaries = new ArrayList<>();
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Salaries");
+    public List<Department> getAll() throws SQLException {
+        List<Department> allDepartments = new ArrayList<>();
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Departments");
 
         ResultSet results = statement.executeQuery();
 
         while (results.next()) {
-            Salary currentSalary = new Salary(results.getString("grade"), results.getString("minSalary"), results.getString("maxSalary"));
-            allSalaries.add(currentSalary);
+            Department currentDepartment = new Department(results.getString("name"), results.getString("location"));
+            allDepartments.add(currentDepartment);
         }
 
-        return allSalaries;
+        return allDepartments;
     }
 
 
-    public Salary get(String grade) throws SQLException {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Salaries WHERE grade = ?");
-        statement.setString(1, grade);
+    public Department get(String name) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Departments WHERE name = ?");
+        statement.setString(1, name);
         ResultSet results = statement.executeQuery();
 
-        Salary salary = null;
+        Department department = null;
         if (results.next()) {
-            salary = new Salary(results.getString("grade"), results.getString("minSalary"), results.getString("maxSalary"));
+            department = new Department(results.getString("name"), results.getString("location"));
         }
 
-        return salary;
+        return department;
     }
 
-    public Salary update(String grade, Salary salary) throws SQLException {
-        String SQL = "UPDATE Salaries " +
-                "SET minSalary = ?, " +
-                "maxSalary = ?, " +
-                "WHERE grade = ?";
+    public Department update(String name, Department department) throws SQLException {
+        String SQL = "UPDATE Departments " +
+                "SET name = ?, " +
+                "location = ? " +
+                "WHERE name = ?";
 
         PreparedStatement ps = this.connection.prepareStatement(SQL);
-        ps.setString(1,salary.getMinSalary());
-        ps.setString(2,salary.getMaxSalary());
-        ps.setString(3, grade);
+        ps.setString(1,department.getName());
+        ps.setString(2,department.getName());
         int rowsAffected = ps.executeUpdate();
 
-        Salary updatedSalary = null;
+        Department updatedDepartment = null;
         if (rowsAffected > 0) {
-            updatedSalary = this.get(grade);
+            updatedDepartment = this.get(name);
         }
-        return updatedSalary;
+        return updatedDepartment;
     }
 
-    public Salary delete(String grade) throws SQLException {
-        String SQL = "DELETE FROM Salaries WHERE grade = ?";
+    public Department delete(String name) throws SQLException {
+        String SQL = "DELETE FROM Departments WHERE name = ?";
         PreparedStatement ps = this.connection.prepareStatement(SQL);
 
-        Salary deletedSalary = null;
-        deletedSalary = this.get(grade);
+        Department deletedDepartment = null;
+        deletedDepartment = this.get(name);
 
-        ps.setString(1, grade);
+        ps.setString(1, name);
         int rowsAffected = ps.executeUpdate();
 
         if (rowsAffected == 0) {
-            deletedSalary = null;
+            deletedDepartment = null;
         }
-        return deletedSalary;
+        return deletedDepartment;
     }
 
-    // TODO needs to change , no need for ID
-    public Salary add(Salary salary) throws SQLException {
-        String SQL = "INSERT INTO Salaries (minSalary,maxSalary) VALUES (?,?)";
-        PreparedStatement ps = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, salary.getMinSalary());
-        ps.setString(2, salary.getMaxSalary());
+    public Department add(Department department) throws SQLException {
+        String SQL = "INSERT INTO Departments (name, location) VALUES (?,?)";
+        PreparedStatement ps = this.connection.prepareStatement(SQL);
+        ps.setString(1, department.getName());
+        ps.setString(2, department.getLocation());
 
+        Department newDepartment = null;
         int rowsAffected = ps.executeUpdate();
-
-        long newId = 0;
         if (rowsAffected > 0) {
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) {
-                    newId = rs.getLong(1);
-                }
-            } catch (Exception e) {
-                System.out.println("Oops: " + e);
-            }
-            employee.setId(newId);
-        } else {
-            employee = null;
+            newDepartment = this.get(department.getName());
         }
-        return employee;
+
+        return newDepartment;
     }
 }
