@@ -1,0 +1,278 @@
+{
+  "individualResults": [
+    {
+      "schemaVersion": "7.0.1",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.0.0",
+          "rawVersion": "1.0.0",
+          "description": "create monolithic films table",
+          "type": "SQL",
+          "installedOnUTC": "2023-06-01T11:52:32.964276Z",
+          "state": "Success",
+          "undoable": "No",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V1_0_0__create_employees_table.sql",
+          "undoFilepath": "",
+          "installedBy": "luahgrjc",
+          "executionTime": 529
+        },
+        {
+          "category": "Versioned",
+          "version": "2.0.0",
+          "rawVersion": "2.0.0",
+          "description": "create stars table",
+          "type": "SQL",
+          "installedOnUTC": "2023-06-01T11:52:34.751434Z",
+          "state": "Future",
+          "undoable": "No",
+          "filepath": "",
+          "undoFilepath": "",
+          "installedBy": "luahgrjc",
+          "executionTime": 604
+        },
+        {
+          "category": "Versioned",
+          "version": "3.0.0",
+          "rawVersion": "3.0.0",
+          "description": "create writers table",
+          "type": "SQL",
+          "installedOnUTC": "2023-06-01T11:52:36.608989Z",
+          "state": "Future",
+          "undoable": "No",
+          "filepath": "",
+          "undoFilepath": "",
+          "installedBy": "luahgrjc",
+          "executionTime": 520
+        },
+        {
+          "category": "Versioned",
+          "version": "4.0.0",
+          "rawVersion": "4.0.0",
+          "description": "create director table",
+          "type": "SQL",
+          "installedOnUTC": "2023-06-01T11:52:38.201504Z",
+          "state": "Future",
+          "undoable": "No",
+          "filepath": "",
+          "undoFilepath": "",
+          "installedBy": "luahgrjc",
+          "executionTime": 490
+        },
+        {
+          "category": "Versioned",
+          "version": "5.0.0",
+          "rawVersion": "5.0.0",
+          "description": "normalize films adding FKs",
+          "type": "SQL",
+          "installedOnUTC": "2023-06-01T11:52:39.646257Z",
+          "state": "Future",
+          "undoable": "No",
+          "filepath": "",
+          "undoFilepath": "",
+          "installedBy": "luahgrjc",
+          "executionTime": 640
+        },
+        {
+          "category": "Versioned",
+          "version": "6.0.0",
+          "rawVersion": "6.0.0",
+          "description": "insert data to directors",
+          "type": "SQL",
+          "installedOnUTC": "2023-06-01T11:52:41.240650Z",
+          "state": "Future",
+          "undoable": "No",
+          "filepath": "",
+          "undoFilepath": "",
+          "installedBy": "luahgrjc",
+          "executionTime": 484
+        },
+        {
+          "category": "Versioned",
+          "version": "6.1.0",
+          "rawVersion": "6.1.0",
+          "description": "insert data to writers",
+          "type": "SQL",
+          "installedOnUTC": "2023-06-01T11:52:42.677793Z",
+          "state": "Future",
+          "undoable": "No",
+          "filepath": "",
+          "undoFilepath": "",
+          "installedBy": "luahgrjc",
+          "executionTime": 479
+        },
+        {
+          "category": "Versioned",
+          "version": "6.2.0",
+          "rawVersion": "6.2.0",
+          "description": "insert data to stars",
+          "type": "SQL",
+          "installedOnUTC": "2023-06-01T11:52:44.107558Z",
+          "state": "Future",
+          "undoable": "No",
+          "filepath": "",
+          "undoFilepath": "",
+          "installedBy": "luahgrjc",
+          "executionTime": 471
+        },
+        {
+          "category": "Versioned",
+          "version": "6.3.0",
+          "rawVersion": "6.3.0",
+          "description": "insert data to films",
+          "type": "SQL",
+          "installedOnUTC": "2023-06-01T11:52:45.530615Z",
+          "state": "Future",
+          "undoable": "No",
+          "filepath": "",
+          "undoFilepath": "",
+          "installedBy": "luahgrjc",
+          "executionTime": 478
+        },
+        {
+          "category": "Versioned",
+          "version": "7.0.0",
+          "rawVersion": "7.0.0",
+          "description": "extension create persons table and refactor old tables",
+          "type": "SQL",
+          "installedOnUTC": "2023-06-01T11:54:52.861549Z",
+          "state": "Future",
+          "undoable": "No",
+          "filepath": "",
+          "undoFilepath": "",
+          "installedBy": "luahgrjc",
+          "executionTime": 1145
+        },
+        {
+          "category": "Versioned",
+          "version": "7.0.1",
+          "rawVersion": "7.0.1",
+          "description": "extension insert data to all tables",
+          "type": "SQL",
+          "installedOnUTC": "2023-06-01T11:58:13.421013Z",
+          "state": "Future",
+          "undoable": "No",
+          "filepath": "",
+          "undoFilepath": "",
+          "installedBy": "luahgrjc",
+          "executionTime": 749
+        }
+      ],
+      "flywayVersion": "9.19.1",
+      "database": "luahgrjc",
+      "allSchemasEmpty": false,
+      "timestamp": "2023-06-02T12:04:00.032688",
+      "operation": "info",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "schemaVersion": null,
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.0.0",
+          "rawVersion": "1_0_0",
+          "description": "create employees table",
+          "type": "SQL",
+          "installedOnUTC": "",
+          "state": "Pending",
+          "undoable": "No",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V1_0_0__create_employees_table.sql",
+          "undoFilepath": "",
+          "installedBy": "",
+          "executionTime": 0
+        }
+      ],
+      "flywayVersion": "9.19.1",
+      "database": "luahgrjc",
+      "allSchemasEmpty": true,
+      "timestamp": "2023-06-02T12:12:50.934849500",
+      "operation": "info",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.0.0",
+          "description": "create employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V1_0_0__create_employees_table.sql",
+          "executionTime": 501
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": false,
+      "flywayVersion": "9.19.1",
+      "database": "luahgrjc",
+      "warnings": [],
+      "timestamp": "2023-06-02T12:33:17.858164200",
+      "operation": "migrate",
+      "exception": "Migration V1_1_0__populate_employees_table.sql failed\n-----------------------------------------------------\nSQL State  : 42P01\nError Code : 0\nMessage    : ERROR: relation \"customer\" does not exist\n  Position: 13\nLocation   : db/migrations/V1_1_0__populate_employees_table.sql (C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V1_1_0__populate_employees_table.sql)\nLine       : 1\nStatement  : INSERT INTO customer (name, jobName, salaryGrade, department)\r\nVALUES  (\u0027John Doe\u0027, \u0027Manager\u0027, \u0027Grade A\u0027, \u0027Sales\u0027),\r\n        (\u0027Jane Smith\u0027, \u0027Engineer\u0027, \u0027Grade B\u0027, \u0027IT\u0027),\r\n        (\u0027Nikola Jokic\u0027, \u0027Salesman\u0027, \u0027Grade D\u0027, \u0027Sales\u0027),\r\n        (\u0027Serena Williams\u0027, \u0027Junior Front End Engineer\u0027, \u0027Grade E\u0027, \u0027IT\u0027),\r\n        (\u0027Raheem Sterling\u0027, \u0027Analyst\u0027, \u0027Grade C\u0027, \u0027Finance\u0027),\r\n        (\u0027Rui Lopez\u0027, \u0027Advisor\u0027, \u0027Grade B\u0027, \u0027Finance\u0027),\r\n        (\u0027Harry Maguire\u0027, \u0027Project Manager\u0027, \u0027Grade A\u0027, \u0027IT\u0027)\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.0.0",
+      "targetSchemaVersion": "1.1.0",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.1.0",
+          "description": "populate employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V1_1_0__populate_employees_table.sql",
+          "executionTime": 486
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": true,
+      "flywayVersion": "9.19.1",
+      "database": "luahgrjc",
+      "warnings": [],
+      "timestamp": "2023-06-02T12:33:42.185002",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": "1.1.0",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.0.0",
+          "description": "create employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V1_0_0__create_employees_table.sql",
+          "executionTime": 511
+        },
+        {
+          "category": "Versioned",
+          "version": "1.1.0",
+          "description": "populate employees table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\DELL\\boolean\\spring\\java-api-mvc-with-postgres\\db\\migrations\\V1_1_0__populate_employees_table.sql",
+          "executionTime": 485
+        }
+      ],
+      "migrationsExecuted": 2,
+      "success": true,
+      "flywayVersion": "9.19.1",
+      "database": "luahgrjc",
+      "warnings": [],
+      "timestamp": "2023-06-02T14:09:07.345874700",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    }
+  ]
+}
