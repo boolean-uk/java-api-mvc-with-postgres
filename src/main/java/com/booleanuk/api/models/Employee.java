@@ -7,15 +7,14 @@ public class Employee {
     private String jobName;
     private String salaryGrade;
     private String department;
-    private String phone;
 
-    public Employee(long id, String name, String jobName, String salaryGrade, String department, String phone) {
+    public Employee(long id, String name, String jobName, String salaryGrade, String department
+    ) {
         this.id = id;
         this.name = name;
         this.jobName = jobName;
         this.salaryGrade = salaryGrade;
         this.department = department;
-        this.phone = phone;
     }
 
 
@@ -59,11 +58,14 @@ public class Employee {
         this.department = department;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", jobName='" + jobName + '\'' +
+                ", salaryGrade='" + salaryGrade + '\'' +
+                ", department='" + department + '\'' +
+                '}';
     }
 }

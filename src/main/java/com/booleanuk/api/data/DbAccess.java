@@ -1,6 +1,7 @@
 package com.booleanuk.api.data;
 
 import org.postgresql.ds.PGSimpleDataSource;
+import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
@@ -9,6 +10,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+// The annotation below makes the DbAccess to be injectable
+@Configuration
 public class DbAccess {
     private DataSource datasource;
     private String dbUser;
