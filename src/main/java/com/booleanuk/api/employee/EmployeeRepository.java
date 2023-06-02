@@ -116,7 +116,7 @@ public class EmployeeRepository {
     }
 
     public Employee add(Employee employee) throws SQLException {
-        PreparedStatement ps = this.connection.prepareStatement("INSERT INTO Employees (name,jobName,salaryGrade,department VALUES (?,?,?,?)");
+        PreparedStatement ps = this.connection.prepareStatement("INSERT INTO Employees (name,jobName,salaryGrade,department) VALUES (?,?,?,?)");
         ps.setString(1, employee.getName());
         ps.setString(2, employee.getJobName());
         ps.setString(3, employee.getSalarygrade());
