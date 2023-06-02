@@ -2,10 +2,10 @@ package com.booleanuk.api.salary;
 
 public class Salary {
     String grade;
-    String minSalary;
-    String maxSalary;
+    int minSalary;
+    int maxSalary;
 
-    public Salary(String grade, String minSalary, String maxSalary) {
+    public Salary(String grade, int minSalary, int maxSalary) {
         this.grade = grade;
         this.minSalary = minSalary;
         this.maxSalary = maxSalary;
@@ -19,19 +19,19 @@ public class Salary {
         this.grade = grade;
     }
 
-    public String getMinSalary() {
+    public int getMinSalary() {
         return minSalary;
     }
 
-    public void setMinSalary(String minSalary) {
+    public void setMinSalary(int minSalary) {
         this.minSalary = minSalary;
     }
 
-    public String getMaxSalary() {
+    public int getMaxSalary() {
         return maxSalary;
     }
 
-    public void setMaxSalary(String maxSalary) {
+    public void setMaxSalary(int maxSalary) {
         this.maxSalary = maxSalary;
     }
 }

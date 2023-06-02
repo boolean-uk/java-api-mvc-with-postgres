@@ -55,7 +55,7 @@ public class SalaryRepository {
         ResultSet results = statement.executeQuery();
 
         while (results.next()) {
-            Salary currentSalary = new Salary(results.getString("grade"), results.getString("minSalary"), results.getString("maxSalary"));
+            Salary currentSalary = new Salary(results.getString("grade"), results.getInt("minSalary"), results.getInt("maxSalary"));
             allSalaries.add(currentSalary);
         }
 
@@ -70,7 +70,7 @@ public class SalaryRepository {
 
         Salary salary = null;
         if (results.next()) {
-            salary = new Salary(results.getString("grade"), results.getString("minSalary"), results.getString("maxSalary"));
+            salary = new Salary(results.getString("grade"), results.getInt("minSalary"), results.getInt("maxSalary"));
         }
 
         return salary;
@@ -83,8 +83,8 @@ public class SalaryRepository {
                 "WHERE grade = ?";
 
         PreparedStatement ps = this.connection.prepareStatement(SQL);
-        ps.setString(1,salary.getMinSalary());
-        ps.setString(2,salary.getMaxSalary());
+        ps.setInt(1,salary.getMinSalary());
+        ps.setInt(2,salary.getMaxSalary());
         ps.setString(3, grade);
         int rowsAffected = ps.executeUpdate();
 
@@ -111,28 +111,20 @@ public class SalaryRepository {
         return deletedSalary;
     }
 
-    // TODO needs to change , no need for ID
+
     public Salary add(Salary salary) throws SQLException {
-        String SQL = "INSERT INTO Salaries (minSalary,maxSalary) VALUES (?,?)";
-        PreparedStatement ps = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, salary.getMinSalary());
-        ps.setString(2, salary.getMaxSalary());
+        String SQL = "INSERT INTO Salaries (grade, minSalary,maxSalary) VALUES (?,?,?)";
+        PreparedStatement ps = this.connection.prepareStatement(SQL);
+        ps.setString(1, salary.getGrade());
+        ps.setInt(2, salary.getMinSalary());
+        ps.setInt(3, salary.getMaxSalary());
 
+        Salary newSalary = null;
         int rowsAffected = ps.executeUpdate();
-
-        long newId = 0;
         if (rowsAffected > 0) {
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) {
-                    newId = rs.getLong(1);
-                }
-            } catch (Exception e) {
-                System.out.println("Oops: " + e);
-            }
-            employee.setId(newId);
-        } else {
-            employee = null;
+            newSalary = this.get(salary.getGrade());
         }
-        return employee;
+
+        return newSalary;
     }
 }
