@@ -2,6 +2,8 @@ package com.booleanuk.api.repositories;
 
 import com.booleanuk.api.models.Employee;
 import org.postgresql.ds.PGSimpleDataSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
@@ -46,18 +48,54 @@ public class EmployeeRepository {
         return dataSource;
     }
 
+    //region // METHODS //
+    public long getSalaryIdByGrade(String grade) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement("select * from salaries where grade = ?");
+        statement.setString(1, grade);
+
+        ResultSet results = statement.executeQuery();
+
+        long result = -1;
+        if (results.next()) {
+            result = results.getLong("id");
+        }
+
+        return result;
+    }
+
+    public long getDepartmentIdByName(String name) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement("select * from departments where name = ?");
+        statement.setString(1, name);
+
+        ResultSet results = statement.executeQuery();
+
+        long result = -1;
+        if (results.next()) {
+            result = results.getLong("id");
+        }
+
+        return result;
+    }
+    //endregion
+
     // ---------------------------------------------- //
     // -------------------- CRUD -------------------- //
     // ---------------------------------------------- //
 
     //region // CREATE //
     public Employee add(Employee employee) throws SQLException {
-        String SQL = "insert into employees (name, jobName, salaryGrade, department) values (?, ?, ?, ?)";
+        long salaryId = getSalaryIdByGrade(employee.getSalaryGrade());
+        if(salaryId == -1) return null;
+
+        long departmentId = getDepartmentIdByName(employee.getDepartment());
+        if(departmentId == -1) return null;
+
+        String SQL = "insert into employees (name, jobName, salary_id, department_id) values (?, ?, ?, ?)";
         PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setLong(3, salaryId);
+        statement.setLong(4, departmentId);
 
         int rowsAffected = statement.executeUpdate();
         long newId = 0;
@@ -79,7 +117,11 @@ public class EmployeeRepository {
 
     //region // GET //
     public List<Employee> getAll() throws SQLException {
-        PreparedStatement statement = this.connection.prepareStatement("select * from employees");
+        PreparedStatement statement = this.connection.prepareStatement(
+            "select employees.id, employees.jobName, employees.name, grade as salaryGrade, departments.name as department from employees\n" +
+            "inner join salaries on employees.salary_id = salaries.id\n" +
+            "inner join departments on employees.department_id = departments.id"
+        );
 
         ResultSet results = statement.executeQuery();
 
@@ -92,7 +134,12 @@ public class EmployeeRepository {
     }
 
     public Employee get(long id) throws SQLException {
-        PreparedStatement statement = this.connection.prepareStatement("select * from employees where id = ?");
+        PreparedStatement statement = this.connection.prepareStatement(
+            "select employees.id, employees.jobName, employees.name, grade as salaryGrade, departments.name as department from employees\n" +
+            "inner join salaries on employees.salary_id = salaries.id\n" +
+            "inner join departments on employees.department_id = departments.id\n" +
+            "where employees.id = ?"
+        );
         statement.setLong(1, id);
 
         ResultSet results = statement.executeQuery();
@@ -107,17 +154,31 @@ public class EmployeeRepository {
 
     //region // UPDATE //
     public Employee update(long id, Employee employee) throws SQLException {
+        long salaryId = getSalaryIdByGrade(employee.getSalaryGrade());
+        if(salaryId == -1) //return null;
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Could not update the employee, please check all required fields are correct."
+            );
+
+        long departmentId = getDepartmentIdByName(employee.getDepartment());
+        if(departmentId == -1) //return null;
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Could not update the employee, please check all required fields are correct."
+            );
+
         String SQL = "update employees " +
                 "set name = ? ," +
                 "jobName = ? ," +
-                "salaryGrade = ? ," +
-                "department = ? " +
+                "salary_id = ? ," +
+                "department_id = ? " +
                 "WHERE id = ? ";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setLong(3, salaryId);
+        statement.setLong(4, departmentId);
         statement.setLong(5, id);
 
         int rowsAffected = statement.executeUpdate();

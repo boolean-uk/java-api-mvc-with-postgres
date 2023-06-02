@@ -36,6 +36,13 @@ public class EmployeeController {
             );
         }
 
+        if(newEmployee == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Could not create employee, please check all required fields are correct."
+            );
+        }
+
         return newEmployee;
     }
     //endregion
