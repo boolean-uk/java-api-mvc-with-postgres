@@ -69,9 +69,10 @@ public class EmployeeRepository {
         String SQL = "DELETE FROM Employee WHERE id = ?";
         PreparedStatement statement = this.db.getConnection().prepareStatement(SQL);
         statement.setLong(1, id);
-        int rowsAffected = statement.executeUpdate();
 
         Employee deletedEmployee = this.get(id);
+        int rowsAffected = statement.executeUpdate();
+
         if (rowsAffected == 0) {
             deletedEmployee = null;
         }
