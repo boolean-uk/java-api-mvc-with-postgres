@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS Salaries (
-grade text unique,
+grade text NOT NULL PRIMARY KEY,
 minSalary int not null,
 maxSalary int not null
 );
 
 CREATE TABLE IF NOT EXISTS Departments (
-name text unique,
+name text NOT NULL PRIMARY KEY,
 location text not null
 );
