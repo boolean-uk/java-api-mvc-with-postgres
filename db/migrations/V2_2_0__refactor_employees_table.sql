@@ -1,3 +1,3 @@
 ALTER TABLE Employees
-ADD CONSTRAINT fk_salaryGrade FOREIGN KEY (salaryGrade) REFERENCES salaries(grade),
-ADD CONSTRAINT fk_department FOREIGN KEY (department) REFERENCES departments(name);
+ADD CONSTRAINT fk_salaryGrade FOREIGN KEY (salaryGrade) REFERENCES salaries(grade) ON UPDATE CASCADE ON DELETE SET NULL,
+ADD CONSTRAINT fk_department FOREIGN KEY (department) REFERENCES departments(name) ON UPDATE CASCADE ON DELETE SET NULL;

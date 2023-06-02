@@ -1,10 +1,10 @@
 INSERT INTO Salaries (grade, minSalary, maxSalary)
 VALUES
-('Grade A', 3200, 5000),
-('Grade B', 2500, 3100),
-('Grade C', 1900, 2400),
-('Grade D', 1200, 1800),
-('Grade E', 700, 1100);
+('A', 3200, 5000),
+('B', 2500, 3100),
+('C', 1900, 2400),
+('D', 1200, 1800),
+('E', 700, 1100);
 
 
 INSERT INTO Departments (name, location)

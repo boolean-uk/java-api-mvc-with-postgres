@@ -79,7 +79,7 @@ public class SalaryRepository {
     public Salary update(String grade, Salary salary) throws SQLException {
         String SQL = "UPDATE Salaries " +
                 "SET minSalary = ?, " +
-                "maxSalary = ?, " +
+                "maxSalary = ? " +
                 "WHERE grade = ?";
 
         PreparedStatement ps = this.connection.prepareStatement(SQL);

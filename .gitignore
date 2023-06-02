@@ -40,3 +40,5 @@ out/
 *.properties
 report.html.html
 report.html.json
+report.html
+report.json

@@ -84,12 +84,14 @@ public class DepartmentRepository {
 
         PreparedStatement ps = this.connection.prepareStatement(SQL);
         ps.setString(1,department.getName());
-        ps.setString(2,department.getName());
+        ps.setString(2,department.getLocation());
+        ps.setString(3, name);
+
         int rowsAffected = ps.executeUpdate();
 
         Department updatedDepartment = null;
         if (rowsAffected > 0) {
-            updatedDepartment = this.get(name);
+            updatedDepartment = this.get(department.getName());
         }
         return updatedDepartment;
     }
