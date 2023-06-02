@@ -16,18 +16,11 @@ public class PostgresDatabase implements Database {
     private String dbUser;
     private String dbPassword;
     private String dbDatabase;
-    private Connection connection;
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public PostgresDatabase(){
         this.getDatabaseCredentials();
-        dataSource= this.createDataScource();
-        try{
-            this.connection = this.dataSource.getConnection();
-        } catch (SQLException e){
-            System.out.println(e.getMessage() );
-        }
-
+        dataSource = this.createDataScource();
     }
 
     private DataSource createDataScource() {
@@ -41,7 +34,7 @@ public class PostgresDatabase implements Database {
     }
 
     private void getDatabaseCredentials() {
-        try(InputStream input = new FileInputStream("src/main/resources/config.properties")){
+        try (InputStream input = new FileInputStream("src/main/resources/config.properties")) {
             Properties prop = new Properties();
             prop.load(input);
             dbUrl = prop.getProperty("db.url");
@@ -53,16 +46,20 @@ public class PostgresDatabase implements Database {
         }
     }
 
-    @Override
     public PreparedStatement statement(String sqlQuery) {
         PreparedStatement s = null;
         try{
+            Connection connection = this.dataSource.getConnection();
             s = connection.prepareStatement(sqlQuery);
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
         return s;
+    }
 
+    @Override
+    public Connection connection() throws SQLException {
+        return this.dataSource.getConnection();
     }
 
 }
