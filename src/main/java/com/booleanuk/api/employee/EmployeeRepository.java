@@ -53,7 +53,8 @@ public class EmployeeRepository {
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()){
-            Employee current = new Employee(resultSet.getInt("id"),
+            Employee current = new Employee(
+                    resultSet.getInt("id"),
                     resultSet.getString("name"), resultSet.getString("job_name"),
                     resultSet.getInt("salary_id"),
                     resultSet.getInt("department_id")
@@ -71,7 +72,8 @@ public class EmployeeRepository {
         ResultSet resultSet = statement.executeQuery();
         Employee employee = null;
         if(resultSet.next()){
-            employee = new Employee(resultSet.getInt("id"),
+            employee = new Employee(
+                    resultSet.getInt("id"),
                     resultSet.getString("name"), resultSet.getString("job_name"),
                     resultSet.getInt("salary_id"),
                     resultSet.getInt("department_id")

@@ -101,7 +101,10 @@ public class DepartmentRepository {
     private List<Department> getFromResultSet(ResultSet rs) throws SQLException {
         List<Department> departments = new ArrayList<>();
         while (rs.next()){
-            Department current = new Department(rs.getInt("id"), rs.getString("name"), rs.getString("location"));
+            Department current = new Department(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("location"));
             departments.add(current);
         }
         return departments;

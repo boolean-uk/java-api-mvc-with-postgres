@@ -52,6 +52,7 @@ public class SalaryRepository {
 
         while (resultSet.next()){
             Salary current = new Salary(
+                    resultSet.getInt("id"),
                     resultSet.getString("grade"),
                     resultSet.getInt("min_salary"),
                     resultSet.getInt("max_salary")
@@ -69,7 +70,9 @@ public class SalaryRepository {
         ResultSet resultSet = statement.executeQuery();
         Salary salary = null;
         if(resultSet.next()){
-            salary = new Salary(resultSet.getString("grade"),
+            salary = new Salary(
+                    resultSet.getInt("id"),
+                    resultSet.getString("grade"),
                     resultSet.getInt("min_salary"),
                     resultSet.getInt("max_salary")
             );
@@ -88,7 +91,7 @@ public class SalaryRepository {
         statement.setString(1, salary.getGrade());
         statement.setInt(2, salary.getMinSalary());
         statement.setInt(3, salary.getMaxSalary());
-        statement.setInt(5, id);
+        statement.setInt(4, id);
         int rowsAffected = statement.executeUpdate();
         Salary updatedSalary = null;
         if (rowsAffected > 0) {

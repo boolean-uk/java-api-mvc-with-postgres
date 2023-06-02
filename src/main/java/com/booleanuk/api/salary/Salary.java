@@ -7,6 +7,7 @@ public class Salary {
     private int minSalary;
     private int maxSalary;
 
+    public Salary(){}
     public Salary(int id, String grade, int minSalary, int maxSalary) {
         this.id = id;
         this.grade = grade;

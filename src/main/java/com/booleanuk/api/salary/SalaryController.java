@@ -38,7 +38,7 @@ public class SalaryController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Salary update(@PathVariable(name = "id") int id, @RequestBody Salary salary){
+    public Salary update(@PathVariable(name = "id") int id, @RequestBody Salary salary) {
         Salary updateSalary;
         try {
             updateSalary = salaryRepository.update(id, salary);
