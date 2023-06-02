@@ -120,7 +120,7 @@ public class EmployeeRepository {
     }
 
     public Employee add(Employee employee) throws SQLException {
-        String SQL = "INSERT INTO Customers(name, address, email, phone) VALUES(?, ?, ?, ?)";
+        String SQL = "INSERT INTO employee(name, jobName, salaryGrade, department) VALUES(?, ?, ?, ?)";
         PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, employee.getName());
         statement.setString(2,employee.getJobName());

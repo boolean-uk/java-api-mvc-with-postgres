@@ -47,7 +47,7 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee update(@PathVariable( name = "id") int id, Employee employee) throws SQLException{
+    public Employee update(@PathVariable(name = "id") int id, @RequestBody Employee employee) throws SQLException{
        Employee tobeUpdated  = this.employees.get(id);
        if (tobeUpdated == null){
            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to update the specified employee");
