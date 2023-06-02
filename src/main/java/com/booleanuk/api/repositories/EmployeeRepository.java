@@ -80,13 +80,13 @@ public class EmployeeRepository {
         return deletedEmployee;
     }
 
-    public Employee add(Employee customer) throws SQLException {
+    public Employee add(Employee employee) throws SQLException {
         String SQL = "INSERT INTO Employee(name, jobName, salaryGrade, department) VALUES(?, ?, ?, ?)";
         PreparedStatement statement = this.db.getConnection().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-        statement.setString(1, customer.getName());
-        statement.setString(2, customer.getJobName());
-        statement.setString(3, customer.getSalaryGrade());
-        statement.setString(4, customer.getDepartment());
+        statement.setString(1, employee.getName());
+        statement.setString(2, employee.getJobName());
+        statement.setString(3, employee.getSalaryGrade());
+        statement.setString(4, employee.getDepartment());
         int rowsAffected = statement.executeUpdate();
         long newId = 0;
         if (rowsAffected > 0) {
@@ -97,10 +97,10 @@ public class EmployeeRepository {
             } catch (Exception e) {
                 System.out.println("Oops: " + e);
             }
-            customer.setId(newId);
+            employee.setId(newId);
         } else {
-            customer = null;
+            employee = null;
         }
-        return customer;
+        return employee;
     }
 }

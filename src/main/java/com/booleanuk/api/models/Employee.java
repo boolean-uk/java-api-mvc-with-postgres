@@ -7,8 +7,18 @@ public class Employee {
     private String salaryGrade;
     private String department;
 
+    public Employee() {
+    }
+
     public Employee(long id, String name, String jobName, String salaryGrade, String department) {
         this.id = id;
+        this.name = name;
+        this.jobName = jobName;
+        this.salaryGrade = salaryGrade;
+        this.department = department;
+    }
+
+    public Employee(String name, String jobName, String salaryGrade, String department) {
         this.name = name;
         this.jobName = jobName;
         this.salaryGrade = salaryGrade;
