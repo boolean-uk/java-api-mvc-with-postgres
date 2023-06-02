@@ -62,6 +62,17 @@ public class EmployeeRepository {
     }
 
 
-    public Employee get()
+    public Employee get(long id) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Employees WHERE id = ?");
+        statement.setLong(1,id);
+        ResultSet results = statement.executeQuery();
+
+        Employee employee = null;
+        if (results.next()) {
+            employee = new Employee(results.getLong("id"), results.getString("name"), results.getString("jobName"), results.getString("salaryGrade"), results.getString("department"));
+        }
+
+        return employee;
+    }
 
 }
