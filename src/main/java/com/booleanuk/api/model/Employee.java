@@ -36,6 +36,10 @@ public Employee(int id, String name, String jobName, String salaryGrade, String 
         return department;
     }
 
+    public void setId(int id){
+    this.id = id;
+    }
+
     public String toString() {
         String result = "";
         result += this.id + " - ";

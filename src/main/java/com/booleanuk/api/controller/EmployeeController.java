@@ -25,7 +25,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public Employee getOne(@PathVariable(name = "id") long id) throws SQLException{
+    public Employee getOne(@PathVariable(name = "id") int id) throws SQLException{
         Employee employee = this.employees.get(id);
         if (employee == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "not found");
@@ -47,16 +47,16 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee update(@PathVariable( name = "id") long id, Employee employee) throws SQLException{
+    public Employee update(@PathVariable( name = "id") int id, Employee employee) throws SQLException{
        Employee tobeUpdated  = this.employees.get(id);
        if (tobeUpdated == null){
-           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to update the specified employee")
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to update the specified employee");
        }
-       return this.employees.update(id);
+       return this.employees.update(id, employee);
     }
 
     @DeleteMapping("/{id}")
-    public Employee delete(@PathVariable(name = "id") long id) throws SQLException{
+    public Employee delete(@PathVariable(name = "id") int id) throws SQLException{
         Employee toBeDeleted = this.employees.get(id);
         if ( toBeDeleted == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to delete the specified employee");
