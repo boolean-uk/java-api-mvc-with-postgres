@@ -75,6 +75,29 @@ public class EmployeeRepository {
         return employee;
     }
 
+    public Employee update(int id, Employee employee) throws SQLException {
+        String SQL = "UPDATE Employees " +
+                "SET name = ?, " +
+                "jobName = ?, " +
+                "salaryGrade = ?, " +
+                "department = ? " +
+                "WHERE id = ?";
+
+        PreparedStatement ps = this.connection.prepareStatement(SQL);
+        ps.setString(1,employee.getName());
+        ps.setString(2,employee.getJobName());
+        ps.setString(3,employee.getSalarygrade());
+        ps.setString(4,employee.getDepartment());
+        ps.setInt(5, id);
+        int rowsAffected = ps.executeUpdate();
+
+        Employee updatedEmployee = null;
+        if (rowsAffected > 0) {
+            updatedEmployee = this.get(id);
+        }
+        return updatedEmployee;
+    }
+
     public Employee delete(int id) throws SQLException {
         String SQL = "DELETE FROM Employees WHERE id = ?";
         PreparedStatement ps = this.connection.prepareStatement(SQL);

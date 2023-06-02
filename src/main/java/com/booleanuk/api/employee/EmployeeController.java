@@ -51,11 +51,11 @@ public class EmployeeController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee create(@RequestBody Employee customer) throws SQLException {
-        Employee theCustomer = this.employees.add(customer);
-        if (theCustomer == null) {
+    public Employee create(@RequestBody Employee employee) throws SQLException {
+        Employee theEmployee = this.employees.add(employee);
+        if (theEmployee == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to create the specified Customer");
         }
-        return theCustomer;
+        return theEmployee;
     }
 }
