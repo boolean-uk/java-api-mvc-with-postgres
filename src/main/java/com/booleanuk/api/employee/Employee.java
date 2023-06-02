@@ -4,22 +4,24 @@ public class Employee {
     private int id;
     private String name;
     private String jobName;
-    private String salaryGrade;
-    private String department;
+    private int salaryId;
+    private int departmentId;
 
-    public Employee(int id, String name, String jobName, String salaryGrade, String department) {
+    public Employee(int id, String name, String jobName, int salaryId, int departmentId) {
         this.id = id;
         this.name = name;
         this.jobName = jobName;
-        this.salaryGrade = salaryGrade;
-        this.department = department;
+        this.salaryId = salaryId;
+        this.departmentId = departmentId;
+    }
+
+    public Employee(String name, String jobName, int salaryId, int departmentId) {
+        this(0, name, jobName, salaryId, departmentId);
     }
 
     public Employee(){}
 
-    public Employee(String name, String jobName, String salaryGrade, String department) {
-        this(0, name, jobName, salaryGrade, department);
-    }
+
 
     public int getId() {
         return id;
@@ -45,19 +47,19 @@ public class Employee {
         this.jobName = jobName;
     }
 
-    public String getSalaryGrade() {
-        return salaryGrade;
+    public int getSalaryId() {
+        return salaryId;
     }
 
-    public void setSalaryGrade(String salaryGrade) {
-        this.salaryGrade = salaryGrade;
+    public void setSalaryId(int salaryId) {
+        this.salaryId = salaryId;
     }
 
-    public String getDepartment() {
-        return department;
+    public int getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
     }
 }

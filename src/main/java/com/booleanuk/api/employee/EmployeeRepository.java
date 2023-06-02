@@ -20,12 +20,12 @@ public class EmployeeRepository {
     }
 
     public Employee add(Employee employee) throws SQLException {
-        String SQL = "INSERT INTO Employee (name, job_name, salary_grade, department) VALUES (?,?,?,?)";
+        String SQL = "INSERT INTO Employee (name, job_name, salary_id, department_id) VALUES (?,?,?,?)";
         PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setInt(3, employee.getSalaryId());
+        statement.setInt(4, employee.getDepartmentId());
 
         int rowsAffected = statement.executeUpdate();
         int newId = 0;
@@ -55,8 +55,8 @@ public class EmployeeRepository {
         while (resultSet.next()){
             Employee current = new Employee(resultSet.getInt("id"),
                     resultSet.getString("name"), resultSet.getString("job_name"),
-                    resultSet.getString("salary_grade"),
-                    resultSet.getString("department")
+                    resultSet.getInt("salary_id"),
+                    resultSet.getInt("department_id")
             );
 
             employees.add(current);
@@ -73,8 +73,8 @@ public class EmployeeRepository {
         if(resultSet.next()){
             employee = new Employee(resultSet.getInt("id"),
                     resultSet.getString("name"), resultSet.getString("job_name"),
-                    resultSet.getString("salary_grade"),
-                    resultSet.getString("department")
+                    resultSet.getInt("salary_id"),
+                    resultSet.getInt("department_id")
             );
         }
 
@@ -85,14 +85,14 @@ public class EmployeeRepository {
         String SQL = "UPDATE Employee " +
                 "SET name = ? ," +
                 "job_name = ? ," +
-                "salary_grade = ? ," +
-                "department = ? " +
+                "salary_id = ? ," +
+                "department_id = ? " +
                 "WHERE id = ? ";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setInt(3, employee.getSalaryId());
+        statement.setInt(4, employee.getDepartmentId());
         statement.setLong(5, id);
         int rowsAffected = statement.executeUpdate();
         Employee updatedEmployee = null;
