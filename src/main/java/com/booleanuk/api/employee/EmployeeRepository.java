@@ -75,4 +75,46 @@ public class EmployeeRepository {
         return employee;
     }
 
+    public Employee delete(int id) throws SQLException {
+        String SQL = "DELETE FROM Employees WHERE id = ?";
+        PreparedStatement ps = this.connection.prepareStatement(SQL);
+
+        Employee deletedEmployee = null;
+        deletedEmployee = this.get(id);
+
+        ps.setInt(1, id);
+        int rowsAffected = ps.executeUpdate();
+
+        if (rowsAffected == 0) {
+            //Reset the customer we're deleting if we didn't delete them
+            deletedEmployee = null;
+        }
+        return deletedEmployee;
+    }
+
+    public Employee add(Employee employee) throws SQLException {
+        PreparedStatement ps = this.connection.prepareStatement("INSERT INTO Employees (name,jobName,salaryGrade,department VALUES (?,?,?,?)");
+        ps.setString(1, employee.getName());
+        ps.setString(2, employee.getJobName());
+        ps.setString(3, employee.getSalarygrade());
+        ps.setString(4, employee.getDepartment());
+
+        int rowsAffected = ps.executeUpdate();
+
+        int newId = 0;
+        if (rowsAffected > 0) {
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    newId = rs.getInt(1);
+                }
+            } catch (Exception e) {
+                System.out.println("Oops: " + e);
+            }
+            employee.setId(newId);
+        } else {
+            employee = null;
+        }
+        return employee;
+    }
+
 }

@@ -48,4 +48,14 @@ public class EmployeeController {
         }
         return this.employees.delete(id);
     }
+
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee create(@RequestBody Employee customer) throws SQLException {
+        Employee theCustomer = this.employees.add(customer);
+        if (theCustomer == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to create the specified Customer");
+        }
+        return theCustomer;
+    }
 }
