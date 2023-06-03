@@ -19,7 +19,7 @@ public class SalaryRepository {
         PreparedStatement statement = this.connection.getConnection().prepareStatement("SELECT * FROM Salaries");
         ResultSet result = statement.executeQuery();
         while(result.next()){
-            all.add(new Salary(result.getInt("id"),result.getInt("min_salary"),result.getInt("max_grade"), result.getString("grade")));
+            all.add(new Salary(result.getInt("id"),result.getInt("min_salary"),result.getInt("max_salary"), result.getString("grade")));
         }
         return all;
     }
@@ -29,7 +29,7 @@ public class SalaryRepository {
         ResultSet result = statement.executeQuery();
         Salary temp = null;
         if(result.next()){
-            temp = new Salary(result.getInt("id"),result.getInt("min_salary"),result.getInt("max_grade"), result.getString("grade")));
+            temp = new Salary(result.getInt("id"),result.getInt("min_salary"),result.getInt("max_salary"), result.getString("grade"));
         }
         return temp;
     }
