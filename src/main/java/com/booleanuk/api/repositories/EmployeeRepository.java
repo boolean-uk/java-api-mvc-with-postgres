@@ -13,8 +13,6 @@ public class EmployeeRepository {
 
     @Autowired
     private DbAccess dbAccess;
-    private Connection employee;
-    private Connection connection;
 
     public EmployeeRepository(DbAccess dbAccess) throws SQLException {
         this.dbAccess = dbAccess;
@@ -22,7 +20,11 @@ public class EmployeeRepository {
 
     public List<Employee> getAll() throws SQLException {
         List<Employee> everyone = new ArrayList<>();
-        PreparedStatement statement = this.dbAccess.getAccess().prepareStatement("SELECT * FROM Employee");
+        PreparedStatement statement = this.dbAccess.getAccess().prepareStatement(
+                "SELECT e.id, e.name, e.jobName, s.grade as salaryGrade, d.name as department " +
+                        "FROM Employee e " +
+                        "JOIN salary s ON e.salary_id=s.id " +
+                        "JOIN department d ON e.department_id=d.id ");
 
         ResultSet results = statement.executeQuery();
 
@@ -39,7 +41,12 @@ public class EmployeeRepository {
     }
 
     public Employee get(long id) throws SQLException {
-        PreparedStatement statement = this.dbAccess.getAccess().prepareStatement("SELECT * FROM Employee WHERE id = ?");
+        PreparedStatement statement = this.dbAccess.getAccess().prepareStatement(
+                "SELECT e.id, e.name, e.jobName, s.grade as salaryGrade, d.name as department " +
+                        "FROM Employee e " +
+                        "JOIN salary s ON e.salary_id=s.id " +
+                        "JOIN department d ON e.department_id=d.id " +
+                        "WHERE e.id = ?");
         // Choose set**** matching the datatype of the missing element
         statement.setLong(1, id);
         ResultSet results = statement.executeQuery();
