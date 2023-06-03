@@ -1,16 +1,26 @@
-package com.booleanuk.api.models;
+package com.booleanuk.api.extension.models;
 
 public class Salary {
+    private int id;
     private int minSalary;
     private int maxSalary;
     private String grade;
 
     public Salary() {}
 
-    public Salary(int minSalary, int maxSalary, String grade) {
+    public Salary(int id, int minSalary, int maxSalary, String grade) {
+        this.id = id;
         this.minSalary = minSalary;
         this.maxSalary = maxSalary;
         this.grade = grade;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getMinSalary() {

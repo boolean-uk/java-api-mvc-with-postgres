@@ -1,4 +1,4 @@
-package com.booleanuk.api.models;
+package com.booleanuk.api.core.models;
 
 public class Employee {
     private int id;

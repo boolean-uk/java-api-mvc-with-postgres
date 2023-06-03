@@ -1,14 +1,14 @@
-package com.booleanuk.api.controllers;
+package com.booleanuk.api.core.controllers;
 
-import com.booleanuk.api.models.Employee;
-import com.booleanuk.api.repositories.EmployeeRepository;
+import com.booleanuk.api.core.models.Employee;
+import com.booleanuk.api.core.repositories.EmployeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("core/employees")
 public class EmployeeController {
     private final EmployeeRepository repo;
 

@@ -1,8 +1,8 @@
-package com.booleanuk.api.repositories;
+package com.booleanuk.api.core.repositories;
 
+import com.booleanuk.api.core.models.Employee;
 import com.booleanuk.api.database.Database;
 import com.booleanuk.api.database.PostgresDatabase;
-import com.booleanuk.api.models.Employee;
 
 import java.sql.*;
 import java.util.ArrayList;

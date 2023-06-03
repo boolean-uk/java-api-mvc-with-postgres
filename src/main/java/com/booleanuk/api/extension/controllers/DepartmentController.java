@@ -1,7 +1,7 @@
-package com.booleanuk.api.controllers;
+package com.booleanuk.api.extension.controllers;
 
-import com.booleanuk.api.models.Department;
-import com.booleanuk.api.repositories.DepartmentRepository;
+import com.booleanuk.api.extension.models.Department;
+import com.booleanuk.api.extension.repositories.DepartmentRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

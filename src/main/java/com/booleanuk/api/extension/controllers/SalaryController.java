@@ -1,14 +1,14 @@
-package com.booleanuk.api.controllers;
+package com.booleanuk.api.extension.controllers;
 
-import com.booleanuk.api.models.Salary;
-import com.booleanuk.api.repositories.SalaryRepository;
+import com.booleanuk.api.extension.models.Salary;
+import com.booleanuk.api.extension.repositories.SalaryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/salary")
+@RequestMapping("extension/salaries")
 public class SalaryController {
     private final SalaryRepository repo;
 
