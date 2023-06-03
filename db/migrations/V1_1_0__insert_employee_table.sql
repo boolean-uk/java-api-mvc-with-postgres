@@ -1,16 +1,5 @@
-DROP TABLE employee;
-CREATE TABLE If NOT EXISTS employee
-(
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    jobName TEXT,
-    salaryGrade TEXT,
-    department TEXT
-);
-
 INSERT INTO employee (name,jobName, salaryGrade, department)
-VALUES ('Rose Breedveld','Developer','A','Java'),
- ('Farhang Younis','Teacher','B','C#'),
- ('Whoever','Engineer','D','C++'),
- ('Rita Nielsen','Designer','F','Python'),
- ('July John','Architect','G','C');
+VALUES ('Rose Breedveld','Developer','4','Development'),
+ ('Farhang Younis','Lecturer','2','Education'),
+ ('Whoever','Supporter','1','Service'),
+ ('Rita Nielsen','Any','3','Any');

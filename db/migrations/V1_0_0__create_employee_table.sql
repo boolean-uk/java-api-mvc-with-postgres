@@ -1,6 +1,6 @@
 CREATE TABLE If NOT EXISTS employee
 (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     jobName TEXT,
     salaryGrade TEXT,
