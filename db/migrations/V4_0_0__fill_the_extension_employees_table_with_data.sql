@@ -1,4 +1,4 @@
-INSERT INTO employees
+INSERT INTO extension_employees
     (name, job, salary_id, department_id)
 values
     ('name1', 'job1', 1, 1),
