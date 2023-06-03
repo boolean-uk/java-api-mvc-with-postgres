@@ -1,7 +1,6 @@
 package com.booleanuk.api.departments;
 
 import com.booleanuk.api.MyConnection;
-import com.booleanuk.api.employees.Employee;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
