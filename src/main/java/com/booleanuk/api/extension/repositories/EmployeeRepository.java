@@ -1,6 +1,7 @@
 package com.booleanuk.api.extension.repositories;
 
-import com.booleanuk.api.extension.models.Employee;
+import com.booleanuk.api.core.models.Employee;
+import com.booleanuk.api.extension.models.ExtensionEmployee;
 import com.booleanuk.api.database.Database;
 import com.booleanuk.api.database.PostgresDatabase;
 
@@ -15,7 +16,14 @@ public class EmployeeRepository {
         List<Employee> employees = new ArrayList<>();
 
         try (Connection connection = db.connection()) {
-            String selectAll = "SELECT * FROM employees";
+//            String selectAll = "SELECT e.id as id, e.name as name, e.job as job, s.grade as salary_grade, d.name as department" +
+//                    "FROM extension_employees e " +
+//                    "JOIN salaries s ON s.id = e.salary_id " +
+//                    "JOIN departments d ON d.id = e.department_id";
+            String selectAll = "SELECT e.id as id, e.name as name, e.job as job, s.grade as salary_grade, d.name as department " +
+                    "FROM extension_employees e " +
+                    "JOIN salaries s ON s.id = e.salary_id " +
+                    "JOIN departments d ON d.id = e.department_id";
             PreparedStatement statement = connection.prepareStatement(selectAll);
             ResultSet results = statement.executeQuery();
 
@@ -41,7 +49,11 @@ public class EmployeeRepository {
         Employee employee = null;
 
         try (Connection connection = db.connection()) {
-            String selectId = "SELECT * FROM Employees WHERE Employees.id = ?";
+            String selectId = "SELECT e.id as id, e.name as name, e.job as job, s.grade as salary_grade, d.name as department " +
+                    "FROM extension_employees e " +
+                    "JOIN salaries s ON s.id = e.salary_id " +
+                    "JOIN departments d ON d.id = e.department_id " +
+                    "WHERE e.id = ?";
             PreparedStatement statement = connection.prepareStatement(selectId);
             statement.setInt(1, id);
             ResultSet results = statement.executeQuery();
@@ -62,18 +74,18 @@ public class EmployeeRepository {
         return employee;
     }
 
-    public Employee update(int id, Employee employee) {
+    public Employee update(int id, ExtensionEmployee employee) {
         Employee requestedEmployee = null;
 
         try (Connection connection = db.connection()) {
             String updateId = "UPDATE Employees " +
-                    "SET name=?, job=?, salary_grade=?, department=? " +
+                    "SET name=?, job=?, salary_id=?, department_id=? " +
                     "WHERE id=?";
             PreparedStatement statement = connection.prepareStatement(updateId);
             statement.setString(1, employee.getName());
             statement.setString(2, employee.getJob());
-            statement.setString(3, employee.getSalaryGrade());
-            statement.setString(4, employee.getDepartment());
+            statement.setInt(3, employee.getSalaryId());
+            statement.setInt(4, employee.getDepartmentId());
             statement.setInt(5, id);
 
             int affectedRows = statement.executeUpdate();
@@ -87,17 +99,17 @@ public class EmployeeRepository {
         return requestedEmployee;
     }
 
-    public Employee add(Employee employee) {
+    public Employee add(ExtensionEmployee employee) {
         Employee newEmployee = null;
 
         try (Connection connection = db.connection()) {
-            String addId = "INSERT INTO Employees (name, job, salary_grade, department) " +
+            String addId = "INSERT INTO extension_employees (name, job, salary_id, department_id) " +
                     "values (?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(addId, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, employee.getName());
             statement.setString(2, employee.getJob());
-            statement.setString(3, employee.getSalaryGrade());
-            statement.setString(4, employee.getDepartment());
+            statement.setInt(3, employee.getSalaryId());
+            statement.setInt(4, employee.getDepartmentId());
 
             int affectedRows = statement.executeUpdate();
 
@@ -122,7 +134,7 @@ public class EmployeeRepository {
         Employee employee = get(id);
 
         try (Connection connection = db.connection()) {
-            String deleteId = "DELETE FROM Employees WHERE Employees.id = ?";
+            String deleteId = "DELETE FROM extension_employees WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(deleteId);
             statement.setInt(1, id);
             int affectedRows = statement.executeUpdate();

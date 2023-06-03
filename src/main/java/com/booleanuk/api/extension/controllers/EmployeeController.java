@@ -1,6 +1,7 @@
 package com.booleanuk.api.extension.controllers;
 
-import com.booleanuk.api.extension.models.Employee;
+import com.booleanuk.api.core.models.Employee;
+import com.booleanuk.api.extension.models.ExtensionEmployee;
 import com.booleanuk.api.extension.repositories.EmployeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +30,13 @@ public class EmployeeController {
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee updateEmployee(@PathVariable(name="id") int id, @RequestBody Employee employee) {
+    public Employee updateEmployee(@PathVariable(name="id") int id, @RequestBody ExtensionEmployee employee) {
         return repo.update(id, employee);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee createEmployee(@RequestBody Employee employee) {
+    public Employee createEmployee(@RequestBody ExtensionEmployee employee) {
         return repo.add(employee);
     }
 
