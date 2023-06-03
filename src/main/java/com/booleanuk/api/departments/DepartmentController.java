@@ -35,7 +35,7 @@ public class DepartmentController {
         if(temp == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No departments matching that id were found");
         }
-        else if(temp.getId()==-1){
+        else if(this.repo.updateDepartment(id,department).getId()==-1){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Could not update the department, please check all required fields are correct");
         }
         return this.repo.updateDepartment(id,department);

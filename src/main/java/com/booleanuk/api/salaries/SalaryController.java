@@ -35,7 +35,7 @@ public class SalaryController {
         Salary temp = this.repo.getSalary(id);
         if(temp == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Salary with given id not found, so could not be updated");
-        }else if(temp.getId() == -1){
+        }else if(this.repo.updateSalary(id,salary).getId() == -1){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not update the salary grade, please check all required fields are correct.");
         }
         return this.repo.updateSalary(id,salary);

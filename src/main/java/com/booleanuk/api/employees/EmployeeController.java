@@ -32,10 +32,10 @@ public class EmployeeController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Employee updateEmployee(@PathVariable (name ="id") int id, @RequestBody Employee employee) throws SQLException {
-        Employee temp = this.repo.getEmployee(id);
-        if(temp == null){
+        Employee temp1 = this.repo.getEmployee(id);
+        if(temp1 == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Employee with given id not found, so could not be updated");
-        } else if(temp.getId() == -1){
+        } else if(this.repo.updateEmployee(id,employee).getId() == -1){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Could not update the employee, please check all required fields are correct.");
         }
         return this.repo.updateEmployee(id,employee);
