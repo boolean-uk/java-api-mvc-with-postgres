@@ -52,6 +52,22 @@ public class DepartmentRepository {
         }
         return department;
     }
+
+    public Department getByName(String name) throws SQLException {
+        PreparedStatement statement = this.dbAccess.getAccess().prepareStatement(
+                "SELECT * FROM Department WHERE name = ?");
+        // Choose set**** matching the datatype of the missing element
+        statement.setString(1, name);
+        ResultSet results = statement.executeQuery();
+        Department department = null;
+        if (results.next()) {
+            department = new Department(
+                    results.getLong("id"),
+                    results.getString("name"),
+                    results.getString("location"));
+        }
+        return department;
+    }
     //
     public Department update(long id, Department department) throws SQLException {
         String SQL = "UPDATE Department " +

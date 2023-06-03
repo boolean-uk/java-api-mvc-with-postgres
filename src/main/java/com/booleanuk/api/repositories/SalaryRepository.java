@@ -52,7 +52,22 @@ public class SalaryRepository {
         }
         return salary;
     }
-    //
+    public Salary getByGrade(String grade) throws SQLException {
+        PreparedStatement statement = this.dbAccess.getAccess().prepareStatement(
+                "SELECT * FROM salary WHERE grade = ?");
+        // Choose set**** matching the datatype of the missing element
+        statement.setString(1, grade);
+        ResultSet results = statement.executeQuery();
+        Salary salary = null;
+        if (results.next()) {
+            salary = new Salary(
+                    results.getLong("id"),
+                    results.getString("grade"),
+                    results.getInt("minSalary"),
+                    results.getInt("maxSalary"));
+        }
+        return salary;
+    }
     public Salary update(long id, Salary salary) throws SQLException {
         String SQL = "UPDATE Salary " +
                 "SET grade = ? ," +

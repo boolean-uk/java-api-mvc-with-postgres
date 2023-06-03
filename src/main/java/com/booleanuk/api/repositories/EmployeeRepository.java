@@ -1,7 +1,9 @@
 package com.booleanuk.api.repositories;
 
 import com.booleanuk.api.data.DbAccess;
+import com.booleanuk.api.models.Department;
 import com.booleanuk.api.models.Employee;
+import com.booleanuk.api.models.Salary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +15,10 @@ public class EmployeeRepository {
 
     @Autowired
     private DbAccess dbAccess;
-
+    @Autowired
+    private SalaryRepository salaryRepository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
     public EmployeeRepository(DbAccess dbAccess) throws SQLException {
         this.dbAccess = dbAccess;
     }
@@ -63,17 +68,23 @@ public class EmployeeRepository {
     }
 //
     public Employee update(long id, Employee employee) throws SQLException {
+
+        Salary salary = salaryRepository.getByGrade(employee.getSalaryGrade());
+        Department department = departmentRepository.getByName(employee.getDepartment());
+
         String SQL = "UPDATE Employee " +
                 "SET name = ? ," +
                 "jobName = ? ," +
-                "salaryGrade = ? ," +
-                "department = ? " +
+                "salary_id = ? ," +
+                "department_id = ? " +
                 "WHERE id = ? ";
         PreparedStatement statement = this.dbAccess.getAccess().prepareStatement(SQL);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+//        statement.setString(3, employee.getSalaryGrade());
+//        statement.setString(4, employee.getDepartment());
+        statement.setLong(3, salary.getId());
+        statement.setLong(4, department.getId());
         statement.setLong(5, id);
         int rowsAffected = statement.executeUpdate();
         Employee updatedEmployee = null;
@@ -101,13 +112,16 @@ public class EmployeeRepository {
     }
 
     public Employee add(Employee employee) throws SQLException {
-        String SQL = "INSERT INTO Employee(name, jobName, salaryGrade,department)" +
+        Salary salary = salaryRepository.getByGrade(employee.getSalaryGrade());
+        Department department = departmentRepository.getByName(employee.getDepartment());
+
+        String SQL = "INSERT INTO Employee(name, jobName, salary_id,department_id)" +
                      "VALUES (?, ?, ?,?)";
         PreparedStatement statement = this.dbAccess.getAccess().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setLong(3, salary.getId());
+        statement.setLong(4, department.getId());
 
         int rowsAffected = statement.executeUpdate();
         long newId = 0;
