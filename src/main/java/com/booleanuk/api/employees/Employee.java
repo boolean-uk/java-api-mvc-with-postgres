@@ -1,15 +1,15 @@
 package com.booleanuk.api.employees;
 
 public class Employee {
-    private int id;
-    private String name,jobName,salaryGrade,department;
+    private int id, salaryId, departmentId;
+    private String name,jobName;
 
-    public Employee(int id, String name, String jobName, String salaryGrade, String department) {
+    public Employee(int id, String name, String jobName, int salaryId, int departmentId) {
         this.id = id;
         this.name = name;
         this.jobName = jobName;
-        this.salaryGrade = salaryGrade;
-        this.department = department;
+        this.salaryId = salaryId;
+        this.departmentId = departmentId;
     }
     public Employee(){
 
@@ -27,12 +27,12 @@ public class Employee {
         return jobName;
     }
 
-    public String getSalaryGrade() {
-        return salaryGrade;
+    public int getSalaryId() {
+        return salaryId;
     }
 
-    public String getDepartment() {
-        return department;
+    public int getDepartmentId() {
+        return departmentId;
     }
 
     public void setId(int id) {

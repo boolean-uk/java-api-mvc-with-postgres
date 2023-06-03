@@ -20,7 +20,7 @@ public class EmployeeRepository {
         PreparedStatement statement = this.connection.getConnection().prepareStatement("SELECT * FROM Employees");
         ResultSet result = statement.executeQuery();
         while(result.next()){
-            everyone.add(new Employee(result.getInt("id"), result.getString("name"),result.getString("job_name"),result.getString("salary_grade"),result.getString("department") ));
+            everyone.add(new Employee(result.getInt("id"), result.getString("name"),result.getString("job_name"),result.getInt("salary_id"),result.getInt("department_id") ));
         }
         return everyone;
     }
@@ -30,7 +30,7 @@ public class EmployeeRepository {
         ResultSet result = statement.executeQuery();
         Employee employee = null;
         if(result.next()){
-            employee = new Employee(result.getInt("id"), result.getString("name"),result.getString("job_name"),result.getString("salary_grade"),result.getString("department") );
+            employee = new Employee(result.getInt("id"), result.getString("name"),result.getString("job_name"),result.getInt("salary_id"),result.getInt("department_id"));
         }
         return employee;
     }
@@ -38,14 +38,14 @@ public class EmployeeRepository {
         String SQL = "UPDATE Employees " +
                 "SET name = ? ," +
                 "job_name = ? ," +
-                "salary_grade = ? ," +
-                "department = ? " +
+                "salary_id = ? ," +
+                "department_id = ? " +
                 "WHERE id = ? ";
         PreparedStatement statement = this.connection.getConnection().prepareStatement(SQL);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setInt(3, employee.getSalaryId());
+        statement.setInt(4, employee.getDepartmentId());
         statement.setLong(5, id);
         int rowsAffected = statement.executeUpdate();
         Employee updatedEmployee = null;
@@ -68,12 +68,12 @@ public class EmployeeRepository {
         return deletedEmployee;
     }
     public Employee addEmployee(Employee employee) throws SQLException {
-        String SQL = "INSERT INTO Employees(name, job_name, salary_grade, department) VALUES(?, ?, ?, ?)";
+        String SQL = "INSERT INTO Employees(name, job_name, salary_id, department_id) VALUES(?, ?, ?, ?)";
         PreparedStatement statement = this.connection.getConnection().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setInt(3, employee.getSalaryId());
+        statement.setInt(4, employee.getDepartmentId());
         int rowsAffected = statement.executeUpdate();
         int newId = 0;
         if (rowsAffected > 0) {
