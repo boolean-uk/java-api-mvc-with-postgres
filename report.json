@@ -373,6 +373,230 @@
       "operation": "migrate",
       "exception": null,
       "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": "3.0.3",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "0.0.0",
+          "description": "create initial table",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V0_0_0__create_initial_table.sql",
+          "executionTime": 706
+        },
+        {
+          "category": "Versioned",
+          "version": "0.0.1",
+          "description": "add data to initial table",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V0_0_1__add_data_to_initial_table.sql",
+          "executionTime": 704
+        },
+        {
+          "category": "Versioned",
+          "version": "1.0.0",
+          "description": "create salaries table",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V1_0_0__create_salaries_table.sql",
+          "executionTime": 711
+        },
+        {
+          "category": "Versioned",
+          "version": "1.1.0",
+          "description": "remove salary details from employees",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V1_1_0__remove_salary_details_from_employees.sql",
+          "executionTime": 607
+        },
+        {
+          "category": "Versioned",
+          "version": "1.2.0",
+          "description": "add foreign key for salary to employees",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V1_2_0__add_foreign_key_for_salary_to_employees.sql",
+          "executionTime": 610
+        },
+        {
+          "category": "Versioned",
+          "version": "2.0.0",
+          "description": "create departments table",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V2_0_0__create_departments_table.sql",
+          "executionTime": 609
+        },
+        {
+          "category": "Versioned",
+          "version": "2.1.0",
+          "description": "remove department details from employees",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V2_1_0__remove_department_details_from_employees.sql",
+          "executionTime": 607
+        },
+        {
+          "category": "Versioned",
+          "version": "2.2.0",
+          "description": "add foreign key for department to employees",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V2_2_0__add_foreign_key_for_department_to_employees.sql",
+          "executionTime": 611
+        },
+        {
+          "category": "Versioned",
+          "version": "3.0.0",
+          "description": "remove the data from employees table",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V3_0_0__remove_the_data_from_employees_table.sql",
+          "executionTime": 611
+        },
+        {
+          "category": "Versioned",
+          "version": "3.0.1",
+          "description": "fill the departments table with data",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V3_0_1__fill_the_departments_table_with_data.sql",
+          "executionTime": 611
+        },
+        {
+          "category": "Versioned",
+          "version": "3.0.2",
+          "description": "fill the salaries table with data",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V3_0_2__fill_the_salaries_table_with_data.sql",
+          "executionTime": 611
+        },
+        {
+          "category": "Versioned",
+          "version": "3.0.3",
+          "description": "fill the employees table with data",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V3_0_3__fill_the_employees_table_with_data.sql",
+          "executionTime": 609
+        }
+      ],
+      "migrationsExecuted": 12,
+      "success": true,
+      "flywayVersion": "9.19.1",
+      "database": "puxmwykr",
+      "warnings": [],
+      "timestamp": "2023-06-03T16:39:11.609655929",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": "4.0.0",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "0.0.0",
+          "description": "create initial table",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V0_0_0__create_initial_table.sql",
+          "executionTime": 600
+        },
+        {
+          "category": "Versioned",
+          "version": "0.0.1",
+          "description": "add data to initial table",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V0_0_1__add_data_to_initial_table.sql",
+          "executionTime": 603
+        },
+        {
+          "category": "Versioned",
+          "version": "1.0.0",
+          "description": "create extension employees table",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V1_0_0__create_extension_employees_table.sql",
+          "executionTime": 610
+        },
+        {
+          "category": "Versioned",
+          "version": "2.0.0",
+          "description": "create salaries table",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V2_0_0__create_salaries_table.sql",
+          "executionTime": 712
+        },
+        {
+          "category": "Versioned",
+          "version": "2.0.1",
+          "description": "fill the salaries table with data",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V2_0_1__fill_the_salaries_table_with_data.sql",
+          "executionTime": 610
+        },
+        {
+          "category": "Versioned",
+          "version": "2.1.0",
+          "description": "remove salary details from extension employees",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V2_1_0__remove_salary_details_from_extension_employees.sql",
+          "executionTime": 614
+        },
+        {
+          "category": "Versioned",
+          "version": "2.2.0",
+          "description": "add foreign key for salary to extension employees",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V2_2_0__add_foreign_key_for_salary_to_extension_employees.sql",
+          "executionTime": 613
+        },
+        {
+          "category": "Versioned",
+          "version": "3.0.0",
+          "description": "create departments table",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V3_0_0__create_departments_table.sql",
+          "executionTime": 594
+        },
+        {
+          "category": "Versioned",
+          "version": "3.0.1",
+          "description": "fill the departments table with data",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V3_0_1__fill_the_departments_table_with_data.sql",
+          "executionTime": 611
+        },
+        {
+          "category": "Versioned",
+          "version": "3.1.0",
+          "description": "remove department details from extension employees",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V3_1_0__remove_department_details_from_extension_employees.sql",
+          "executionTime": 612
+        },
+        {
+          "category": "Versioned",
+          "version": "3.2.0",
+          "description": "add foreign key for department to extension employees",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V3_2_0__add_foreign_key_for_department_to_extension_employees.sql",
+          "executionTime": 610
+        },
+        {
+          "category": "Versioned",
+          "version": "4.0.0",
+          "description": "fill the extension employees table with data",
+          "type": "SQL",
+          "filepath": "/home/ai/Documents/java-api-mvc-with-postgres/db/migrations/V4_0_0__fill_the_extension_employees_table_with_data.sql",
+          "executionTime": 610
+        }
+      ],
+      "migrationsExecuted": 12,
+      "success": true,
+      "flywayVersion": "9.19.1",
+      "database": "puxmwykr",
+      "warnings": [],
+      "timestamp": "2023-06-03T17:05:52.541827766",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
     }
   ]
 }

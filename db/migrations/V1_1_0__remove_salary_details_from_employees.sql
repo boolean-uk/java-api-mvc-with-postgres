@@ -1,2 +1,0 @@
-ALTER TABLE EMPLOYEES
-DROP COLUMN salary_grade;
