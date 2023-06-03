@@ -47,6 +47,9 @@ public class EmployeeRepository {
         statement.setInt(3, employee.getSalaryId());
         statement.setInt(4, employee.getDepartmentId());
         statement.setLong(5, id);
+        if(employee.getName() == null || employee.getJobName() == null || employee.getDepartmentId() ==0 || employee.getSalaryId() == 0){
+            return new Employee(-1,"N/A","N/A",0,0);
+        }
         int rowsAffected = statement.executeUpdate();
         Employee updatedEmployee = null;
         if (rowsAffected > 0) {

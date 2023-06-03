@@ -25,7 +25,7 @@ public class SalaryController {
     public Salary getSalary(@PathVariable (name = "id") int id) throws SQLException {
         Salary temp = this.repo.getSalary(id);
         if(temp == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Salary not found, FIX MESSAGE LATER");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No salary grades matching that id were found.");
         }
         return temp;
     }
@@ -35,6 +35,8 @@ public class SalaryController {
         Salary temp = this.repo.getSalary(id);
         if(temp == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Salary with given id not found, so could not be updated");
+        }else if(temp.getId() == -1){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not update the salary grade, please check all required fields are correct.");
         }
         return this.repo.updateSalary(id,salary);
     }
@@ -43,7 +45,7 @@ public class SalaryController {
     public Salary createSalary(@RequestBody Salary salary) throws SQLException {
         Salary temp = this.repo.addSalary(salary);
         if(temp == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Salary body at fault");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Could not create a new salary grade, please check all required fields are correct.");
         }
         return temp;
     }
@@ -52,7 +54,7 @@ public class SalaryController {
     public Salary deleteSalary(@PathVariable (name = "id") int id) throws SQLException {
         Salary temp = this.repo.deleteSalary(id);
         if(temp == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Failed to delete Salary, check that the id is correct");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No salary grades matching that id were found.");
         }
         return temp;
     }

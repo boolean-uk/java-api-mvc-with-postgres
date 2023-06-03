@@ -24,7 +24,7 @@ public class DepartmentController {
     public Department getDepartment(@PathVariable (name = "id") int id) throws SQLException {
         Department temp = this.repo.getDepartment(id);
         if(temp == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Department not found, FIX MESSAGE LATER");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No departments matching that id were found");
         }
         return temp;
     }
@@ -33,7 +33,10 @@ public class DepartmentController {
     public Department updateDepartment(@PathVariable (name = "id") int id, @RequestBody Department department) throws SQLException{
         Department temp = this.repo.getDepartment(id);
         if(temp == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Department with given id not found, so could not be updated");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No departments matching that id were found");
+        }
+        else if(temp.getId()==-1){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Could not update the department, please check all required fields are correct");
         }
         return this.repo.updateDepartment(id,department);
     }
@@ -42,7 +45,7 @@ public class DepartmentController {
     public Department createDepartment(@RequestBody Department department) throws SQLException {
         Department temp = this.repo.addDepartment(department);
         if(temp == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Department body at fault");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Could not create the new department, please check all required fields are correct.");
         }
         return temp;
     }
@@ -51,7 +54,7 @@ public class DepartmentController {
     public Department deleteDepartment(@PathVariable (name = "id") int id) throws SQLException {
         Department temp = this.repo.deleteDepartment(id);
         if(temp == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Failed to delete Department, check that the id is correct");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No departments matching that id were found.");
         }
         return temp;
     }

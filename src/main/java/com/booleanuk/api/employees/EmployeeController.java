@@ -25,7 +25,7 @@ public class EmployeeController {
     public Employee getEmployee(@PathVariable (name ="id") int id) throws SQLException {
         Employee temp = this.repo.getEmployee(id);
         if(temp == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Employee with given id not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No employees with that id were found");
         }
         return temp;
     }
@@ -35,6 +35,8 @@ public class EmployeeController {
         Employee temp = this.repo.getEmployee(id);
         if(temp == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Employee with given id not found, so could not be updated");
+        } else if(temp.getId() == -1){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Could not update the employee, please check all required fields are correct.");
         }
         return this.repo.updateEmployee(id,employee);
     }
@@ -43,7 +45,7 @@ public class EmployeeController {
     public Employee createEmployee(@RequestBody Employee employee) throws SQLException {
         Employee temp = this.repo.addEmployee(employee);
         if(temp == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Could not create employee");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Could not create employee, please check all required fields are correct.");
         }
         return temp;
     }
@@ -52,7 +54,7 @@ public class EmployeeController {
     public Employee deleteEmployee(@PathVariable (name = "id") int id) throws SQLException {
         Employee temp = this.repo.deleteEmployee(id);
         if(temp == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Failed to delete Employee, check that the id is correct");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No employees with that id were found.");
         }
         return temp;
     }

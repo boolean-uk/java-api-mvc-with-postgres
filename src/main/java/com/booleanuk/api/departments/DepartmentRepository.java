@@ -41,6 +41,10 @@ public class DepartmentRepository {
         statement.setString(2,department.getLocation());
         statement.setInt(3,id);
         int rowsAffected = statement.executeUpdate();
+        //checking for faulty body.
+        if(department.getName() == null || department.getLocation()==null){
+            return new Department(-1,"N/A","N/A");
+        }
         Department updatedDepartment = null;
         if(rowsAffected>0){
             updatedDepartment = this.getDepartment(id);

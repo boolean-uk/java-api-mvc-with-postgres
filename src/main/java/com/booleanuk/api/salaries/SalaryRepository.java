@@ -40,6 +40,9 @@ public class SalaryRepository {
         statement.setInt(2,salary.getMaxSalary());
         statement.setString(3,salary.getGrade());
         statement.setInt(4,id);
+        if(salary.getMaxSalary() == 0 || salary.getMinSalary() == 0|| salary.getGrade() == null){
+            return new Salary(-1,0,0,"N/A");
+        }
         int rowsAffected = statement.executeUpdate();
         Salary updatedSalary = null;
         if(rowsAffected>0){
