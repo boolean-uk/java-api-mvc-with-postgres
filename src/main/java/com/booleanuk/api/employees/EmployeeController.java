@@ -48,7 +48,7 @@ public class EmployeeController {
         return temp;
     }
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public Employee deleteEmployee(@PathVariable (name = "id") int id) throws SQLException {
         Employee temp = this.repo.deleteEmployee(id);
         if(temp == null){

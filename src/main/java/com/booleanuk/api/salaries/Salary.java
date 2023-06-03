@@ -11,8 +11,6 @@ public class Salary {
         this.grade = grade;
     }
 
-    public Salary() {
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -32,5 +30,8 @@ public class Salary {
 
     public String getGrade() {
         return grade;
+    }
+    public String toString(){
+        return this.getId()+ " - "+this.getGrade()+" - Salary range: "+this.getMinSalary()+" / "+this.getMaxSalary();
     }
 }
