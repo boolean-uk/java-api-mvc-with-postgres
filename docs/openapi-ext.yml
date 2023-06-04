@@ -388,7 +388,7 @@ components:
     schemas:
         CreateEmployee:
             type: object
-            required: [name, job, salary_id, department_id]
+            required: [name, job, salaryId, departmentId]
             properties:
                 name:
                     type: string
@@ -396,10 +396,10 @@ components:
                 job:
                     type: string
                     example: "Java Developer"
-                salary_id:
+                salaryId:
                     type: integer
                     example: 1
-                department_id:
+                departmentId:
                     type: integer
                     example: 1
         Employee:
@@ -414,12 +414,12 @@ components:
                 job:
                     type: string
                     example: "Java Developer"
-                salary_id:
-                    type: string
-                    example: "8"
-                department_id:
-                    type: string
-                    example: "Software Development"
+                salaryId:
+                    type: integer
+                    example: 1
+                departmentId:
+                    type: integer
+                    example: 1
         AllEmployees:
             type: array
             items:
@@ -432,10 +432,10 @@ components:
                     type: string
                     example: "8"
                 minSalary:
-                    type: int
+                    type: integer
                     example: 25000
                 maxSalary:
-                    type: int
+                    type: integer
                     example: 30000
         Salary:
             type: object
@@ -447,10 +447,10 @@ components:
                     type: string
                     example: "8"
                 minSalary:
-                    type: int
+                    type: integer
                     example: 25000
                 maxSalary:
-                    type: int
+                    type: integer
                     example: 30000
         AllSalaries:
             type: array

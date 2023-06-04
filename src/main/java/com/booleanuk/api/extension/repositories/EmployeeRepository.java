@@ -16,10 +16,6 @@ public class EmployeeRepository {
         List<Employee> employees = new ArrayList<>();
 
         try (Connection connection = db.connection()) {
-//            String selectAll = "SELECT e.id as id, e.name as name, e.job as job, s.grade as salary_grade, d.name as department" +
-//                    "FROM extension_employees e " +
-//                    "JOIN salaries s ON s.id = e.salary_id " +
-//                    "JOIN departments d ON d.id = e.department_id";
             String selectAll = "SELECT e.id as id, e.name as name, e.job as job, s.grade as salary_grade, d.name as department " +
                     "FROM extension_employees e " +
                     "JOIN salaries s ON s.id = e.salary_id " +
@@ -74,11 +70,11 @@ public class EmployeeRepository {
         return employee;
     }
 
-    public Employee update(int id, ExtensionEmployee employee) {
+    public Employee update(int id, ExtensionEmployee employee) throws SQLException {
         Employee requestedEmployee = null;
 
         try (Connection connection = db.connection()) {
-            String updateId = "UPDATE Employees " +
+            String updateId = "UPDATE extension_employees " +
                     "SET name=?, job=?, salary_id=?, department_id=? " +
                     "WHERE id=?";
             PreparedStatement statement = connection.prepareStatement(updateId);
@@ -94,12 +90,13 @@ public class EmployeeRepository {
                 requestedEmployee = get(id);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            throw new SQLException("Error on employees update method: " + e.getMessage());
         }
 
         return requestedEmployee;
     }
 
-    public Employee add(ExtensionEmployee employee) {
+    public Employee add(ExtensionEmployee employee) throws SQLException {
         Employee newEmployee = null;
 
         try (Connection connection = db.connection()) {
@@ -125,6 +122,7 @@ public class EmployeeRepository {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            throw new SQLException("Error on employees add method: " + e.getMessage());
         }
 
         return newEmployee;

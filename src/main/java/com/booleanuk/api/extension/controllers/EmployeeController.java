@@ -5,6 +5,7 @@ import com.booleanuk.api.extension.models.ExtensionEmployee;
 import com.booleanuk.api.extension.repositories.EmployeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,30 +20,64 @@ public class EmployeeController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Employee> getEmployees() {
-        return repo.getAll();
+        List<Employee> employees = repo.getAll();
+
+        if (employees.size() == 0)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employees matching the criteria were found");
+
+        return employees;
     }
 
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public Employee getEmployee(@PathVariable(name="id") int id) {
-        return repo.get(id);
+        Employee requestedEmployee = repo.get(id);
+
+        if (requestedEmployee == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employees with that id were found");
+
+        return requestedEmployee;
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Employee updateEmployee(@PathVariable(name="id") int id, @RequestBody ExtensionEmployee employee) {
-        return repo.update(id, employee);
+        Employee updatedEmployee = null;
+
+        try {
+            updatedEmployee = repo.update(id, employee);
+        } catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Couldn't update the employee, please check all required fields are correct");
+        }
+
+        if (updatedEmployee == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employees with that id were found");
+
+        return updatedEmployee;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Employee createEmployee(@RequestBody ExtensionEmployee employee) {
-        return repo.add(employee);
+        Employee createdEmployee = null;
+
+        try {
+            createdEmployee =  repo.add(employee);
+        } catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Couldn't create a new employee, please check all required fields are correct");
+        }
+        System.out.println(createdEmployee == null);
+        return createdEmployee;
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public Employee deleteEmployee(@PathVariable(name="id") int id) {
-        return repo.delete(id);
+        Employee deletedEmployee = repo.delete(id);
+
+        if (deletedEmployee == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employees with that id were found");
+
+        return deletedEmployee;
     }
 }
