@@ -11,7 +11,7 @@ tags:
     - name: salaries
     - name: departments
 paths:
-    /employees:
+    /extension/employees:
         post:
             tags:
                 - employees
@@ -51,7 +51,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Error404'
-    /employees/{id}:
+    /extension/employees/{id}:
         get:
             tags:
                 - employees
@@ -63,7 +63,7 @@ paths:
                   description: The ID of the employee to get
                   required: true
                   schema:
-                      type: long
+                      type: integer
             responses:
                 200:
                     content:
@@ -87,7 +87,7 @@ paths:
                   description: The ID of the employee to update
                   required: true
                   schema:
-                      type: long
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -135,7 +135,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Error404'
-    /salaries:
+    /extension/salaries:
         post:
             tags:
                 - salaries
@@ -175,7 +175,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Error404'
-    /salaries/{id}:
+    /extension/salaries/{id}:
         get:
             tags:
                 - salaries
@@ -187,7 +187,7 @@ paths:
                   description: The ID of the salary grade to get
                   required: true
                   schema:
-                      type: long
+                      type: integer
             responses:
                 200:
                     content:
@@ -211,7 +211,7 @@ paths:
                   description: The ID of the salary grade to update
                   required: true
                   schema:
-                      type: long
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -246,7 +246,7 @@ paths:
                   description: The ID of the salary grade to delete
                   required: true
                   schema:
-                      type: long
+                      type: integer
             responses:
                 200:
                     content:
@@ -259,7 +259,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Error404'
-    /departments:
+    /extension/departments:
         post:
             tags:
                 - departments
@@ -299,7 +299,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Error404'
-    /departments/{id}:
+    /extension/departments/{id}:
         get:
             tags:
                 - departments
@@ -311,7 +311,7 @@ paths:
                   description: The ID of the department to get
                   required: true
                   schema:
-                      type: long
+                      type: integer
             responses:
                 200:
                     content:
@@ -335,7 +335,7 @@ paths:
                   description: The ID of the department to update
                   required: true
                   schema:
-                      type: long
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -370,7 +370,7 @@ paths:
                   description: The ID of the department to delete
                   required: true
                   schema:
-                      type: long
+                      type: integer
             responses:
                 200:
                     content:
@@ -388,38 +388,38 @@ components:
     schemas:
         CreateEmployee:
             type: object
-            required: [name, jobName, salaryGrade, department]
+            required: [name, job, salaryId, departmentId]
             properties:
                 name:
                     type: string
                     example: "Dave Ames"
-                jobName:
+                job:
                     type: string
                     example: "Java Developer"
-                salaryGrade:
-                    type: string
-                    example: "8"
-                department:
-                    type: string
-                    example: "Software Development"
+                salaryId:
+                    type: integer
+                    example: 1
+                departmentId:
+                    type: integer
+                    example: 1
         Employee:
             type: object
             properties:
                 id:
-                    type: long
+                    type: integer
                     example: 1
                 name:
                     type: string
                     example: "Dave Ames"
-                jobName:
+                job:
                     type: string
                     example: "Java Developer"
-                salaryGrade:
-                    type: string
-                    example: "8"
-                department:
-                    type: string
-                    example: "Software Development"
+                salaryId:
+                    type: integer
+                    example: 1
+                departmentId:
+                    type: integer
+                    example: 1
         AllEmployees:
             type: array
             items:
@@ -432,22 +432,25 @@ components:
                     type: string
                     example: "8"
                 minSalary:
-                    type: int
+                    type: integer
                     example: 25000
                 maxSalary:
-                    type: int
+                    type: integer
                     example: 30000
         Salary:
             type: object
             properties:
+                id:
+                    type: integer
+                    example: 1
                 grade:
                     type: string
                     example: "8"
                 minSalary:
-                    type: int
+                    type: integer
                     example: 25000
                 maxSalary:
-                    type: int
+                    type: integer
                     example: 30000
         AllSalaries:
             type: array
@@ -468,7 +471,7 @@ components:
             type: object
             properties:
                 id:
-                    type: long
+                    type: integer
                     example: 1
                 name:
                     type: string

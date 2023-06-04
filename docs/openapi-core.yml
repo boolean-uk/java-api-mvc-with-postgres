@@ -49,7 +49,7 @@ paths:
                   description: The ID of the employee to get
                   required: true
                   schema:
-                      type: long
+                      type: integer
             responses:
                 200:
                     content:
@@ -67,7 +67,7 @@ paths:
                   description: The ID of the employee to update
                   required: true
                   schema:
-                      type: long
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -90,7 +90,7 @@ paths:
                   description: The ID of the employee to delete
                   required: true
                   schema:
-                      type: long
+                      type: integer
             responses:
                 200:
                     content:
@@ -102,12 +102,12 @@ components:
     schemas:
         CreateEmployee:
             type: object
-            required: [name, jobName, salaryGrade, department]
+            required: [name, job, salaryGrade, department]
             properties:
                 name:
                     type: string
                     example: "Dave Ames"
-                jobName:
+                job:
                     type: string
                     example: "Java Developer"
                 salaryGrade:
@@ -120,7 +120,7 @@ components:
             type: object
             properties:
                 id:
-                    type: long
+                    type: integer
                     example: 1
                 name:
                     type: string
