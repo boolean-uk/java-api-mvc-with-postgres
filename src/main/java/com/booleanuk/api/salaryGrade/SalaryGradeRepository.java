@@ -1,6 +1,7 @@
 package com.booleanuk.api.salaryGrade;
 
 import org.postgresql.ds.PGSimpleDataSource;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
@@ -9,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
+@Repository
 public class SalaryGradeRepository {
     DataSource datasource;
     String dbUser;
@@ -44,7 +45,7 @@ public class SalaryGradeRepository {
 
     public List<SalaryGrade> getAll() throws SQLException  {
         List<SalaryGrade> allGrades = new ArrayList<>();
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM salary_grades");
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM salaries");
 
         ResultSet results = statement.executeQuery();
 
@@ -58,7 +59,7 @@ public class SalaryGradeRepository {
     }
 
     public SalaryGrade get(long id) throws SQLException {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM salary_grades WHERE id = ?");
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM salaries WHERE id = ?");
         statement.setLong(1, id);
         ResultSet results = statement.executeQuery();
         SalaryGrade salaryGrade = null;
@@ -71,7 +72,7 @@ public class SalaryGradeRepository {
     }
 
     public SalaryGrade update(long id, SalaryGrade employee) throws SQLException {
-        String SQL = "UPDATE salary_grades " +
+        String SQL = "UPDATE salaries " +
                 "SET grade = ? ," +
                 "minSalary = ? ," +
                 "maxSalary = ? " +
@@ -90,7 +91,7 @@ public class SalaryGradeRepository {
     }
 
     public SalaryGrade delete(long id) throws SQLException {
-        String SQL = "DELETE FROM salary_grades WHERE id = ?";
+        String SQL = "DELETE FROM salaries WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
         SalaryGrade deletedSalaryGrade = null;
         deletedSalaryGrade = this.get(id);
@@ -104,7 +105,7 @@ public class SalaryGradeRepository {
     }
 
     public SalaryGrade add(SalaryGrade salaryGrade) throws SQLException {
-        String SQL = "INSERT INTO salary_grades(grade, minSalary, maxSalary) VALUES(?, ?, ?)";
+        String SQL = "INSERT INTO salaries(grade, minSalary, maxSalary) VALUES(?, ?, ?)";
         PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, salaryGrade.getGrade());
         statement.setInt(2, salaryGrade.getMinSalary());
