@@ -36,6 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-.properties
+src/main/resources/config.properties
 report.html
 report.json
