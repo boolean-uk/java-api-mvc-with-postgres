@@ -3,4 +3,4 @@ VALUES
     ('Panagiotis Karapiperis', 'Software Developer', 'A', 'Software Development'),
     ('Dave Ames', 'Teacher','A','BooleanUK'),
     ('John Wick','Cleaner','C','Assasin INC'),
-    ('Liam Neeson','Call Center Representative','D','I will find you INC');
+    ('Liam Neeson','Call Center Representative','B','I will find you INC');
