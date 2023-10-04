@@ -114,12 +114,12 @@ components:
     schemas:
         CreateEmployee:
             type: object
-            required: [name, jobName, salaryGrade, department]
+            required: [name, job, salaryGrade, department]
             properties:
                 name:
                     type: string
                     example: "Dave Ames"
-                jobName:
+                job:
                     type: string
                     example: "Java Developer"
                 salaryGrade:
