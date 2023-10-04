@@ -1,50 +1,20 @@
 package com.booleanuk.api.department;
-import org.postgresql.ds.PGSimpleDataSource;
-import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import com.booleanuk.api.dbConfiguration.DatabaseConnection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
+
 
 @Repository
 public class DepartmentRepository {
-    DataSource datasource;
-    String dbUser;
-    String dbURL;
-    String dbPassword;
-    String dbDatabase;
-    Connection connection;
-
-    public DepartmentRepository() throws SQLException {
-        this.getDatabaseCredentials();
-        this.datasource = this.createDataSource();
-        this.connection = this.datasource.getConnection();
+    private final Connection connection;
+    @Autowired
+    public DepartmentRepository(DatabaseConnection dbConnection){
+        this.connection = dbConnection.getConnection();
     }
-    private void getDatabaseCredentials() {
-        try (InputStream input = new FileInputStream("src/main/resources/config.properties")) {
-            Properties prop = new Properties();
-            prop.load(input);
-            this.dbUser = prop.getProperty("db.user");
-            this.dbURL = prop.getProperty("db.url");
-            this.dbPassword = prop.getProperty("db.password");
-            this.dbDatabase = prop.getProperty("db.database");
-        } catch(Exception e) {
-            System.out.println("Oops: " + e);
-        }
-    }
-
-    private DataSource createDataSource() {
-        final String url = "jdbc:postgresql://" + this.dbURL + ":5432/" + this.dbDatabase + "?user=" + this.dbUser +"&password=" + this.dbPassword;
-        final PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        dataSource.setUrl(url);
-        return dataSource;
-    }
-
-
 
     public List<Department> getAll() throws SQLException  {
         List<Department> departments = new ArrayList<>();

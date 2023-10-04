@@ -42,5 +42,6 @@ public class DatabaseConnection {
         dataSource.setUrl(url);
         return dataSource;
     }
+    public Connection getConnection(){return this.connection;}
 
 }
