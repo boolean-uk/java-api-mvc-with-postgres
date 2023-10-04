@@ -1,0 +1,11 @@
+ALTER TABLE employees
+ALTER COLUMN name SET NOT NULL;
+
+ALTER TABLE employees
+ALTER COLUMN jobName SET NOT NULL;
+
+ALTER TABLE employees
+ALTER COLUMN salaryGrade SET NOT NULL;
+
+ALTER TABLE employees
+ALTER COLUMN department SET NOT NULL;
