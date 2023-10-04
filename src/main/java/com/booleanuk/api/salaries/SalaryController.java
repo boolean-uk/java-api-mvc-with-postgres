@@ -1,5 +1,7 @@
-package com.booleanuk.api.employee;
+package com.booleanuk.api.salaries;
 
+import com.booleanuk.api.employee.Employee;
+import com.booleanuk.api.employee.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,28 +11,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/employees")
-public class EmployeeController {
+@RequestMapping("/salaries")
+public class SalaryController {
 
     @Autowired
-    private EmployeeRepo employeeRepo;
+    private SalaryRepo salaryRepo;
 
     @GetMapping
-    public ResponseEntity<ArrayList<Employee>> getAllEmployees() {
+    public ResponseEntity<ArrayList<Salary>> getAllSalaries() {
         try {
-            ArrayList<Employee> employees = employeeRepo.getAllData();
-            return ResponseEntity.ok(employees);
+            ArrayList<Salary> salaries = salaryRepo.getAllData();
+            return ResponseEntity.ok(salaries);
         } catch (SQLException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getAnEmployee(@PathVariable int id) {
+    public ResponseEntity<Salary> getASallary(@PathVariable int id) {
         try {
-            Employee employee = employeeRepo.getOne(id);
-            if (employee != null) {
-                return ResponseEntity.ok(employee);
+            Salary salary = salaryRepo.getOne(id);
+            if (salary != null) {
+                return ResponseEntity.ok(salary);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
@@ -41,11 +43,11 @@ public class EmployeeController {
 
 
     @PostMapping
-    public ResponseEntity<Employee> createAnEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Salary> createSalaey(@RequestBody Salary salary) {
         try {
-            Employee employee1 = employeeRepo.add(employee);
-            if (employee1 != null) {
-                return ResponseEntity.ok(employee);
+            Salary salary1 = salaryRepo.add(salary);
+            if (salary1 != null) {
+                return ResponseEntity.ok(salary);
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             }
@@ -55,11 +57,11 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateAnEmployee(@PathVariable int id, @RequestBody Employee employee) {
+    public ResponseEntity<Salary> updateSalary(@PathVariable int id, @RequestBody Salary salary) {
         try {
-            Employee employee1 = employeeRepo.update(id, employee);
-            if (employee1 != null) {
-                return ResponseEntity.ok(employee1);
+            Salary salary1 = salaryRepo.update(id, salary);
+            if (salary1 != null) {
+                return ResponseEntity.ok(salary1);
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -69,11 +71,11 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Employee> deleteAnEmployee(@PathVariable int id) {
+    public ResponseEntity<Salary> deleteSalary(@PathVariable int id) {
         try {
-            Employee employee = employeeRepo.delete(id);
-            if (employee != null) {
-                return ResponseEntity.ok(employee);
+            Salary salary = salaryRepo.delete(id);
+            if (salary != null) {
+                return ResponseEntity.ok(salary);
             } else {
                 return ResponseEntity.notFound().build();
             }

@@ -1,5 +1,7 @@
-package com.booleanuk.api.employee;
+package com.booleanuk.api.departments;
 
+import com.booleanuk.api.employee.Employee;
+import com.booleanuk.api.employee.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,28 +11,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/employees")
-public class EmployeeController {
+@RequestMapping("/department")
+public class DepartmentController {
 
     @Autowired
-    private EmployeeRepo employeeRepo;
+    private DepartmentRepo departmentRepo;
 
     @GetMapping
-    public ResponseEntity<ArrayList<Employee>> getAllEmployees() {
+    public ResponseEntity<ArrayList<Department>> getAllDepartments() {
         try {
-            ArrayList<Employee> employees = employeeRepo.getAllData();
-            return ResponseEntity.ok(employees);
+            ArrayList<Department> departments = departmentRepo.getAllData();
+            return ResponseEntity.ok(departments);
         } catch (SQLException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getAnEmployee(@PathVariable int id) {
+    public ResponseEntity<Department> getADepartment(@PathVariable int id) {
         try {
-            Employee employee = employeeRepo.getOne(id);
-            if (employee != null) {
-                return ResponseEntity.ok(employee);
+            Department department = departmentRepo.getOne(id);
+            if (department != null) {
+                return ResponseEntity.ok(department);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
@@ -41,11 +43,11 @@ public class EmployeeController {
 
 
     @PostMapping
-    public ResponseEntity<Employee> createAnEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Department> createDepartment(@RequestBody Department department) {
         try {
-            Employee employee1 = employeeRepo.add(employee);
-            if (employee1 != null) {
-                return ResponseEntity.ok(employee);
+            Department department1 = departmentRepo.add(department);
+            if (department1 != null) {
+                return ResponseEntity.ok(department);
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             }
@@ -55,11 +57,11 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateAnEmployee(@PathVariable int id, @RequestBody Employee employee) {
+    public ResponseEntity<Department> updateADepartment(@PathVariable int id, @RequestBody Department department) {
         try {
-            Employee employee1 = employeeRepo.update(id, employee);
-            if (employee1 != null) {
-                return ResponseEntity.ok(employee1);
+            Department department1 = departmentRepo.update(id, department);
+            if (department1 != null) {
+                return ResponseEntity.ok(department1);
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -69,11 +71,11 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Employee> deleteAnEmployee(@PathVariable int id) {
+    public ResponseEntity<Department> deleteDepartment(@PathVariable int id) {
         try {
-            Employee employee = employeeRepo.delete(id);
-            if (employee != null) {
-                return ResponseEntity.ok(employee);
+            Department department = departmentRepo.delete(id);
+            if (department != null) {
+                return ResponseEntity.ok(department);
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -81,4 +83,5 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
 }

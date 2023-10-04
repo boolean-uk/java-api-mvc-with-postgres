@@ -5,17 +5,17 @@ public class Employee {
     private int id;
     private String fullname;
     private String jobName;
-    private String salaryGrade;
-    private String department;
+    private int salaryId;
+    private int departmentId;
 
     public Employee() {}
 
-    public Employee(int id, String fullname, String jobName, String salaryGrade, String department) {
+    public Employee(int id, String fullname, String jobName, int salaryId, int departmentId) {
         this.id = id;
         this.fullname = fullname;
         this.jobName = jobName;
-        this.salaryGrade = salaryGrade;
-        this.department = department;
+        this.salaryId = salaryId;
+        this.departmentId = departmentId;
     }
 
     public int getId() {
@@ -42,20 +42,20 @@ public class Employee {
         this.jobName = jobName;
     }
 
-    public String getSalaryGrade() {
-        return salaryGrade;
+    public int getSalaryId() {
+        return salaryId;
     }
 
-    public void setSalaryGrade(String salaryGrade) {
-        this.salaryGrade = salaryGrade;
+    public void setSalaryId(int salaryId) {
+        this.salaryId = salaryId;
     }
 
-    public String getDepartment() {
-        return department;
+    public int getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
     }
 
     @Override
@@ -64,8 +64,8 @@ public class Employee {
                 "id=" + id +
                 ", fullname='" + fullname + '\'' +
                 ", jobName='" + jobName + '\'' +
-                ", salaryGrade='" + salaryGrade + '\'' +
-                ", department='" + department + '\'' +
+                ", salaryId=" + salaryId +
+                ", departmentId=" + departmentId +
                 '}';
     }
 }
