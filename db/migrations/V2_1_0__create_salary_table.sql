@@ -1,0 +1,6 @@
+CREATE TABLE salaries (
+    id SERIAL PRIMARY KEY,
+    grade VARCHAR(10) NOT NULL,
+    minSalary INTEGER DEFAULT 0 NOT NULL,
+    maxSalary INTEGER DEFAULT 0 NOT NULL
+);
