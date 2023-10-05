@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+### Personal Settings ###
+flyway.conf
+report.html
+report.json
+*.properties
