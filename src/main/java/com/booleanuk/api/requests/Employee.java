@@ -14,10 +14,6 @@ public class Employee {
         this.department = department;
     }
 
-    public long getId() {
-        return id;
-    }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -26,31 +22,15 @@ public class Employee {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getJobName() {
         return jobName;
-    }
-
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
     }
 
     public String getSalaryGrade() {
         return salaryGrade;
     }
 
-    public void setSalaryGrade(String salaryGrade) {
-        this.salaryGrade = salaryGrade;
-    }
-
     public String getDepartment() {
         return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
     }
 }
