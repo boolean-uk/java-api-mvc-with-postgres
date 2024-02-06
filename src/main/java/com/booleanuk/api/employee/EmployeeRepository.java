@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Properties;
 
 public class EmployeeRepository {
-    DataSource datasource;
-    String dbUser;
-    String dbURL;
-    String dbPassword;
-    String dbDatabase;
-    Connection connection;
+    private DataSource datasource;
+    private String dbUser;
+    private String dbURL;
+    private String dbPassword;
+    private String dbDatabase;
+    private Connection connection;
 
     public EmployeeRepository() throws SQLException {
         this.getDatabaseCredentials();
