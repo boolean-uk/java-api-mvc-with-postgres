@@ -1,4 +1,4 @@
-package com.booleanuk.api.requests;
+package com.booleanuk.api.requests.employee;
 
 import javax.sql.DataSource;
 import org.postgresql.ds.PGSimpleDataSource;
@@ -51,15 +51,15 @@ public class EmployeeRepository {
         return dataSource;
     }
 
-    public Employee createEmployee(Employee employee) throws SQLException {
+    public Salary createEmployee(Salary salary) throws SQLException {
         String insertSQL = "INSERT INTO Employees(name, jobName, salaryGrade, department) VALUES(?, ?, ?, ?)";
 
         PreparedStatement statement = this.connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
 
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setString(1, salary.getName());
+        statement.setString(2, salary.getJobName());
+        statement.setString(3, salary.getSalaryGrade());
+        statement.setString(4, salary.getDepartment());
 
         int rowsAffected = statement.executeUpdate();
 
@@ -72,40 +72,40 @@ public class EmployeeRepository {
                     newId = rs.getLong(1);  //Ligger i column 1 i databasen. Hämtas eftersom det skapas automatiskt med SERIAL
                 }
             } catch (Exception e) {
-                System.out.println("Newly created employee's SERIAL id could not be retrieved from database: " + e);
+                System.out.println("Newly created salary's SERIAL id could not be retrieved from database: " + e);
             }
 
-            employee.setId(newId);
+            salary.setId(newId);
 
         }
         else {
-            employee = null;
+            salary = null;
         }
 
-        return employee;
+        return salary;
     }
 
-    public List<Employee> getEmployees() throws SQLException  {
-        List<Employee> allEmployees = new ArrayList<>();
+    public List<Salary> getEmployees() throws SQLException  {
+        List<Salary> allSalaries = new ArrayList<>();
 
         PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Employees");
 
         ResultSet results = statement.executeQuery();
 
         while (results.next()) {
-            Employee employee = new Employee(
+            Salary salary = new Salary(
                     results.getLong("id"),
                     results.getString("name"),
                     results.getString("jobName"),
                     results.getString("salaryGrade"),
                     results.getString("department"));
-            allEmployees.add(employee);
+            allSalaries.add(salary);
         }
 
-        return allEmployees;
+        return allSalaries;
     }
 
-    public Employee getSpecificEmployee(long id) throws SQLException {
+    public Salary getSpecificEmployee(long id) throws SQLException {
         PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Employees WHERE id = ?");
 
         // Choose set**** matching the datatype of the missing element
@@ -113,10 +113,10 @@ public class EmployeeRepository {
 
         ResultSet results = statement.executeQuery();
 
-        Employee employee = null;
+        Salary salary = null;
 
         if (results.next()) {
-            employee = new Employee(
+            salary = new Salary(
                     results.getLong("id"),
                     results.getString("name"),
                     results.getString("jobName"),
@@ -124,10 +124,10 @@ public class EmployeeRepository {
                     results.getString("department"));
         }
 
-        return employee;
+        return salary;
     }
 
-    public Employee updateEmployee(long id, Employee employee) throws SQLException {
+    public Salary updateEmployee(long id, Salary salary) throws SQLException {
         String SQL = "UPDATE Employees " +
                 "SET name = ? ," +
                 "jobName = ? ," +
@@ -137,32 +137,32 @@ public class EmployeeRepository {
 
         PreparedStatement statement = this.connection.prepareStatement(SQL);
 
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setString(1, salary.getName());
+        statement.setString(2, salary.getJobName());
+        statement.setString(3, salary.getSalaryGrade());
+        statement.setString(4, salary.getDepartment());
         statement.setLong(5, id);
 
         int rowsAffected = statement.executeUpdate();
 
-        Employee updatedEmployee = null;
+        Salary updatedSalary = null;
 
         if (rowsAffected > 0) {
-            updatedEmployee = this.getSpecificEmployee(id);
+            updatedSalary = this.getSpecificEmployee(id);
         }
 
-        return updatedEmployee;
+        return updatedSalary;
     }
 
-    public Employee deleteEmployee(long id) throws SQLException {
+    public Salary deleteEmployee(long id) throws SQLException {
         String SQL = "DELETE FROM Employees WHERE id = ?";
 
         PreparedStatement statement = this.connection.prepareStatement(SQL);
 
         // Get the employee before we delete them
-        Employee deletedEmployee = null;
+        Salary deletedSalary = null;
 
-        deletedEmployee = this.getSpecificEmployee(id);
+        deletedSalary = this.getSpecificEmployee(id);
 
         statement.setLong(1, id);
 
@@ -170,9 +170,9 @@ public class EmployeeRepository {
 
         if (rowsAffected == 0) {
             //Reset the employee we're deleting if we didn't delete them
-            deletedEmployee = null;
+            deletedSalary = null;
         }
 
-        return deletedEmployee;
+        return deletedSalary;
     }
 }
