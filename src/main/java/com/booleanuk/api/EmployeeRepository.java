@@ -3,10 +3,7 @@ package com.booleanuk.api;
 import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -73,13 +70,54 @@ public class EmployeeRepository {
                 "department = ?" +
                 "WHERE id = ?;";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1,employee.getName());
+        statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
         statement.setString(3, employee.getSalaryGrade());
         statement.setString(4, employee.getDepartment());
         statement.setInt(5, employee.getId());
+        statement.executeUpdate();
 
         return getOne(id);
+    }
+
+    public Employee delete(int id) throws SQLException{
+        String sql = "DELETE FROM employees WHERE id = ?;";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        Employee deleted = getOne(id);
+
+        statement.setInt(1, id);
+        statement.executeUpdate();
+
+        return deleted;
+    }
+
+    public Employee add(Employee employee) throws SQLException{
+        String SQL = "INSERT INTO employees " +
+                "(name, address, email, phone) " +
+                "VALUES (?, ?, ?, ?);";
+        PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+
+        statement.setString(1, employee.getName());
+        statement.setString(2, employee.getJobName());
+        statement.setString(3, employee.getSalaryGrade());
+        statement.setString(4, employee.getDepartment());
+
+        int rowsAffected = statement.executeUpdate();
+        int newId = 0;
+
+        if (rowsAffected > 0) {
+            try (ResultSet rs = statement.getGeneratedKeys()) {
+                if (rs.next()) {
+                    newId = rs.getInt(1);
+                }
+            } catch (Exception e) {
+                System.out.println("Oops: " + e);
+            }
+            employee.setId(newId);
+        } else {
+            employee = null;
+        }
+        return employee;
     }
 
     public Employee findEmployeeFromName(String name) throws SQLException{

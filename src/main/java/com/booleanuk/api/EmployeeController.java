@@ -35,7 +35,7 @@ public class EmployeeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Employee create(@RequestBody Employee employee) throws SQLException{
-        Employee theEmployee = employees.addEmployee(employee);
+        Employee theEmployee = employees.add(employee);
 
         if (theEmployee == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to create the specified employee.");
@@ -59,7 +59,7 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     public Employee delete(@PathVariable int id) throws SQLException {
-        Employee toBeDeleted = employees.getEmployee(id);
+        Employee toBeDeleted = employees.getOne(id);
         if (toBeDeleted == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
