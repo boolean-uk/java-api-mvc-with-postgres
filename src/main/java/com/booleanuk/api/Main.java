@@ -2,15 +2,21 @@ package com.booleanuk.api;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+import java.sql.SQLException;
+
+//@SpringBootApplication
 public class Main {
     public static void main(String[] args){
-        EmployeeRepository myRepo = new EmployeeRepository();
         try {
-            myRepo.connectToDatabase();
-        }
-        catch(Exception e) {
-            System.out.println("Oops: " + e);
+            EmployeeRepository employees = new EmployeeRepository();
+
+            for (Employee employee : employees.getAll()){
+                System.out.println(employee);
+            }
+
+            System.out.println(employees.getOne(2));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

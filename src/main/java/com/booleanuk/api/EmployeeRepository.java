@@ -1,81 +1,89 @@
 package com.booleanuk.api;
 
+import javax.sql.DataSource;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
+import org.postgresql.ds.PGSimpleDataSource;
 
 public class EmployeeRepository {
-    private List<Employee> employees;
+    private DataSource dataSource;
+    private String dbUser;
+    private String dbURL;
+    private String dbPassword;
+    private String bdDatabase;
+    private Connection connection;
 
-    public EmployeeRepository(){
-        employees = new ArrayList<>();
+    public EmployeeRepository() throws SQLException {
+        getDatabaseCredentials();
+        dataSource = createDataSource();
+        connection = dataSource.getConnection();
     }
 
-    public List<Employee> getEmployees(){
+    public List<Employee> getAll() throws SQLException{
+        List<Employee> employees = new ArrayList<>();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM employees;");
+        ResultSet results = statement.executeQuery();
+
+        while (results.next()){
+            Employee theEmployee = new Employee(
+                    results.getInt("id"),
+                    results.getString("name"),
+                    results.getString("job_name"),
+                    results.getString("salary_grade"),
+                    results.getString("department")
+            );
+            employees.add(theEmployee);
+        }
+
         return employees;
     }
 
-    public Employee getEmployee(int id){
-        Employee employee = findEmployeeFromId(id);
+    public Employee getOne(int id) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM employees WHERE id = ?;");
+        statement.setInt(1, id);
+        ResultSet results = statement.executeQuery();
+        Employee employee = null;
 
-        if (employee == null){
-            return null;
+        if (results.next()){
+            employee = new Employee(
+                    results.getInt("id"),
+                    results.getString("name"),
+                    results.getString("job_name"),
+                    results.getString("salary_grade"),
+                    results.getString("department")
+            );
         }
-        int index = employees.indexOf(employee);
-
-        return employees.get(id);
-    }
-
-    public Employee addEmployee(Employee newEmployee){
-        Employee employee = findEmployeeFromName(newEmployee.getName());
-
-        if (employee != null){
-            return null;
-        }
-
-        employees.add(employee);
-
-        return newEmployee;
-    }
-
-    public Employee update(int id, Employee updatedEmployee){
-        Employee employee = findEmployeeFromId(id);
-
-        if (employee == null){
-            return null;
-        }
-
-        employee.setName(updatedEmployee.getName());
-        employee.setJobName(updatedEmployee.getJobName());
-        employee.setSalaryGrade(updatedEmployee.getSalaryGrade());
-        employee.setDepartment(updatedEmployee.getDepartment());
 
         return employee;
     }
 
-    public Employee delete(int id){
-        Employee employee = findEmployeeFromId(id);
+    public Employee update(int id, Employee employee) throws SQLException{
+        String sql = "UPDATE employees " +
+                "SET name = ?, " +
+                "job_name = ?, " +
+                "salary_grade = ?, " +
+                "department = ?" +
+                "WHERE id = ?;";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1,employee.getName());
+        statement.setString(2, employee.getJobName());
+        statement.setString(3, employee.getSalaryGrade());
+        statement.setString(4, employee.getDepartment());
+        statement.setInt(5, employee.getId());
 
-        if (employee == null){
-            return null;
-        }
-
-        int index = employees.indexOf(employee);
-
-        return employees.remove(index);
+        return getOne(id);
     }
 
-    public Employee findEmployeeFromId(int id){
-        for (Employee employee : employees){
-            if (employee.getId() == id){
-                return employee;
-            }
-        }
-
-        return null;
-    }
-
-    public Employee findEmployeeFromName(String name){
-        for (Employee employee : employees){
+    public Employee findEmployeeFromName(String name) throws SQLException{
+        for (Employee employee : getAll()){
             if (employee.getName().equals(name)){
                 return employee;
             }
@@ -83,4 +91,33 @@ public class EmployeeRepository {
 
         return null;
     }
+
+    private void getDatabaseCredentials(){
+        try {
+            InputStream input = new FileInputStream("src/main/resources/config.properties");
+            Properties prop = new Properties();
+
+            prop.load(input);
+            dbUser = prop.getProperty("db.user");
+            dbURL = prop.getProperty("db.url");
+            dbPassword = prop.getProperty("db.password");
+            bdDatabase = prop.getProperty("db.database");
+
+        } catch (Exception e){
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    private DataSource createDataSource(){
+        String url = "jdbc:postgresql://" + dbURL +
+                ":5432/" + bdDatabase +
+                "?user=" + dbUser +
+                "&password=" + dbPassword;
+        PGSimpleDataSource dataSource = new PGSimpleDataSource();
+        dataSource.setUrl(url);
+
+        return dataSource;
+    }
+
+
 }

@@ -17,13 +17,13 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> getAll(){
-        return employees.getEmployees();
+    public List<Employee> getAll() throws SQLException{
+        return employees.getAll();
     }
 
     @GetMapping("/{id}")
-    public Employee getOne(@PathVariable int id){
-        Employee employee = employees.getEmployee(id);
+    public Employee getOne(@PathVariable int id) throws SQLException{
+        Employee employee = employees.getOne(id);
 
         if (employee == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -46,7 +46,7 @@ public class EmployeeController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Employee update(@PathVariable int id, @RequestBody Employee employee) throws SQLException {
-        Employee toBeUpdated = employees.getEmployee(id);
+        Employee toBeUpdated = employees.getOne(id);
 
         if (toBeUpdated == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
