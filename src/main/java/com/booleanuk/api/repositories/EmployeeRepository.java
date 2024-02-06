@@ -42,7 +42,7 @@ public class EmployeeRepository {
         parameters.put("name", employee.getName());
         parameters.put("jobName", employee.getJobName());
         parameters.put("salaryGrade", employee.getSalaryGrade());
-        parameters.put("department", employee.getDepartment_id());
+        parameters.put("department", employee.getDepartmentId());
 
         return (int) simpleJdbcInsert.executeAndReturnKey(parameters);
     }
@@ -53,7 +53,7 @@ public class EmployeeRepository {
                 employee.getName(),
                 employee.getJobName(),
                 employee.getSalaryGrade(),
-                employee.getDepartment_id(),
+                employee.getDepartmentId(),
                 id
         );
     }

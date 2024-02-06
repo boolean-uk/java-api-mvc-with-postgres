@@ -1,5 +1,5 @@
 INSERT INTO employee
-        (name, jobName, salaryGrade, department)
+        (name, job_name, salary_grade, department)
     VALUES
         ('Alice Smith', 'Production Operator', '4', 'Production'),
         ('Bob Johnson', 'Quality Control Technician', '7', 'Quality Assurance'),

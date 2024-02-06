@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS employee (
     id SERIAL PRIMARY KEY,
     name TEXT,
-    jobName TEXT,
-    salaryGrade TEXT,
+    job_name TEXT,
+    salary_grade TEXT,
     department TEXT
 );
