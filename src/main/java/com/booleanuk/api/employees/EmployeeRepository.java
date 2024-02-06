@@ -5,10 +5,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -71,7 +68,7 @@ public class EmployeeRepository {
                 "(name, jobName, salaryGrade, department) " +
                 "VALUES (?, ?, ?, ?)";
 
-        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
         statement.setString(3, employee.getSalaryGrade());
@@ -81,6 +78,16 @@ public class EmployeeRepository {
         int newId = -1; // Hmmm...
         if(rowsAffected > 0)    {
             // Waiting for standup to try the id thing..
+            try(ResultSet rs = statement.getGeneratedKeys())   {
+                System.out.println("Hello");
+                if(rs.next()) {
+                    System.out.println(":D");
+                    newId = rs.getInt(1);
+                }
+            } catch (Exception e) {
+                System.out.println(":( " + e);
+            }
+            employee.setId(newId);
             System.out.println("Yes, whoohoo");
         }   else employee = null;
         return employee;
@@ -105,6 +112,18 @@ public class EmployeeRepository {
             updatedEmployee = this.getOne(id);
         }
         return updatedEmployee;
+    }
+
+    public Employee delete(int id) throws SQLException {
+        String SQL = "DELETE FROM employees WHERE id= ?";
+        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        statement.setInt(1, id);
+        Employee deletedEmployee = this.getOne(id);
+        int rowsAffected = statement.executeUpdate();
+        if(rowsAffected == 0)   {
+            deletedEmployee = null;
+        }
+        return deletedEmployee;
     }
 
     public void getDatabaseCredentials()    {
