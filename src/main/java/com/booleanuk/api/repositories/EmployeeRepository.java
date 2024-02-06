@@ -40,15 +40,15 @@ public class EmployeeRepository {
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", employee.getName());
-        parameters.put("jobName", employee.getJobName());
-        parameters.put("salaryGrade", employee.getSalaryGrade());
+        parameters.put("job_name", employee.getJobName());
+        parameters.put("salary_grade", employee.getSalaryGrade());
         parameters.put("department", employee.getDepartmentId());
 
         return (int) simpleJdbcInsert.executeAndReturnKey(parameters);
     }
 
     public void updateEmployee(int id, Employee employee) {
-        String sql = "UPDATE employee SET name = ?, jobName = ?, salaryGrade = ?, department = ? WHERE id = ?";
+        String sql = "UPDATE employee SET name = ?, job_name = ?, salary_grade = ?, department = ? WHERE id = ?";
         jdbcTemplate.update(sql,
                 employee.getName(),
                 employee.getJobName(),
