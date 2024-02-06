@@ -1,4 +1,4 @@
-package com.booleanuk.api;
+package com.booleanuk.api.employee;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class EmployeeController {
     public Employee getOne(@PathVariable(name = "id") long id) throws SQLException {
         Employee employee = employees.get(id);
         if (employee == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employees matching that id were found");
         }
         return employee;
     }
@@ -35,7 +35,7 @@ public class EmployeeController {
     public Employee create(@RequestBody Employee employee) throws SQLException {
         Employee theEmployee = employees.add(employee);
         if (theEmployee == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to create the specified Employee");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not create employee, please check all required fields are correct.");
         }
         return theEmployee;
     }
@@ -45,7 +45,7 @@ public class EmployeeController {
     public Employee update(@PathVariable (name = "id") long id, @RequestBody Employee employee) throws SQLException {
         Employee toBeUpdated = employees.get(id);
         if (toBeUpdated == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employees matching that id were found");
         }
         return employees.update(id, employee);
     }
@@ -54,7 +54,7 @@ public class EmployeeController {
     public Employee delete(@PathVariable (name = "id") long id) throws SQLException {
         Employee toBeDeleted = employees.get(id);
         if (toBeDeleted == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employees matching that id were found");
         }
         return employees.delete(id);
     }
