@@ -58,4 +58,13 @@ public class DepartmentController {
         }
         return theDepartment;
     }
+
+    @DeleteMapping("/{id}")
+    public Department delete(@PathVariable(name="id") int id) throws SQLException {
+        Department theDepartment =  this.departments.delete(id);
+        if (theDepartment == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+        }
+        return theDepartment;
+    }
 }

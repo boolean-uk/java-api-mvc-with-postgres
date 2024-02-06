@@ -108,4 +108,17 @@ public class DepartmentRepository {
         }
         return updatedDepartment;
     }
+
+    public Department delete(int id) throws SQLException {
+        String SQL = "DELETE FROM Departments WHERE id = ?";
+        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        Department deletedDepartment = this.get(id);
+
+        statement.setInt(1, id);
+        int rowsAffected = statement.executeUpdate();
+        if (rowsAffected == 0) {
+            deletedDepartment = null;
+        }
+        return deletedDepartment;
+    }
 }
