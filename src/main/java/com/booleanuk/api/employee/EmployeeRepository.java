@@ -91,4 +91,25 @@ public class EmployeeRepository {
         }
         return employee;
     }
+
+    public Employee update(int id, Employee employee) throws SQLException {
+        String SQL = "UPDATE Employees " +
+                "SET name = ? ," +
+                "job_name = ? ," +
+                "salary_grade = ? ," +
+                "department = ? " +
+                "WHERE id = ? ";
+        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        statement.setString(1, employee.getName());
+        statement.setString(2, employee.getJobName());
+        statement.setString(3, employee.getSalaryGrade());
+        statement.setString(4, employee.getDepartment());
+        statement.setInt(5, id);
+        int rowsAffected = statement.executeUpdate();
+        Employee updatedEmployee = null;
+        if (rowsAffected > 0) {
+            updatedEmployee = this.get(id);
+        }
+        return updatedEmployee;
+    }
 }

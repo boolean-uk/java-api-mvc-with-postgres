@@ -30,4 +30,10 @@ public class EmployeeController {
     public Employee get(@PathVariable(name = "id") int id) throws SQLException {
         return this.employees.get(id);
     }
+
+    @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee update(@PathVariable(name="id") int id, @RequestBody Employee employee) throws SQLException {
+        return this.employees.update(id, employee);
+    }
 }
