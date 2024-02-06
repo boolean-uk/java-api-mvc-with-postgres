@@ -1,4 +1,4 @@
-package com.booleanuk.api.employees;
+package com.booleanuk.api.core.employees;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

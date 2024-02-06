@@ -1,7 +1,7 @@
-package com.booleanuk.api;
+package com.booleanuk.api.core;
 
-import com.booleanuk.api.employees.Employee;
-import com.booleanuk.api.employees.EmployeeRepository;
+import com.booleanuk.api.core.employees.Employee;
+import com.booleanuk.api.core.employees.EmployeeRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

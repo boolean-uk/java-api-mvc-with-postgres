@@ -1,6 +1,6 @@
 package com.booleanuk.api;
 
-import com.booleanuk.api.employees.Employee;
+import com.booleanuk.api.core.employees.Employee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

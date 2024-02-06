@@ -1,4 +1,4 @@
-package com.booleanuk.api.employees;
+package com.booleanuk.api.extension.employees;
 
 public class Employee {
     private int id;
