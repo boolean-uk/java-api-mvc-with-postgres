@@ -1,5 +1,6 @@
 package com.booleanuk.api.repositories;
 
+import com.booleanuk.api.models.Department;
 import com.booleanuk.api.models.Employee;
 import com.booleanuk.api.models.Salary;
 import org.postgresql.ds.PGSimpleDataSource;
@@ -7,10 +8,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -60,5 +58,28 @@ public class SalaryRepository {
             everyone.add(theSalary);
         }
         return everyone;
+    }
+
+    public Salary add(Salary salary) throws SQLException {
+        String SQL = "INSERT INTO Salaries (grade, min_salary, max_salary) VALUES(?, ?, ?)";
+        PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+        statement.setString(1, salary.getGrade());
+        statement.setInt(2, salary.getMinSalary());
+        statement.setInt(3, salary.getMaxSalary());
+        int rowsAffected = statement.executeUpdate();
+        int newId = 0;
+        if (rowsAffected > 0) {
+            try (ResultSet rs = statement.getGeneratedKeys()) {
+                if (rs.next()) {
+                    newId = rs.getInt(1);
+                }
+            } catch (Exception e) {
+                System.out.println("Oops: " + e);
+            }
+            salary.setId(newId);
+        } else {
+            salary = null;
+        }
+        return salary;
     }
 }
