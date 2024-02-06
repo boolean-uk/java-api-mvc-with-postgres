@@ -1,4 +1,4 @@
-package com.booleanuk.api.employee;
+package com.booleanuk.api.department;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class EmployeeRepository {
+public class DepartmentRepository {
     private DataSource dataSource;
     private String dbUser;
     private String dbURL;
@@ -18,95 +18,87 @@ public class EmployeeRepository {
     private String dbDatabase;
     private Connection connection;
 
-    public EmployeeRepository() throws SQLException {
+    public DepartmentRepository() throws SQLException {
         this.getDatabaseCredentials();
         this.dataSource = this.createDataSource();
         this.connection = this.dataSource.getConnection();
     }
 
-    public List<Employee> getAll() throws SQLException{
-        List <Employee> everyone = new ArrayList<>();
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM employees");
+    public List<Department> getAll() throws SQLException{
+        List <Department> departments = new ArrayList<>();
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM departments");
         ResultSet results = statement.executeQuery();
 
         while (results.next()) {
-            Employee theEmployee = new Employee(results.getInt("id"), results.getString("name"),
-                    results.getString("jobName"), results.getInt("department_id"),
-                    results.getInt("salary_id"));
-            everyone.add(theEmployee);
+            Department theDepartment = new Department(results.getInt("id"), results.getString("name"),
+                    results.getString("location"));
+            departments.add(theDepartment);
         }
-        return everyone;
+        return departments;
     }
 
-    public Employee get(int id) throws SQLException {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM employees WHERE id= ?");
+    public Department get(int id) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM departments WHERE id= ?");
         statement.setInt(1, id);
         ResultSet results = statement.executeQuery();
-        Employee employee = null;
+        Department department = null;
         if (results.next()) {
-            employee = new Employee(results.getInt("id"), results.getString("name"),
-                    results.getString("jobName"), results.getInt("department_id"),
-                    results.getInt("salary_id"));
+            department = new Department(results.getInt("id"), results.getString("name"),
+                    results.getString("location"));
         }
-        return employee;
+        return department;
     }
 
-    public Employee update(int id, Employee employee) throws SQLException {
-        String SQL = "UPDATE employees " +
+    public Department update(int id, Department department) throws SQLException {
+        String SQL = "UPDATE departments " +
                 "SET name = ?, " +
-                "jobName = ?, " +
-                "department_id = ?, " +
-                "salary_id = ? " +
+                "location = ? " +
                 "WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setInt(3, employee.getDepartment_id());
-        statement.setInt(4, employee.getSalary_id());
-        statement.setInt(5, id);
+        statement.setString(1, department.getName());
+        statement.setString(2, department.getLocation());
+        statement.setInt(3, id);
         int rowsAffected = statement.executeUpdate();
-        Employee updatedEmployee = null;
+        Department updatedDepartment = null;
         if (rowsAffected > 0) {
-            updatedEmployee = this.get(id);
+            updatedDepartment = this.get(id);
         }
-        return updatedEmployee;
+        return updatedDepartment;
     }
 
-    public Employee delete(int id) throws SQLException {
-        String SQL = "DELETE FROM employees WHERE id = ?";
+    public Department delete(int id) throws SQLException {
+        String SQL = "DELETE FROM departments WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        Employee deletedEmployee = this.get(id);
+        Department deletedDepartment = this.get(id);
 
         statement.setInt(1, id);
         int rowsAffected = statement.executeUpdate();
         if (rowsAffected == 0) {
-            deletedEmployee = null;
+            deletedDepartment = null;
         }
-        return deletedEmployee;
+        return deletedDepartment;
     }
 
-    public Employee add(Employee employee) throws SQLException {
-        String SQL = "INSERT INTO employees (name, jobName, department_id, salary_id) VALUES (?, ?, ?, ?)";
+    public Department add(Department department) throws SQLException {
+        String SQL = "INSERT INTO departments (name, location) VALUES (?, ?)";
         PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setInt(3, employee.getDepartment_id());
-        statement.setInt(4, employee.getSalary_id());
+        statement.setString(1, department.getName());
+        statement.setString(2, department.getLocation());
         int roesAffected = statement.executeUpdate();
         int newId = -1;
         if (roesAffected > 0) {
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
-               if (resultSet.next()){
+                if (resultSet.next()){
                     newId = resultSet.getInt(1);
-               }
+                }
             } catch (Exception e) {
                 System.out.println("Empty resultSet: " + e);
             }
-            employee.setId(newId);
+            department.setId(newId);
         } else {
-            employee = null;
+            department = null;
         }
-        return employee;
+        return department;
     }
 
     private void getDatabaseCredentials() {
