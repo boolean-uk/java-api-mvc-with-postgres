@@ -1,4 +1,4 @@
-package com.booleanuk.api;
+package com.booleanuk.api.employee;
 
 import javax.sql.DataSource;
 import org.postgresql.ds.PGSimpleDataSource;
