@@ -10,14 +10,14 @@ public class Employee {
     private String name;
     private String jobName;
     private String salaryGrade;
-    private String department;
+    private int departmentId;
 
-    public Employee(int id, String name, String jobName, String salaryGrade, String department) {
+    public Employee(int id, String name, String jobName, String salaryGrade, int departmentId) {
         this.id = id;
         this.name = name;
         this.jobName = jobName;
         this.salaryGrade = salaryGrade;
-        this.department = department;
+        this.departmentId = departmentId;
     }
 
     public int getId() {
@@ -55,11 +55,18 @@ public class Employee {
         this.salaryGrade = salaryGrade;
     }
 
-    public String getDepartment() {
-        return department;
+    public int getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public boolean valuesAreAllowed(Employee employee) {
+        if(Integer.parseInt(employee.getSalaryGrade()) > 100 || Integer.parseInt(employee.getSalaryGrade()) < 0) {
+            return false;
+        }
+        return true;
     }
 }

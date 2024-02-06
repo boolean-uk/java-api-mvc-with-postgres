@@ -9,45 +9,19 @@ import java.util.List;
 import java.util.Properties;
 
 import com.booleanuk.api.model.Employee;
+import com.booleanuk.api.util.UtilClass;
 import org.postgresql.ds.PGSimpleDataSource;
 
 public class EmployeeRepository {
 
-    private DataSource datasource;
-    private String dbUser;
-    private String dbURL;
-    private String dbPassword;
-    private String dbDatabase;
     private Connection connection;
 
     public EmployeeRepository() throws SQLException {
-        this.getDatabaseCredentials();
-        this.datasource = this.createDataSource();
-        this.connection = this.datasource.getConnection();
+        UtilClass util = new UtilClass();
+        this.connection = util.getConnection();
     }
 
-    private void getDatabaseCredentials() {
-        try (InputStream input = new FileInputStream(("src/main/resources/config.properties"))) {
-            Properties properties = new Properties();
-            properties.load(input);
-            this.dbUser = properties.getProperty("db.user");
-            this.dbURL = properties.getProperty("db.url");
-            this.dbPassword = properties.getProperty("db.password");
-            this.dbDatabase = properties.getProperty("db.database");
-        } catch(Exception e) {
-            System.out.println(e);
-        }
 
-    }
-
-    private DataSource createDataSource() {
-
-        final String url = "jdbc:postgresql://" + this.dbURL + ":5432/" + this.dbDatabase + "?user=" + this.dbUser +"&password=" + this.dbPassword;
-        final PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        dataSource.setUrl(url);
-        return dataSource;
-
-    }
 
     public List<Employee> getAll() throws SQLException {
         List<Employee> employees = new ArrayList<>();
@@ -58,7 +32,7 @@ public class EmployeeRepository {
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()) {
-            Employee employee = new Employee(resultSet.getInt(1), resultSet.getString(2),resultSet.getString(3), resultSet.getString(4), resultSet.getString(5));
+            Employee employee = new Employee(resultSet.getInt(1), resultSet.getString(2),resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5));
             employees.add(employee);
         }
 
@@ -71,7 +45,7 @@ public class EmployeeRepository {
         ResultSet resultSet = statement.executeQuery();
         Employee employee = null;
         if (resultSet.next()) {
-            employee = new Employee(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5));
+            employee = new Employee(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5));
         }
         return employee;
     }
@@ -87,7 +61,7 @@ public class EmployeeRepository {
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
         statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setInt(4, employee.getDepartmentId());
         statement.setInt(5, id);
         int rowsAffected = statement.executeUpdate();
         Employee updatedEmployee = null;
@@ -119,7 +93,7 @@ public class EmployeeRepository {
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
         statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setInt(4, employee.getDepartmentId());
         int rowsAffected = statement.executeUpdate();
         int newId = 0;
         if (rowsAffected > 0) {

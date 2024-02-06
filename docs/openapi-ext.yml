@@ -146,7 +146,7 @@ paths:
         post:
             tags:
                 - salaries
-            summary: Create a new salary grade
+            summary: Create a new Department grade
             description: Add a new salary grade to our list of available salary grades
             operationId: createSalary
             requestBody:
