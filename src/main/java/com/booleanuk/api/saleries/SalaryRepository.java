@@ -1,4 +1,4 @@
-package com.booleanuk.api.employee;
+package com.booleanuk.api.saleries;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class EmployeeRepository {
+public class SalaryRepository {
     private DataSource dataSource;
     private String dbUser;
     private String dbURL;
@@ -21,88 +21,84 @@ public class EmployeeRepository {
     private String dbDatabase;
     private Connection connection;
 
-    public EmployeeRepository() throws SQLException {
+    public SalaryRepository() throws SQLException {
         this.getDatabaseCredentials();
         this.dataSource = this.createDataSource();
         this.connection = this.dataSource.getConnection();
     }
 
-    public List<Employee> getAll() throws SQLException {
-        List<Employee> everyone = new ArrayList<>();
+    public List<Salary> getAll() throws SQLException {
+        List<Salary> everyone = new ArrayList<>();
         PreparedStatement statement = this.connection.prepareStatement(
-                "SELECT * FROM Employees");
+                "SELECT * FROM Salaries");
         ResultSet rs = statement.executeQuery();
 
         while (rs.next()) {
-            Employee theEmployee = new Employee(rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getString("job_name"),
-                    rs.getInt("salary_id"),
-                    rs.getInt("department_id"));
-            everyone.add(theEmployee);
+            Salary theSalary = new Salary(rs.getInt("id"),
+                    rs.getString("grade"),
+                    rs.getInt("min_salary"),
+                    rs.getInt("max_salary"));
+            everyone.add(theSalary);
         }
         return everyone;
     }
 
-    public Employee get(int id) throws SQLException {
+    public Salary get(int id) throws SQLException {
         PreparedStatement statement = this.connection.prepareStatement(
-                "SELECT * FROM Employees WHERE id= ?");
+                "SELECT * FROM Salaries WHERE id= ?");
         statement.setInt(1, id);
         ResultSet rs = statement.executeQuery();
-        Employee employee = null;
+        Salary salary = null;
         if (rs.next()) {
-            employee = new Employee(rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getString("job_name"),
-                    rs.getInt("salary_id"),
-                    rs.getInt("department_id"));
+            salary = new Salary(rs.getInt("id"),
+                    rs.getString("grade"),
+                    rs.getInt("min_salary"),
+                    rs.getInt("max_salary"));
         }
-        return employee;
+        return salary;
     }
 
-    public Employee update(int id, Employee employee) throws SQLException {
-        String SQL = "UPDATE Employees " +
-                "SET name = ?, " +
-                "job_name = ?, " +
-                "salary_id = ?, " +
-                "department_id = ? " +
+    public Salary update(int id, Salary salary) throws SQLException {
+        String SQL = "UPDATE Salaries " +
+                "SET grade = ?, " +
+                "min_salary = ?, " +
+                "max_salary = ? " +
                 "WHERE id = ?";
+
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setInt(3, employee.getSalaryID());
-        statement.setInt(4, employee.getDepartmentID());
-        statement.setInt(5, id);
+        statement.setString(1, salary.getGrade());
+        statement.setInt(2, salary.getMinSalary());
+        statement.setInt(3, salary.getMaxSalary());
+        statement.setInt(4, id);
         int rowAffected = statement.executeUpdate();
-        Employee updatedEmployee = null;
+        Salary updatedSalary = null;
         if (rowAffected > 0) {
-            updatedEmployee = this.get(id);
+            updatedSalary = this.get(id);
         }
-        return updatedEmployee;
+        return updatedSalary;
     }
 
-    public Employee delete(int id) throws SQLException {
-        String SQL = "DELETE FROM Employees WHERE id = ?";
+    public Salary delete(int id) throws SQLException {
+        String SQL = "DELETE FROM Salaries WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        Employee deletedEmployee = this.get(id);
+        Salary deletedSalary = this.get(id);
 
         statement.setInt(1, id);
         int rowAffected = statement.executeUpdate();
         if (rowAffected == 0) {
-            deletedEmployee = null;
+            deletedSalary = null;
         }
-        return deletedEmployee;
+        return deletedSalary;
     }
 
-    public Employee add(Employee employee) throws SQLException {
+    public Salary add(Salary salary) throws SQLException {
         String SQL =
-            "INSERT INTO Employees (name, job_name, salary_id, department_id) "
-                    + "VALUES (?, ?, ?, ?)";
+                "INSERT INTO Salaries (grade, min_salary, max_salary) "
+                        + "VALUES (?, ?, ?)";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setInt(3, employee.getSalaryID());
-        statement.setInt(4, employee.getDepartmentID());
+        statement.setString(1, salary.getGrade());
+        statement.setInt(2, salary.getMinSalary());
+        statement.setInt(3, salary.getMaxSalary());
         int rowAffected = statement.executeUpdate();
         int newID = -1;
         if (rowAffected > 0) {
@@ -113,11 +109,11 @@ public class EmployeeRepository {
             } catch (Exception e) {
                 System.out.println("Oh nos: " + e);
             }
-            employee.setId(newID);
+            salary.setId(newID);
         } else {
-            employee = null;
+            salary = null;
         }
-        return employee;
+        return salary;
     }
 
     //---------------------- Private section ----------------------//
@@ -144,5 +140,4 @@ public class EmployeeRepository {
         dataSource.setUrl(url);
         return dataSource;
     }
-
 }

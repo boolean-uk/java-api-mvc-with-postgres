@@ -4,23 +4,23 @@ public class Employee {
     private int id;
     private String name;
     private String jobName;
-    private String salaryGrade;
-    private String department;
+    private int salaryID;
+    private int departmentID;
 
-    public Employee(int id, String name, String jobName, String salaryGrade, String department) {
+    public Employee(int id, String name, String jobName, int salaryID, int departmentID) {
         this.id = id;
         this.name = name;
         this.jobName = jobName;
-        this.salaryGrade = salaryGrade;
-        this.department = department;
+        this.salaryID = salaryID;
+        this.departmentID = departmentID;
     }
 
     public String toString() {
         String result = this.id + " - ";
         result += this.name + " - ";
         result += this.jobName + " - ";
-        result += this.salaryGrade + " - ";
-        result += this.department + " - ";
+        result += this.salaryID + " - ";
+        result += this.departmentID + " - ";
         return result;
     }
 
@@ -36,12 +36,12 @@ public class Employee {
         return this.jobName;
     }
 
-    public String getSalaryGrade() {
-        return this.salaryGrade;
+    public int getSalaryID() {
+        return this.salaryID;
     }
 
-    public String getDepartment() {
-        return this.department;
+    public int getDepartmentID() {
+        return this.departmentID;
     }
 
     public void setId(int id) {

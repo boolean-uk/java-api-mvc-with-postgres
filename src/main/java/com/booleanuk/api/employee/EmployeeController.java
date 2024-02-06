@@ -37,19 +37,19 @@ public class EmployeeController {
         Employee createdEmployee = this.employees.add(employee);
         if (createdEmployee == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Unable to create the specified Customer");
+                    "Unable to create the specified Employee");
         }
         return createdEmployee;
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee update(@PathVariable (name = "id") int id, @RequestBody Employee customer) throws SQLException {
+    public Employee update(@PathVariable (name = "id") int id, @RequestBody Employee employee) throws SQLException {
         Employee updatedEmployee = this.employees.get(id);
         if (updatedEmployee == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
         }
-        return this.employees.update(id, customer);
+        return this.employees.update(id, employee);
     }
 
     @DeleteMapping("{id}")

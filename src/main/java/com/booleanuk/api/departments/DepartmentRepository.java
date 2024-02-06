@@ -1,4 +1,4 @@
-package com.booleanuk.api.employee;
+package com.booleanuk.api.departments;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class EmployeeRepository {
+public class DepartmentRepository {
     private DataSource dataSource;
     private String dbUser;
     private String dbURL;
@@ -21,88 +21,78 @@ public class EmployeeRepository {
     private String dbDatabase;
     private Connection connection;
 
-    public EmployeeRepository() throws SQLException {
+    public DepartmentRepository() throws SQLException {
         this.getDatabaseCredentials();
         this.dataSource = this.createDataSource();
         this.connection = this.dataSource.getConnection();
     }
 
-    public List<Employee> getAll() throws SQLException {
-        List<Employee> everyone = new ArrayList<>();
+    public List<Department> getAll() throws SQLException {
+        List<Department> everyone = new ArrayList<>();
         PreparedStatement statement = this.connection.prepareStatement(
-                "SELECT * FROM Employees");
+                "SELECT * FROM Departments");
         ResultSet rs = statement.executeQuery();
 
         while (rs.next()) {
-            Employee theEmployee = new Employee(rs.getInt("id"),
+            Department theDepartment = new Department(rs.getInt("id"),
                     rs.getString("name"),
-                    rs.getString("job_name"),
-                    rs.getInt("salary_id"),
-                    rs.getInt("department_id"));
-            everyone.add(theEmployee);
+                    rs.getString("location"));
+            everyone.add(theDepartment);
         }
         return everyone;
     }
 
-    public Employee get(int id) throws SQLException {
+    public Department get(int id) throws SQLException {
         PreparedStatement statement = this.connection.prepareStatement(
-                "SELECT * FROM Employees WHERE id= ?");
+                "SELECT * FROM Departments WHERE id= ?");
         statement.setInt(1, id);
         ResultSet rs = statement.executeQuery();
-        Employee employee = null;
+        Department department = null;
         if (rs.next()) {
-            employee = new Employee(rs.getInt("id"),
+            department = new Department(rs.getInt("id"),
                     rs.getString("name"),
-                    rs.getString("job_name"),
-                    rs.getInt("salary_id"),
-                    rs.getInt("department_id"));
+                    rs.getString("location"));
         }
-        return employee;
+        return department;
     }
 
-    public Employee update(int id, Employee employee) throws SQLException {
-        String SQL = "UPDATE Employees " +
+    public Department update(int id, Department department) throws SQLException {
+        String SQL = "UPDATE Departments " +
                 "SET name = ?, " +
-                "job_name = ?, " +
-                "salary_id = ?, " +
-                "department_id = ? " +
+                "location = ? " +
                 "WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setInt(3, employee.getSalaryID());
-        statement.setInt(4, employee.getDepartmentID());
-        statement.setInt(5, id);
+        statement.setString(1, department.getName());
+        statement.setString(2, department.getLocation());
+        statement.setInt(3, id);
         int rowAffected = statement.executeUpdate();
-        Employee updatedEmployee = null;
+        Department updatedDepartment = null;
         if (rowAffected > 0) {
-            updatedEmployee = this.get(id);
+            updatedDepartment = this.get(id);
         }
-        return updatedEmployee;
+        return updatedDepartment;
     }
 
-    public Employee delete(int id) throws SQLException {
-        String SQL = "DELETE FROM Employees WHERE id = ?";
+    public Department delete(int id) throws SQLException {
+        String SQL = "DELETE FROM Departments WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        Employee deletedEmployee = this.get(id);
+        Department deletedDepartment = this.get(id);
 
         statement.setInt(1, id);
         int rowAffected = statement.executeUpdate();
         if (rowAffected == 0) {
-            deletedEmployee = null;
+            deletedDepartment = null;
         }
-        return deletedEmployee;
+        return deletedDepartment;
     }
 
-    public Employee add(Employee employee) throws SQLException {
+    public Department add(Department department) throws SQLException {
         String SQL =
-            "INSERT INTO Employees (name, job_name, salary_id, department_id) "
-                    + "VALUES (?, ?, ?, ?)";
+                "INSERT INTO Departments (name, location) "
+                        + "VALUES (?, ?)";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setInt(3, employee.getSalaryID());
-        statement.setInt(4, employee.getDepartmentID());
+        statement.setString(1, department.getName());
+        statement.setString(2, department.getLocation());
         int rowAffected = statement.executeUpdate();
         int newID = -1;
         if (rowAffected > 0) {
@@ -113,11 +103,11 @@ public class EmployeeRepository {
             } catch (Exception e) {
                 System.out.println("Oh nos: " + e);
             }
-            employee.setId(newID);
+            department.setId(newID);
         } else {
-            employee = null;
+            department = null;
         }
-        return employee;
+        return department;
     }
 
     //---------------------- Private section ----------------------//
@@ -144,5 +134,4 @@ public class EmployeeRepository {
         dataSource.setUrl(url);
         return dataSource;
     }
-
 }
