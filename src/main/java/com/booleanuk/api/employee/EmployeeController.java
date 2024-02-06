@@ -36,4 +36,20 @@ public class EmployeeController {
         }
         return employee;
     }
+    @PutMapping("/{id}")
+    public Employee update(@PathVariable int id, @RequestBody Employee employee) throws SQLException {
+        Employee toBeUpdated = this.employeeRepository.getOne(id);
+        if (toBeUpdated == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+        }
+        return this.employeeRepository.update(id, employee);
+    }
+    @DeleteMapping("/{id}")
+    public Employee delete(@PathVariable int id) throws SQLException {
+        Employee toBeDeleted = this.employeeRepository.getOne(id);
+        if (toBeDeleted == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+        }
+        return this.employeeRepository.delete(id);
+    }
 }
