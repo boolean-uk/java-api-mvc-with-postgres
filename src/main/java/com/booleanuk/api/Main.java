@@ -23,6 +23,6 @@ public class Main {
         } catch (Exception e)    {
             System.out.println("Aur naur, " + e);
         }
-        //SpringApplication.run(Main.class, args);
+        SpringApplication.run(Main.class, args);
     }
 }
