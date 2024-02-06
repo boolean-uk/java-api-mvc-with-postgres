@@ -6,3 +6,4 @@ CREATE TABLE IF NOT EXISTS employees(
     salary_grade TEXT NOT NULL,
     department TEXT NOT NULL
 );
+

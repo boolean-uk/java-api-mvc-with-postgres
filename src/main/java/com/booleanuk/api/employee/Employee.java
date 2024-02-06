@@ -1,5 +1,7 @@
 package com.booleanuk.api.employee;
 
+import com.booleanuk.api.department.Department;
+import com.booleanuk.api.salary.Salary;
 import jakarta.persistence.*;
 
 @Entity
@@ -22,12 +24,7 @@ public class Employee {
     private Employee(){
 
     }
-    public Employee(String name, String jobName, String salaryGrade, String department) {
-        this.name = name;
-        this.jobName = jobName;
-        this.salaryGrade = salaryGrade;
-        this.department = department;
-    }
+
 
     public Integer getId() {
         return id;
