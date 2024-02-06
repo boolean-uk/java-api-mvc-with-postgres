@@ -50,4 +50,12 @@ public class Employee {
     public void setDepartment(String department) {
         this.department = department;
     }
+
+    public String toString(){
+        String result = "";
+        result += this.id + " : ";
+        result+= this.name + " | ";
+        result += this.department;
+        return result;
+    }
 }
