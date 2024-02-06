@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Properties;
 
 
-public class EmployeeRepository {
+public class DepartmentRepository {
     DataSource datasource;
     String dbUser;
     String dbURL;
@@ -19,7 +19,7 @@ public class EmployeeRepository {
     String dbDatabase;
     Connection connection;
 
-    public EmployeeRepository() throws SQLException  {
+    public DepartmentRepository() throws SQLException  {
         this.getDatabaseCredentials();
         this.datasource = this.createDataSource();
         this.connection = this.datasource.getConnection();
@@ -49,75 +49,66 @@ public class EmployeeRepository {
 
 
 
-    public List<Employee> getAll() throws SQLException  {
-        List<Employee> everyone = new ArrayList<>();
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Employees");
+    public List<Department> getAll() throws SQLException  {
+        List<Department> everyone = new ArrayList<>();
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Departments");
 
         ResultSet results = statement.executeQuery();
 
         while (results.next()) {
-            Employee theEmployee = new Employee(results.getLong("id"), results.getString("name"), results.getString("jobName"), results.getInt("salary_id"), results.getInt("department_id"));
-            everyone.add(theEmployee);
+            Department theDepartment = new Department(results.getLong("id"), results.getString("name"));
+            everyone.add(theDepartment);
         }
         return everyone;
     }
 
-    public Employee get(long id) throws SQLException {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Employees WHERE id = ?");
+    public Department get(long id) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Departments WHERE id = ?");
         // Choose set**** matching the datatype of the missing element
         statement.setLong(1, id);
         ResultSet results = statement.executeQuery();
-        Employee employee = null;
+        Department department = null;
         if (results.next()) {
-            employee = new Employee(results.getLong("id"), results.getString("name"), results.getString("jobName"), results.getInt("salary_id"), results.getInt("department_id"));
+            department = new Department(results.getLong("id"), results.getString("name"));
         }
-        return employee;
+        return department;
     }
 
-    public Employee update(long id, Employee employee) throws SQLException {
-        String SQL = "UPDATE Employees " +
-                "SET name = ? ," +
-                "jobName = ? ," +
-                "salary_id = ? ," +
-                "department_id = ? " +
+    public Department update(long id, Department department) throws SQLException {
+        String SQL = "UPDATE Departments " +
+                "SET name = ? " +
                 "WHERE id = ? ";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setInt(3, employee.getSalary_id());
-        statement.setInt(4, employee.getDepartment_id());
-        statement.setLong(5, id);
+        statement.setString(1, department.getName());
+        statement.setLong(2, id);
         int rowsAffected = statement.executeUpdate();
-        Employee updatedEmployee = null;
+        Department updatedDepartment = null;
         if (rowsAffected > 0) {
-            updatedEmployee = this.get(id);
+            updatedDepartment = this.get(id);
         }
-        return updatedEmployee;
+        return updatedDepartment;
     }
 
-    public Employee delete(long id) throws SQLException {
-        String SQL = "DELETE FROM Employees WHERE id = ?";
+    public Department delete(long id) throws SQLException {
+        String SQL = "DELETE FROM Departments WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        // Get the employee we're deleting before we delete them
-        Employee deletedEmployee = null;
-        deletedEmployee = this.get(id);
+        // Get the department we're deleting before we delete them
+        Department deletedDepartment = null;
+        deletedDepartment = this.get(id);
 
         statement.setLong(1, id);
         int rowsAffected = statement.executeUpdate();
         if (rowsAffected == 0) {
-            //Reset the employee we're deleting if we didn't delete them
-            deletedEmployee = null;
+            //Reset the department we're deleting if we didn't delete them
+            deletedDepartment = null;
         }
-        return deletedEmployee;
+        return deletedDepartment;
     }
 
-    public Employee add(Employee employee) throws SQLException {
-        String SQL = "INSERT INTO Employees(name, jobName, salary_id, department_id) VALUES(?, ?, ?, ?)";
+    public Department add(Department department) throws SQLException {
+        String SQL = "INSERT INTO Departments(name) VALUES(?)";
         PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setInt(3, employee.getSalary_id());
-        statement.setInt(4, employee.getDepartment_id());
+        statement.setString(1, department.getName());
         int rowsAffected = statement.executeUpdate();
         long newId = 0;
         if (rowsAffected > 0) {
@@ -128,11 +119,11 @@ public class EmployeeRepository {
             } catch (Exception e) {
                 System.out.println("Oops: " + e);
             }
-            employee.setId(newId);
+            department.setId(newId);
         } else {
-            employee = null;
+            department = null;
         }
-        return employee;
+        return department;
     }
 }
 

@@ -4,15 +4,15 @@ public class Employee {
     private long id;
     private String name;
     private String jobName;
-    private String salaryGrade;
-    private String department;
+    private int salary_id;
+    private int department_id;
 
-    public Employee(long id, String name, String address, String email, String phoneNumber) {
+    public Employee(long id, String name, String jobName, int salary_id, int department_id) {
         this.id = id;
         this.name = name;
-        this.jobName = address;
-        this.salaryGrade = email;
-        this.department = phoneNumber;
+        this.jobName = jobName;
+        this.salary_id = salary_id;
+        this.department_id = department_id;
     }
 
     public String toString() {
@@ -32,12 +32,12 @@ public class Employee {
         return jobName;
     }
 
-    public String getSalaryGrade() {
-        return salaryGrade;
+    public int getSalary_id() {
+        return salary_id;
     }
 
-    public String getDepartment() {
-        return department;
+    public int getDepartment_id() {
+        return department_id;
     }
 
     public void setId(long id) {
