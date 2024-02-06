@@ -1,6 +1,6 @@
 package com.booleanuk.api;
 
-import com.booleanuk.api.requests.employee.Salary;
+import com.booleanuk.api.requests.employee.Employee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ public class EmployeeTest {
         String salaryGrade = "ABC";
         String department = "IT";
 
-        Salary salary = new Salary(1, "Sarah Bernard", "Manager", "ABC", "IT");
+        Employee salary = new Employee(1, "Sarah Bernard", "Manager", "ABC", "IT");
 
         Assertions.assertEquals(salary.getName(), name);
         Assertions.assertEquals(salary.getJobName(), jobName);

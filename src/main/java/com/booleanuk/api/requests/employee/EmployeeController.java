@@ -19,8 +19,8 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Salary createEmployee(@RequestBody Salary salary) throws SQLException {
-        Salary createdSalary = this.employeeRepository.createEmployee(salary);
+    public Employee createEmployee(@RequestBody Employee salary) throws SQLException {
+        Employee createdSalary = this.employeeRepository.createEmployee(salary);
 
         if(createdSalary == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not create salary, please check all required fields are correct.");
@@ -31,15 +31,15 @@ public class EmployeeController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Salary> getEmployees() throws SQLException {
-        List<Salary> allSalaries = this.employeeRepository.getEmployees();
+    public List<Employee> getEmployees() throws SQLException {
+        List<Employee> allSalaries = this.employeeRepository.getEmployees();
         return allSalaries;
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Salary getSpecificEmployee(@PathVariable long id) throws SQLException {
-        Salary specificSalary = this.employeeRepository.getSpecificEmployee(id);
+    public Employee getSpecificEmployee(@PathVariable long id) throws SQLException {
+        Employee specificSalary = this.employeeRepository.getSpecificEmployee(id);
 
         if(specificSalary == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employees with that id were found.");
@@ -50,12 +50,12 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Salary updateEmployee(@PathVariable long id, @RequestBody Salary salary) throws SQLException {
+    public Employee updateEmployee(@PathVariable long id, @RequestBody Employee salary) throws SQLException {
         if(salary.getName() == null || salary.getJobName() == null || salary.getSalaryGrade() == null || salary.getDepartment() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not update the salary, please check all required fields are correct.");
         }
 
-        Salary updatedSalary = this.employeeRepository.updateEmployee(id, salary);
+        Employee updatedSalary = this.employeeRepository.updateEmployee(id, salary);
 
         if(updatedSalary == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No salary with that id was found.");
@@ -66,8 +66,8 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Salary deleteEmployee(@PathVariable long id) throws SQLException {
-        Salary deletedSalary = this.employeeRepository.deleteEmployee(id);
+    public Employee deleteEmployee(@PathVariable long id) throws SQLException {
+        Employee deletedSalary = this.employeeRepository.deleteEmployee(id);
 
         if(deletedSalary == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employee with that id was found.");
