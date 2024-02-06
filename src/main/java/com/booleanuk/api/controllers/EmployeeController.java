@@ -1,5 +1,7 @@
-package com.booleanuk.api.employee;
+package com.booleanuk.api.controllers;
 
+import com.booleanuk.api.models.Employee;
+import com.booleanuk.api.repositories.EmployeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;

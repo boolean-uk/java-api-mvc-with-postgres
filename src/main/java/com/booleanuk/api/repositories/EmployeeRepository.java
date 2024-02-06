@@ -1,5 +1,6 @@
-package com.booleanuk.api.employee;
+package com.booleanuk.api.repositories;
 
+import com.booleanuk.api.models.Employee;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;

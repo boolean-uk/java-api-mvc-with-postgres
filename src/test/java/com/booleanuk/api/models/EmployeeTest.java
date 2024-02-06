@@ -1,9 +1,7 @@
-package com.booleanuk.api.employee;
+package com.booleanuk.api.models;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeTest {
 
