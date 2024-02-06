@@ -80,4 +80,15 @@ public class EmployeeRepository {
         }
         return employee;
     }
+
+    public Employee get(int id) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Employees WHERE id = ?");
+        statement.setInt(1, id);
+        ResultSet results = statement.executeQuery();
+        Employee employee = null;
+        if (results.next()) {
+            employee = new Employee(results.getInt("id"), results.getString("name"), results.getString("job_name"), results.getString("salary_grade"), results.getString("department"));
+        }
+        return employee;
+    }
 }

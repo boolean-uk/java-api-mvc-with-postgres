@@ -23,4 +23,9 @@ public class EmployeeController {
     public Employee create(@RequestBody Employee employee) throws SQLException {
         return this.employees.add(employee);
     }
+
+    @GetMapping("/{id}")
+    public Employee get(@PathVariable(name = "id") int id) throws SQLException {
+        return this.employees.get(id);
+    }
 }
