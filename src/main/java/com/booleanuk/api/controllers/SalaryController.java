@@ -1,9 +1,11 @@
 package com.booleanuk.api.controllers;
 
+import com.booleanuk.api.DatabaseManager;
 import com.booleanuk.api.models.Department;
 import com.booleanuk.api.models.Employee;
 import com.booleanuk.api.models.Salary;
 import com.booleanuk.api.repositories.SalaryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,8 +18,9 @@ import java.util.List;
 public class SalaryController {
     private SalaryRepository salaries;
 
-    public SalaryController() throws SQLException {
-        this.salaries = new SalaryRepository();
+    @Autowired
+    public SalaryController(SalaryRepository salaries) throws SQLException {
+        this.salaries = salaries;
     }
 
     @GetMapping

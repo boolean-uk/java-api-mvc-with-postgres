@@ -3,6 +3,7 @@ package com.booleanuk.api.controllers;
 import com.booleanuk.api.models.Department;
 import com.booleanuk.api.models.Employee;
 import com.booleanuk.api.repositories.DepartmentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,8 +16,9 @@ import java.util.List;
 public class DepartmentController {
     private DepartmentRepository departments;
 
-    public DepartmentController() throws SQLException {
-        this.departments = new DepartmentRepository();
+    @Autowired
+    public DepartmentController(DepartmentRepository departments) throws SQLException {
+        this.departments = departments;
     }
 
     @GetMapping

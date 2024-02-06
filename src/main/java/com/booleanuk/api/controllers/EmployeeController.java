@@ -2,6 +2,7 @@ package com.booleanuk.api.controllers;
 
 import com.booleanuk.api.models.Employee;
 import com.booleanuk.api.repositories.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,8 +15,9 @@ import java.util.List;
 public class EmployeeController {
     private EmployeeRepository employees;
 
-    public EmployeeController() throws SQLException {
-        this.employees = new EmployeeRepository();
+    @Autowired
+    public EmployeeController(EmployeeRepository employees) throws SQLException {
+        this.employees = employees;
     }
 
     @GetMapping
