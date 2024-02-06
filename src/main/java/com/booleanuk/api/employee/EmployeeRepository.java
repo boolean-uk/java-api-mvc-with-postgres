@@ -103,7 +103,9 @@ public class EmployeeRepository {
     }
 
     public Employee createOne(Employee employee) throws SQLException {
-        String _SQL = "INSERT INTO employees (name, job_name, salary_grade, department) VALUES (?, ?, ?, ?)";
+        String _SQL = "INSERT INTO employees " +
+                             "(name, job_name, salary_grade, department) " +
+                      "VALUES (?, ?, ?, ?)";
         PreparedStatement statement = this.connection.prepareStatement(_SQL);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJob_name());

@@ -17,11 +17,13 @@ public class EmployeeController {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<Employee> getAll() throws SQLException {
         return this.employees.getAll();
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Employee getOne(@PathVariable int id) throws  SQLException {
         Employee employee = this.employees.getOne(id);
         if (employee == null) {
@@ -31,6 +33,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Employee deleteOne(@PathVariable int id) throws SQLException {
         Employee employee = this.employees.deleteOne(id);
         if (employee == null) {
@@ -40,6 +43,7 @@ public class EmployeeController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Employee createOne(@RequestBody Employee e) throws SQLException {
         Employee employee = this.employees.createOne(e);
         if (employee == null) {
@@ -49,6 +53,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
     public Employee updateOne(@PathVariable int id, @RequestBody Employee e) throws SQLException {
         Employee employee = this.employees.updateOne(id, e);
         if (employee == null) {
