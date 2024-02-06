@@ -1,6 +1,7 @@
 package com.booleanuk.api.Interfaces;
 
 import com.booleanuk.api.employee.Employee;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 

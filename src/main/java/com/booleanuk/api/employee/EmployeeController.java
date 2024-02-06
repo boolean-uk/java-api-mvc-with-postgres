@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -44,7 +46,6 @@ public class EmployeeController {
 
 
     }
-
     @PutMapping("/{id}")
     public Employee updateOneEmployee(@PathVariable int id, @RequestBody Employee employee){
         Employee temp = this.employeeRepository.findById(id).orElse(null);
