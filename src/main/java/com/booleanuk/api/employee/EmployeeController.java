@@ -1,10 +1,7 @@
 package com.booleanuk.api.employee;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.SQLException;
@@ -17,6 +14,14 @@ public class EmployeeController {
 
     public EmployeeController() throws SQLException {
         this.employeeRepository = new EmployeeRepository();
+    }
+    @PostMapping
+    public Employee create(@RequestBody Employee employee) throws SQLException{
+        Employee employee1 = this.employeeRepository.create(employee);
+        if (employee1 == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to create employee");
+        }
+        return employee1;
     }
 
     @GetMapping

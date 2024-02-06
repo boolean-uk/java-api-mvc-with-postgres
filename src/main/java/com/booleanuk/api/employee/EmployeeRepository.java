@@ -47,6 +47,29 @@ public class EmployeeRepository {
         dataSource.setUrl(URL);
         return dataSource;
     }
+    public Employee create(Employee employee) throws SQLException{
+        String SQL = "INSERT INTO Employees (name, jobName, salaryGrade, department) VALUES (?, ?, ?, ?)";
+        PreparedStatement preparedStatement = this.connection.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
+        preparedStatement.setString(1, employee.getName());
+        preparedStatement.setString(2, employee.getJobName());
+        preparedStatement.setString(3, employee.getSalaryGrade());
+        preparedStatement.setString(4, employee.getDepartment());
+        int rowsAffected = preparedStatement.executeUpdate();
+        int newId = 0;
+        if (rowsAffected > 0) {
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    newId = resultSet.getInt(1);
+                }
+            } catch (Exception e) {
+                System.out.println("Oops: " + e);
+            }
+            employee.setId(newId);
+        } else {
+            employee = null;
+        }
+        return employee;
+    }
     public List<Employee> getAll() throws SQLException{
         List<Employee> allEmployees = new ArrayList<>();
         PreparedStatement preparedStatement = this.connection.prepareStatement("SELECT * FROM employees");
