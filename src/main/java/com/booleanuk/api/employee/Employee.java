@@ -36,6 +36,9 @@ public class Employee {
         return department;
     }
 
+    public void setId(int id){
+        this.id = id;
+    }
     public String toString(){
         String res = "";
         res += this.id + " - ";
