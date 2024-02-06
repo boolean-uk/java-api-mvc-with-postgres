@@ -33,7 +33,7 @@ public class EmployeeRepository {
 
         while (results.next()) {
             Employee theEmployee = new Employee(results.getInt("id"), results.getString("name"),
-                    results.getString("jobName"), results.getInt("salaryGrade"), results.getString("department"));
+                    results.getString("jobName"), results.getString("salaryGrade"), results.getString("department"));
             employees.add(theEmployee);
         }
         return employees;
@@ -46,7 +46,7 @@ public class EmployeeRepository {
         Employee employee = null;
         if (results.next()) {
             employee = new Employee(results.getInt("id"), results.getString("name"),
-                    results.getString("jobName"), results.getInt("salaryGrade"), results.getString("department"));
+                    results.getString("jobName"), results.getString("salaryGrade"), results.getString("department"));
         }
         return employee;
     }
@@ -61,7 +61,7 @@ public class EmployeeRepository {
         PreparedStatement statement = this.connection.prepareStatement(SQL);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
-        statement.setInt(3, employee.getSalaryGrade());
+        statement.setString(3, employee.getSalaryGrade());
         statement.setString(4, employee.getDepartment());
         statement.setInt(5, id);
         int rowsAffected = statement.executeUpdate();
@@ -92,7 +92,7 @@ public class EmployeeRepository {
         PreparedStatement statement = this.connection.prepareStatement(SQL);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
-        statement.setInt(3, employee.getSalaryGrade());
+        statement.setString(3, employee.getSalaryGrade());
         statement.setString(4, employee.getDepartment());
         int rowsAffected = statement.executeUpdate();
         int newId = -1;

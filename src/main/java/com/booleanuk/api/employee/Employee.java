@@ -4,10 +4,10 @@ public class Employee {
     private int id;
     private String name;
     private String jobName;
-    private int salaryGrade;
+    private String salaryGrade;
     private String department;
 
-    public Employee(int id, String name, String jobName, int salaryGrade, String department) {
+    public Employee(int id, String name, String jobName, String salaryGrade, String department) {
         this.id = id;
         this.name = name;
         this.jobName = jobName;
@@ -27,7 +27,7 @@ public class Employee {
         return jobName;
     }
 
-    public int getSalaryGrade() {
+    public String getSalaryGrade() {
         return salaryGrade;
     }
 

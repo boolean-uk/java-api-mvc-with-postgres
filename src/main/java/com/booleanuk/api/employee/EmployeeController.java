@@ -25,7 +25,7 @@ public class EmployeeController {
         Employee employee = this.employees.get(id);
 
         if (employee == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer says no");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employee with that ID found");
         }
         return employee;
     }
@@ -34,22 +34,24 @@ public class EmployeeController {
     public Employee create(@RequestBody Employee employee) throws SQLException{
         Employee employeeToAdd = this.employees.add(employee);
         if(employeeToAdd == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer says no");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not add employee");
         }
         return employeeToAdd;
     }
 
     @PutMapping("/{id}")
     public Employee update(@PathVariable int id, @RequestBody Employee employee) throws SQLException{
+        this.getOne(id);
         Employee employeeToUpdate = this.employees.update(id, employee);
-        if(employeeToUpdate == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer says no");
+        if(employeeToUpdate.getName() == null || employeeToUpdate.getJobName() == null || employeeToUpdate.getDepartment() == null || employeeToUpdate.getSalaryGrade() == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not update the employee, please check that all fields are correct");
         }
         return employeeToUpdate;
     }
 
     @DeleteMapping("/{id}")
     public Employee delete(@PathVariable int id) throws SQLException{
+        this.getOne(id);
         Employee employeeToDelete = this.employees.delete(id);
         if(employeeToDelete== null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer says no");
