@@ -16,5 +16,31 @@ public class Employee {
         this.department = department;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public String getSalaryGrade() {
+        return salaryGrade;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public String toString(){
+        String res = "";
+        res += this.id + " - ";
+        res += this.name + " - ";
+        res += this.jobName + " - ";
+        return res;
+    }
 }
