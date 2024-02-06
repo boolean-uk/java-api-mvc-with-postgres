@@ -80,4 +80,15 @@ public class DepartmentRepository {
         }
         return department;
     }
+
+    public Department get(int id) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Departments WHERE id = ?");
+        statement.setInt(1, id);
+        ResultSet results = statement.executeQuery();
+        Department department = null;
+        if (results.next()) {
+            department = new Department(results.getInt("id"), results.getString("name"), results.getString("location"));
+        }
+        return department;
+    }
 }

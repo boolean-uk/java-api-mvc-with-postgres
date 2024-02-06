@@ -36,4 +36,13 @@ public class DepartmentController {
         }
         return theDepartment;
     }
+
+    @GetMapping("/{id}")
+    public Department get(@PathVariable(name = "id") int id) throws SQLException {
+        Department theDepartment =  this.departments.get(id);
+        if (theDepartment == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+        }
+        return theDepartment;
+    }
 }
