@@ -34,7 +34,7 @@ public class EmployeeController {
     public Employee addEmployee(@RequestBody Employee employee) {
         try {
             log.info("Adding new " + employee);
-            if (Stream.of(employee.getName(), employee.getJobName(), employee.getSalaryGrade(), employee.getDepartment())
+            if (Stream.of(employee.getName(), employee.getJobName(), employee.getSalaryGrade())
                     .anyMatch(field -> field == null || field.isBlank())) {
                 throw new IllegalArgumentException("Required fields are missing/empty.");
             }
@@ -62,7 +62,7 @@ public class EmployeeController {
     public Employee updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
         try {
             log.info("Updating Employee(id=" + id + ") with values from " + employee);
-            if (Stream.of(employee.getName(), employee.getJobName(), employee.getSalaryGrade(), employee.getDepartment())
+            if (Stream.of(employee.getName(), employee.getJobName(), employee.getSalaryGrade())
                     .anyMatch(field -> field == null || field.isBlank())) {
                 throw new IllegalArgumentException("Required fields are missing/empty.");
             }

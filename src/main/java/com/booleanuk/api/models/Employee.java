@@ -12,5 +12,5 @@ public class Employee {
     private String name;
     private String jobName;
     private String salaryGrade;
-    private String department;
+    private int department_id;
 }
