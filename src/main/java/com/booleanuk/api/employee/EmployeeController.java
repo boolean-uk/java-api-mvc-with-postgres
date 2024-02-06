@@ -1,5 +1,6 @@
 package com.booleanuk.api.employee;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ public class EmployeeController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Employee create(@RequestBody Employee employee) throws SQLException {
         return this.employees.add(employee);
     }
