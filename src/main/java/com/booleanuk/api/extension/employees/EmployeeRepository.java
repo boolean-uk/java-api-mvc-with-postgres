@@ -1,6 +1,8 @@
 package com.booleanuk.api.extension.employees;
 
 import org.postgresql.ds.PGSimpleDataSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
@@ -26,25 +28,20 @@ public class EmployeeRepository {
 
     public List<Employee> getAll() throws SQLException {
         List<Employee> employees = new ArrayList<>();
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM employees");
-        PreparedStatement gradeStatement =
-                this.connection.prepareStatement("SELECT id FROM salaries WHERE grade= ?");
-        PreparedStatement departmentStatement =
-                this.connection.prepareStatement("SELECT id FROM departments WHERE grade= ?");
+        PreparedStatement statement = this.connection.prepareStatement(
+                "SELECT *, salaries.grade AS salaryGrade, departments.name AS department FROM employees "
+                + "INNER JOIN salaries ON salaries.id = employees.salaryGrade_id "
+                + "INNER JOIN departments ON departments.id = employees.department_id ");
 
         ResultSet results = statement.executeQuery();
-        gradeStatement.setInt(1, results.getInt("salaryGrade_id"));
-        ResultSet grade = gradeStatement.executeQuery();
-        departmentStatement.setInt(1, results.getInt("department_id"));
-        ResultSet department = departmentStatement.executeQuery();
 
         while(results.next())   {
             Employee employee = new Employee(
                     results.getInt("id"),
                     results.getString("name"),
                     results.getString("jobName"),
-                    grade.getString("salaryGrade"),
-                    department.getString("department")
+                    results.getString("salaryGrade"),
+                    results.getString("department")
             );
             employees.add(employee);
         }
@@ -52,7 +49,10 @@ public class EmployeeRepository {
     }
 
     public Employee getOne(int id) throws SQLException {
-        String SQL = "SELECT * FROM employees WHERE id= ?";
+        String SQL = "SELECT * FROM employees "
+                + "INNER JOIN salaries ON salaries.id = employees.salary_id \n"
+                + "INNER JOIN departments ON departments.id = employees.department_id\n"
+                + "WHERE id= ? ";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
         statement.setInt(1, id);
 
@@ -64,8 +64,8 @@ public class EmployeeRepository {
                     results.getInt("id"),
                     results.getString("name"),
                     results.getString("jobName"),
-                    results.getInt("salaryGrade_id"),
-                    results.getInt("department_id")
+                    results.getString("salaryGrade"),
+                    results.getString("department")
             );
         }
         return employee;
@@ -76,11 +76,34 @@ public class EmployeeRepository {
                 "(name, jobName, salaryGrade_id, department_id) " +
                 "VALUES (?, ?, ?, ?)";
 
+        PreparedStatement salary =this.connection.prepareStatement(
+                "SELECT id AS salaryGrade_id "
+                + "FROM salaries "
+                + "WHERE grade= ?"
+        );
+        PreparedStatement department = this.connection.prepareStatement(
+                "SELECT id AS department_id FROM departments "
+                + "WHERE name= ?"
+        );
+
         PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+
+        salary.setString(1, employee.getSalaryGrade());
+        department.setString(1, employee.getDepartment());
+
+        ResultSet resultSalary = salary.executeQuery();
+        if(resultSalary.next())
+        {
+            statement.setInt(3, resultSalary.getInt("salaryGrade_id"));
+        }   else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Salary id does not exist");
+        ResultSet resultDepartment = department.executeQuery();
+        if(resultDepartment.next())
+        {
+            statement.setInt(4, resultDepartment.getInt("department_id"));
+        }   else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department id does not exist");
+
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
-        statement.setInt(3, employee.getSalaryGrade());
-        statement.setInt(4, employee.getDepartment());
 
         int rowsAffected = statement.executeUpdate();
         int newId = -1;
@@ -104,11 +127,35 @@ public class EmployeeRepository {
                 "salaryGrade_id= ?," +
                 "department_id= ?" +
                 "WHERE id= ?";
+        PreparedStatement salary =this.connection.prepareStatement(
+                "SELECT id AS salaryGrade_id"
+                        + "FROM salaries"
+                        + "WHERE grade= ?"
+        );
+        PreparedStatement department = this.connection.prepareStatement(
+                "SELECT id AS department_id FROM departments"
+                        + "WHERE name= ?"
+        );
+
         PreparedStatement statement = this.connection.prepareStatement(SQL);
+        salary.setString(1, employee.getSalaryGrade());
+        department.setString(1, employee.getDepartment());
+
+        ResultSet resultSalary = salary.executeQuery();
+        if(resultSalary.next())
+        {
+            statement.setInt(3, resultSalary.getInt("salaryGrade_id"));
+        }   else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Salary id does not exist");
+        ResultSet resultDepartment = department.executeQuery();
+        if(resultDepartment.next())
+        {
+            statement.setInt(4, resultDepartment.getInt("department_id"));
+        }   else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department id does not exist");
+
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
-        statement.setInt(3, employee.getSalaryGrade());
-        statement.setInt(4, employee.getDepartment());
+        statement.setInt(3, resultSalary.getInt("salaryGrade_id"));
+        statement.setInt(4, resultDepartment.getInt("department_id"));
         statement.setInt(5, id);
         int rowsAffected = statement.executeUpdate();
         Employee updatedEmployee = null;
