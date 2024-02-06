@@ -51,15 +51,15 @@ public class DepartmentRepository {
     }
 
     public Department update(int id, Department department) throws SQLException {
-        String SQL = "UPDATE Salary " +
-                "SET departmentId = ? ," +
+        String SQL = "UPDATE Department " +
+                "SET " +
                 "name = ? ," +
-                "location = ? ," +
+                "location = ?" +
                 "WHERE departmentId = ? ";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        statement.setInt(1, department.getDepartmentId());
-        statement.setString(2, department.getName());
-        statement.setString(3, department.getLocation());
+        statement.setString(1, department.getName());
+        statement.setString(2, department.getLocation());
+        statement.setInt(3, id);
         int rowsAffected = statement.executeUpdate();
         Department updatedDepartment = null;
         if (rowsAffected > 0) {

@@ -52,14 +52,15 @@ public class SalaryRepository {
 
     public Salary update(String grade, Salary salary) throws SQLException {
         String SQL = "UPDATE Salary " +
-                "SET grade = ? ," +
+                "SET " +
                 "minSalary = ? ," +
-                "maxSalary = ? ," +
+                "maxSalary = ?" +
                 "WHERE grade = ? ";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        statement.setString(1, salary.getGrade());
-        statement.setInt(2, salary.getMinSalary());
-        statement.setInt(3, salary.getMaxSalary());
+        statement.setInt(1, salary.getMinSalary());
+        statement.setInt(2, salary.getMaxSalary());
+        statement.setString(3, grade);
+
         int rowsAffected = statement.executeUpdate();
         Salary updatedSalary = null;
         if (rowsAffected > 0) {

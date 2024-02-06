@@ -2,7 +2,7 @@ CREATE TABLE Salary (
     grade TEXT,
     minSalary INT,
     maxSalary INT,
-    PRIMARY KEY(salaryId)
+    PRIMARY KEY(grade)
 );
 
 
