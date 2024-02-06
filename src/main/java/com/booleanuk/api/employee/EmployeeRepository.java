@@ -55,8 +55,14 @@ public class EmployeeRepository {
     }
 
     public List<Employee> getAll() throws SQLException {
+        String _SQL =
+                "SELECT e.id, e.name, e.job_name, s.salary_grade, d.department " +
+                        "FROM employees e " +
+                        "JOIN salaries s ON e.salary_id = s.id " +
+                        "JOIN departments d ON e.department_id = d.id " +
+                        "ORDER BY e.id ASC";
         List<Employee> all_employees = new ArrayList<>();
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM employees");
+        PreparedStatement statement = this.connection.prepareStatement(_SQL);
         ResultSet rs = statement.executeQuery();
 
         while (rs.next()) {
@@ -73,7 +79,12 @@ public class EmployeeRepository {
     }
 
     public Employee getOne(int id) throws SQLException {
-        String _SQL = "SELECT * FROM employees WHERE id= ?";
+        String _SQL =
+                "SELECT e.id, e.name, e.job_name, s.salary_grade, d.department " +
+                "FROM employees e " +
+                "JOIN salaries s ON e.salary_id = s.id " +
+                "JOIN departments d ON e.department_id = d.id " +
+                "WHERE e.id = ?";
         PreparedStatement statement = this.connection.prepareStatement(_SQL);
         statement.setInt(1, id);
         ResultSet rs = statement.executeQuery();
@@ -84,7 +95,8 @@ public class EmployeeRepository {
                     rs.getString("name"),
                     rs.getString("job_name"),
                     rs.getString("salary_grade"),
-                    rs.getString("department"));
+                    rs.getString("department")
+            );
         }
         return employee;
     }
@@ -103,14 +115,16 @@ public class EmployeeRepository {
     }
 
     public Employee createOne(Employee employee) throws SQLException {
-        String _SQL = "INSERT INTO employees " +
-                             "(name, job_name, salary_grade, department) " +
-                      "VALUES (?, ?, ?, ?)";
+        String _SQL =
+                "INSERT INTO employees " +
+                "(name, job_name, salary_id, department_id) " +
+                "VALUES " +
+                "(?, ?, ?, ?)";
         PreparedStatement statement = this.connection.prepareStatement(_SQL);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJob_name());
-        statement.setString(3, employee.getSalary_grade());
-        statement.setString(4, employee.getDepartment());
+        statement.setInt(3, Integer.valueOf(employee.getSalary_grade()));
+        statement.setInt(4, Integer.valueOf(employee.getDepartment()));
         int rowsAffected = statement.executeUpdate();
         int newId = -1;
         if (rowsAffected > 0) {

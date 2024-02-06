@@ -3,10 +3,13 @@ package com.booleanuk.api.department;
 public class Department {
     private int id;
     private String department;
+    private String location;
 
-    public Department(int id, String department) {
+    public Department(int id, String department, String location) {
         this.id = id;
         this.department = department;
+        this.location = location;
+
     }
 
     public int getId() {
@@ -23,5 +26,13 @@ public class Department {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

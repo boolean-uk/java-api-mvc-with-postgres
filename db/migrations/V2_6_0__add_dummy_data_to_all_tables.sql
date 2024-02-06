@@ -1,25 +1,25 @@
 INSERT INTO salaries
-    (salary_grade)
+    (salary_grade, min_salary, max_salary)
     VALUES
-    ('3'),
-    ('4'),
-    ('5'),
-    ('6'),
-    ('7');
+    ('3', 15000, 24999),
+    ('4', 25000, 34999),
+    ('5', 35000, 44999),
+    ('6', 45000, 54999),
+    ('7', 55000, 100000);
 
 INSERT INTO departments
-    (department)
+    (department, location)
     VALUES
-    ('Engineering'),
-    ('Analytics'),
-    ('Project Management'),
-    ('Marketing'),
-    ('Finance'),
-    ('Human Resources'),
-    ('Operations'),
-    ('Sales'),
-    ('Customer Support'),
-    ('Design');
+    ('Engineering', 'Copenhagen'),
+    ('Analytics', 'Copenhagen'),
+    ('Project Management', 'Copenhagen'),
+    ('Marketing', 'Copenhagen'),
+    ('Finance', 'Copenhagen'),
+    ('Human Resources', 'Copenhagen'),
+    ('Operations', 'Copenhagen'),
+    ('Sales', 'Copenhagen'),
+    ('Customer Support', 'Copenhagen'),
+    ('Design', 'Copenhagen');
 
 INSERT INTO employees
     (name, job_name, salary_id, department_id)

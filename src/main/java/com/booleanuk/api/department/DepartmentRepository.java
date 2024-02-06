@@ -58,7 +58,8 @@ public class DepartmentRepository {
         while (rs.next()) {
             Department department = new Department(
                     rs.getInt("id"),
-                    rs.getString("department")
+                    rs.getString("department"),
+                    rs.getString("location")
             );
             all_departments.add(department);
         }

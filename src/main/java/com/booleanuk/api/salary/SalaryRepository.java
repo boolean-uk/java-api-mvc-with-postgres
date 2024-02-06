@@ -1,4 +1,5 @@
 package com.booleanuk.api.salary;
+import com.booleanuk.api.employee.Employee;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
@@ -56,10 +57,89 @@ public class SalaryRepository {
         while (rs.next()) {
             Salary salary = new Salary(
                     rs.getInt("id"),
-                    rs.getString("salary_grade")
+                    rs.getString("salary_grade"),
+                    rs.getInt("min_salary"),
+                    rs.getInt("max_salary")
             );
             all_salaries.add(salary);
         }
         return all_salaries;
     }
+
+    public Salary getOne(int id) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM salaries WHERE id = ?");
+        statement.setInt(1, id);
+        ResultSet rs = statement.executeQuery();
+        Salary salary = null;
+        if (rs.next()) {
+            salary = new Salary(
+                    rs.getInt("id"),
+                    rs.getString("salary_grade"),
+                    rs.getInt("min_salary"),
+                    rs.getInt("max_salary")
+            );
+        }
+        return salary;
+    }
+
+    public Salary deleteOne(int id) throws SQLException {
+        String _SQL = "DELETE FROM salaries WHERE id = ?";
+        PreparedStatement statement = this.connection.prepareStatement(_SQL);
+        Salary deletedSalary = this.getOne(id);
+
+        statement.setInt(1, id);
+        int rowsAffected = statement.executeUpdate();
+        if (rowsAffected == 0) {
+            deletedSalary = null;
+        }
+        return deletedSalary;
+    }
+
+    public Salary createOne(Salary salary) throws SQLException {
+        String _SQL =
+                "INSERT INTO salaries " +
+                "(salary_grade, min_salary, max_salary) " +
+                "VALUES " +
+                "(?, ?, ?)";
+        PreparedStatement statement = this.connection.prepareStatement(_SQL);
+        statement.setString(1, salary.getSalary_grade());
+        statement.setInt(2, salary.getMin_salary());
+        statement.setInt(3, salary.getMax_salary());
+        int rowsAffected = statement.executeUpdate();
+        int newId = -1;
+        if (rowsAffected > 0) {
+            try(ResultSet rs = statement.getGeneratedKeys()) {
+                if (rs.next()) {
+                    newId = rs.getInt(1);
+                }
+            } catch (Exception e) {
+                System.out.println("Oh nos: " + e);
+            }
+            salary.setId(newId);
+        } else {
+            salary = null;
+        }
+        return salary;
+    }
+
+    public Salary updateOne(int id, Salary salary) throws SQLException {
+        String _SQL = "UPDATE employees " +
+                "SET salary_grade = ?, " +
+                "min_salary = ?, " +
+                "max_salary = ? " +
+                "WHERE id = ?";
+        PreparedStatement statement = this.connection.prepareStatement(_SQL);
+        statement.setString(1, salary.getSalary_grade());
+        statement.setInt(2, salary.getMin_salary());
+        statement.setInt(3, salary.getMax_salary());
+        statement.setInt(4, id);
+        int rowsAffected = statement.executeUpdate();
+        Salary updatedSalary = null;
+        if (rowsAffected > 0) {
+            updatedSalary = this.getOne(id);
+        }
+        return updatedSalary;
+    }
 }
+
+
