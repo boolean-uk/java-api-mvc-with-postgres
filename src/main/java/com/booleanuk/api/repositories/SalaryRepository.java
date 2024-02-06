@@ -1,12 +1,18 @@
 package com.booleanuk.api.repositories;
 
+import com.booleanuk.api.models.Employee;
+import com.booleanuk.api.models.Salary;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class SalaryRepository {
@@ -41,5 +47,18 @@ public class SalaryRepository {
         final PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setUrl(url);
         return dataSource;
+    }
+
+    public List<Salary> getAll() throws SQLException  {
+        List<Salary> everyone = new ArrayList<>();
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Salaries");
+
+        ResultSet results = statement.executeQuery();
+
+        while (results.next()) {
+            Salary theSalary = new Salary(results.getInt("id"), results.getString("grade"), results.getInt("min_salary"), results.getInt("max_salary"));
+            everyone.add(theSalary);
+        }
+        return everyone;
     }
 }
