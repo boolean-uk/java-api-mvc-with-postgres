@@ -6,7 +6,11 @@ import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class EmployeeRepository {
@@ -41,5 +45,18 @@ public class EmployeeRepository {
         final PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setUrl(url);
         return dataSource;
+    }
+
+    public List<Employee> getAll() throws SQLException  {
+        List<Employee> everyone = new ArrayList<>();
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Employees");
+
+        ResultSet results = statement.executeQuery();
+
+        while (results.next()) {
+            Employee theEmployee = new Employee(results.getInt("id"), results.getString("name"), results.getString("job_name"), results.getString("salary_grade"), results.getString("department"));
+            everyone.add(theEmployee);
+        }
+        return everyone;
     }
 }
