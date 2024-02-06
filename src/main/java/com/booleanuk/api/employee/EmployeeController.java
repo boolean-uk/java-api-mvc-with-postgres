@@ -1,8 +1,6 @@
 package com.booleanuk.api.employee;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,6 +16,11 @@ public class EmployeeController {
 
     @GetMapping
     public List<Employee> getAll() throws SQLException {
-        return employees.getAll();
+        return this.employees.getAll();
+    }
+
+    @PostMapping
+    public Employee create(@RequestBody Employee employee) throws SQLException {
+        return this.employees.add(employee);
     }
 }
