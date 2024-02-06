@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         EmployeeRepository empRepo = new EmployeeRepository();
         try {
-            System.out.println(empRepo.getAll());
+            System.out.println(empRepo.getOne(2));
         } catch (Exception e)    {
             System.out.println("Aur naur, " + e);
         }

@@ -46,6 +46,26 @@ public class EmployeeRepository {
         return employees;
     }
 
+    public Employee getOne(int id) throws SQLException {
+        String SQL = "SELECT * FROM employees WHERE id= ?";
+        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        statement.setInt(1, id);
+
+        ResultSet results = statement.executeQuery();
+
+        Employee employee = null;
+        if(results.next()){
+            employee = new Employee(
+                    results.getInt("id"),
+                    results.getString("name"),
+                    results.getString("jobName"),
+                    results.getString("salaryGrade"),
+                    results.getString("department")
+            );
+        }
+        return employee;
+    }
+
     public void getDatabaseCredentials()    {
         try(InputStream input = new FileInputStream("src/main/resources/config.properties")) {
             // Properties : Represents a persistent set of properties.

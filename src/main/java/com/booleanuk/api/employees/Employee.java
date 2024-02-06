@@ -21,7 +21,7 @@ public class Employee {
                 + this.name + " - "
                 + this.jobName + " - "
                 + this.salaryGrade + " - "
-                + this.department + " - ";
+                + this.department;
         return result;
     }
 
