@@ -59,4 +59,17 @@ public class EmployeeRepository {
         }
         return allEmployees;
     }
+    public Employee getOne(int id) throws SQLException{
+        PreparedStatement preparedStatement = this.connection.prepareStatement(
+                "SELECT * FROM Employees WHERE id = ?");
+        preparedStatement.setLong(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Employee employee = null;
+        if (resultSet.next()){
+            employee = new Employee(resultSet.getInt("id"), resultSet.getString("name"),
+                    resultSet.getString("jobName"), resultSet.getString("salaryGrade"),
+                    resultSet.getString("department"));
+        }
+        return employee;
+    }
 }
