@@ -15,41 +15,30 @@ public class Employee {
         this.department = department;
     }
 
-    public int getId() {
-        return id;
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getJobName() {
         return jobName;
     }
 
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
-    }
 
     public String getSalaryGrade() {
         return salaryGrade;
     }
 
-    public void setSalaryGrade(String salaryGrade) {
-        this.salaryGrade = salaryGrade;
-    }
 
     public String getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
-    }
 
     public String toString(){
         String result = "";

@@ -29,7 +29,6 @@ public class EmployeeRepository {
         this.getDatabaseCredentials();
         this.dataSource = this.createDataSource();
         this.connection = this.dataSource.getConnection();
-
     }
 
     public List<Employee> getAll() throws SQLException {
@@ -63,6 +62,64 @@ public class EmployeeRepository {
         return employee;
     }
 
+    public Employee update(int id, Employee employee) throws SQLException{
+        String SQL = "UPDATE employees " +
+                "SET name = ?, "+
+                "SET jobName = ?, "+
+                "SET salaryGrade = ?, "+
+                "SET department = ?" +
+                "WHERE id = ?";
+        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        statement.setString(1, employee.getName());
+        statement.setString(2, employee.getJobName());
+        statement.setString(3, employee.getSalaryGrade());
+        statement.setString(4, employee.getDepartment());
+        statement.setInt(5, id);
+        int rowsAffected = statement.executeUpdate();
+        Employee updatedEmployee = null;
+        if (rowsAffected > 0){
+            updatedEmployee = this.get(id);
+        }
+        return updatedEmployee;
+    }
+
+    public Employee delete(int id) throws SQLException{
+        String SQL = "DELETE FROM employees WHERE id = ?";
+        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        Employee deletedEmployee =  this.get(id);
+
+        statement.setInt(1, id);
+        int rowsAffected = statement.executeUpdate();
+        if (rowsAffected == 0){
+            deletedEmployee = null;
+        }
+        return deletedEmployee;
+    }
+
+    public Employee add(Employee employee) throws SQLException{
+        String SQL = "INSERT INTO employees (name,jobName,salaryGrade,department) VALUES (?,?,?,?)";
+        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        statement.setString(1, employee.getName());
+        statement.setString(2, employee.getJobName());
+        statement.setString(3, employee.getSalaryGrade());
+        statement.setString(4, employee.getDepartment());
+        int rowsAffected = statement.executeUpdate();
+        int newId = -1;
+        if (rowsAffected > 0){
+            try (ResultSet resultSet = statement.getGeneratedKeys()){
+                if (resultSet.next()){
+                    newId = resultSet.getInt(1);
+                }
+            }
+            catch (Exception e){
+                System.out.println("Can't add employee: " +e);
+            }
+            employee.setId(newId);
+        }else {
+            employee = null;
+        }
+        return employee;
+    }
 
     private void getDatabaseCredentials(){
         try(InputStream input = new FileInputStream("src/main/resources/config.properties")) {
