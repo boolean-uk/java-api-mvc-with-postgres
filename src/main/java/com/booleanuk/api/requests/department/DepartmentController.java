@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/departments")
 public class DepartmentController {
     DepartmentRepository departmentRepository;
 

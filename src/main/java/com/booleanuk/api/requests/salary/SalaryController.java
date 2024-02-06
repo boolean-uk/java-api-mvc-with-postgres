@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/salaries")
 public class SalaryController {
     SalaryRepository salaryRepository;
 
