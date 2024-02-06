@@ -73,7 +73,8 @@ public class EmployeeRepository {
     }
 
     public Employee getOne(int id) throws SQLException {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM employees WHERE id= ?");
+        String _SQL = "SELECT * FROM employees WHERE id= ?";
+        PreparedStatement statement = this.connection.prepareStatement(_SQL);
         statement.setInt(1, id);
         ResultSet rs = statement.executeQuery();
         Employee employee = null;
@@ -86,5 +87,18 @@ public class EmployeeRepository {
                     rs.getString("department"));
         }
         return employee;
+    }
+
+    public Employee deleteOne(int id) throws SQLException {
+        String _SQL = "DELETE FROM employees WHERE id = ?";
+        PreparedStatement statement = this.connection.prepareStatement(_SQL);
+        Employee deletedEmployee = this.getOne(id);
+
+        statement.setInt(1, id);
+        int rowsAffected = statement.executeUpdate();
+        if (rowsAffected == 0) {
+            deletedEmployee = null;
+        }
+        return deletedEmployee;
     }
 }
