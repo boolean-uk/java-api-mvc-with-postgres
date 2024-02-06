@@ -82,4 +82,15 @@ public class SalaryRepository {
         }
         return salary;
     }
+
+    public Salary get(int id) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Salaries WHERE id = ?");
+        statement.setInt(1, id);
+        ResultSet results = statement.executeQuery();
+        Salary salary = null;
+        if (results.next()) {
+            salary = new Salary(results.getInt("id"), results.getString("grade"), results.getInt("min_salary"), results.getInt("max_salary"));
+        }
+        return salary;
+    }
 }

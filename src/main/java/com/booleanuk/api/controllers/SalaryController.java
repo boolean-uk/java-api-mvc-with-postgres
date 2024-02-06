@@ -1,5 +1,6 @@
 package com.booleanuk.api.controllers;
 
+import com.booleanuk.api.models.Department;
 import com.booleanuk.api.models.Employee;
 import com.booleanuk.api.models.Salary;
 import com.booleanuk.api.repositories.SalaryRepository;
@@ -33,6 +34,15 @@ public class SalaryController {
         Salary theSalary =  this.salaries.add(salary);
         if (theSalary == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad request");
+        }
+        return theSalary;
+    }
+
+    @GetMapping("/{id}")
+    public Salary get(@PathVariable(name = "id") int id) throws SQLException {
+        Salary theSalary =  this.salaries.get(id);
+        if (theSalary == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
         }
         return theSalary;
     }
