@@ -35,6 +35,34 @@ public class EmployeeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Employee create(@RequestBody Employee employee) throws SQLException{
-        Employee e =
+        Employee theEmployee = employees.addEmployee(employee);
+
+        if (theEmployee == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to create the specified employee.");
+        }
+        return theEmployee;
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee update(@PathVariable int id, @RequestBody Employee employee) throws SQLException {
+        Employee toBeUpdated = employees.getEmployee(id);
+
+        if (toBeUpdated == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } else if (employees.findEmployeeFromName(employee.getName()) != null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to update employee.");
+        }
+
+        return employees.update(id, employee);
+    }
+
+    @DeleteMapping("/{id}")
+    public Employee delete(@PathVariable int id) throws SQLException {
+        Employee toBeDeleted = employees.getEmployee(id);
+        if (toBeDeleted == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return employees.delete(id);
     }
 }
