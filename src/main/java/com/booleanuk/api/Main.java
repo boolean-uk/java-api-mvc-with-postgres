@@ -1,4 +1,4 @@
-package com.booleanuk.api.employee;
+package com.booleanuk.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
