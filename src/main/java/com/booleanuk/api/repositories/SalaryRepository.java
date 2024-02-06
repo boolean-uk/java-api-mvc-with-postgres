@@ -93,4 +93,23 @@ public class SalaryRepository {
         }
         return salary;
     }
+
+    public Salary update(int id, Salary salary) throws SQLException {
+        String SQL = "UPDATE Salaries " +
+                "SET grade = ? ," +
+                "min_salary = ? ," +
+                "max_salary = ? " +
+                "WHERE id = ? ";
+        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        statement.setString(1, salary.getGrade());
+        statement.setInt(2, salary.getMinSalary());
+        statement.setInt(3, salary.getMaxSalary());
+        statement.setInt(4, id);
+        int rowsAffected = statement.executeUpdate();
+        Salary updatedSalary = null;
+        if (rowsAffected > 0) {
+            updatedSalary = this.get(id);
+        }
+        return updatedSalary;
+    }
 }

@@ -46,4 +46,17 @@ public class SalaryController {
         }
         return theSalary;
     }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Salary update(@PathVariable(name="id") int id, @RequestBody Salary salary) throws SQLException {
+        if (salary.getGrade() == null || salary.getMinSalary() < 0 || salary.getMaxSalary() < 0 || salary.getMinSalary() > salary.getMaxSalary()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad request");
+        }
+        Salary theSalary = this.salaries.update(id, salary);
+        if (theSalary == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+        }
+        return theSalary;
+    }
 }
