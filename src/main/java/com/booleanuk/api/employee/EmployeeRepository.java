@@ -40,7 +40,7 @@ public class EmployeeRepository {
     }
 
     private DataSource createDataSource() {
-        final String url = "jdbc:postgressql://" + this.dbURL + ":5432/" + this.dbDataBase + "?user=" + this.dbUser + "?password=" + this.dbPassword;
+        final String url = "jdbc:postgressql://" + this.dbURL + ":5432/" + this.dbDataBase + "?user=" + this.dbUser + "&password=" + this.dbPassword;
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setURL(url);
         return dataSource;
