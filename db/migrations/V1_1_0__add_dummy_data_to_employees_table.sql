@@ -1,0 +1,26 @@
+INSERT INTO employees
+    (name, job_name, salary_grade, department)
+VALUES
+    ('John Smith', 'Software Engineer', '5', 'Engineering'),
+    ('Jane Doe', 'Data Analyst', '4', 'Analytics'),
+    ('Michael Johnson', 'Project Manager', '6', 'Project Management'),
+    ('Emily Brown', 'Marketing Specialist', '4', 'Marketing'),
+    ('Christopher Lee', 'Financial Analyst', '5', 'Finance'),
+    ('Amanda Wilson', 'Human Resources Manager', '7', 'Human Resources'),
+    ('David Taylor', 'Operations Manager', '7', 'Operations'),
+    ('Sarah Martinez', 'Sales Representative', '3', 'Sales'),
+    ('Daniel Anderson', 'Customer Support Specialist', '3', 'Customer Support'),
+    ('Jessica Thompson', 'Graphic Designer', '4', 'Design'),
+    ('Kevin Garcia', 'Software Developer', '5', 'Engineering'),
+    ('Michelle Harris', 'Data Scientist', '6', 'Analytics'),
+    ('Zoe Washington', 'Data Scientist', '7', 'Analytics'),
+    ('Liam Richardson', 'Financial Planner', '6', 'Finance'),
+    ('Hailey Hill', 'Marketing Analyst', '4', 'Marketing'),
+    ('Jackson Gomez', 'Operations Analyst', '5', 'Operations'),
+    ('Avery Carter', 'Sales Consultant', '4', 'Sales'),
+    ('Mia Long', 'Technical Support Engineer', '4', 'Customer Support'),
+    ('Elijah Reed', 'Graphic Designer', '5', 'Design'),
+    ('Addison Torres', 'Software Engineer', '6', 'Engineering'),
+    ('Evelyn Flores', 'Data Engineer', '7', 'Analytics'),
+    ('Owen Morgan', 'Financial Advisor', '6', 'Finance'),
+    ('Scarlett Coleman', 'Marketing Coordinator', '3', 'Marketing');
