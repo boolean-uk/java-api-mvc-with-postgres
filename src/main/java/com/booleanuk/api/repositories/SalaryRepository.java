@@ -112,4 +112,17 @@ public class SalaryRepository {
         }
         return updatedSalary;
     }
+
+    public Salary delete(int id) throws SQLException {
+        String SQL = "DELETE FROM Salaries WHERE id = ?";
+        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        Salary deletedSalary = this.get(id);
+
+        statement.setInt(1, id);
+        int rowsAffected = statement.executeUpdate();
+        if (rowsAffected == 0) {
+            deletedSalary = null;
+        }
+        return deletedSalary;
+    }
 }

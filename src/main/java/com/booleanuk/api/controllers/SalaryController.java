@@ -59,4 +59,13 @@ public class SalaryController {
         }
         return theSalary;
     }
+
+    @DeleteMapping("/{id}")
+    public Salary delete(@PathVariable(name="id") int id) throws SQLException {
+        Salary theSalary =  this.salaries.delete(id);
+        if (theSalary == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+        }
+        return theSalary;
+    }
 }
