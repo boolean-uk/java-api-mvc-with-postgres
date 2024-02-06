@@ -66,6 +66,26 @@ public class EmployeeRepository {
         return employee;
     }
 
+    public Employee add(Employee employee) throws SQLException{
+        String SQL = "INSERT INTO employees " +
+                "(name, jobName, salaryGrade, department) " +
+                "VALUES (?, ?, ?, ?)";
+
+        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        statement.setString(1, employee.getName());
+        statement.setString(2, employee.getJobName());
+        statement.setString(3, employee.getSalaryGrade());
+        statement.setString(4, employee.getDepartment());
+
+        int rowsAffected = statement.executeUpdate();
+        int newId = -1; // Hmmm...
+        if(rowsAffected > 0)    {
+            // Waiting for standup to try the id thing..
+            System.out.println("Yes, whoohoo");
+        }   else employee = null;
+        return employee;
+    }
+
     public void getDatabaseCredentials()    {
         try(InputStream input = new FileInputStream("src/main/resources/config.properties")) {
             // Properties : Represents a persistent set of properties.
