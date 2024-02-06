@@ -1,6 +1,9 @@
 package com.booleanuk.api.model;
 
 
+import com.sun.jdi.InvalidTypeException;
+
+import java.util.InputMismatchException;
 
 public class Employee {
     private int id;
@@ -45,7 +48,10 @@ public class Employee {
         return salaryGrade;
     }
 
-    public void setSalaryGrade(String salaryGrade) {
+    public void setSalaryGrade(String salaryGrade) throws InputMismatchException {
+        if(Integer.parseInt(salaryGrade) > 100 || Integer.parseInt(salaryGrade) < 0) {
+            throw new InputMismatchException("SalaryGrade higher than 100 or less than 0");
+        }
         this.salaryGrade = salaryGrade;
     }
 
