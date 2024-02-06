@@ -112,4 +112,17 @@ public class EmployeeRepository {
         }
         return updatedEmployee;
     }
+
+    public Employee delete(int id) throws SQLException {
+        String SQL = "DELETE FROM Employees WHERE id = ?";
+        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        Employee deletedEmployee = this.get(id);
+
+        statement.setLong(1, id);
+        int rowsAffected = statement.executeUpdate();
+        if (rowsAffected == 0) {
+            deletedEmployee = null;
+        }
+        return deletedEmployee;
+    }
 }

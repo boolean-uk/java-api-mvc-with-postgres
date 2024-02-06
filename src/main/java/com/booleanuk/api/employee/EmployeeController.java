@@ -31,9 +31,14 @@ public class EmployeeController {
         return this.employees.get(id);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Employee update(@PathVariable(name="id") int id, @RequestBody Employee employee) throws SQLException {
         return this.employees.update(id, employee);
+    }
+
+    @DeleteMapping("/{id}")
+    public Employee delete(@PathVariable(name="id") int id) throws SQLException {
+        return this.employees.delete(id);
     }
 }
