@@ -91,4 +91,21 @@ public class DepartmentRepository {
         }
         return department;
     }
+
+    public Department update(int id, Department department) throws SQLException {
+        String SQL = "UPDATE Departments " +
+                "SET name = ? ," +
+                "location = ? " +
+                "WHERE id = ? ";
+        PreparedStatement statement = this.connection.prepareStatement(SQL);
+        statement.setString(1, department.getName());
+        statement.setString(2, department.getLocation());
+        statement.setInt(3, id);
+        int rowsAffected = statement.executeUpdate();
+        Department updatedDepartment = null;
+        if (rowsAffected > 0) {
+            updatedDepartment = this.get(id);
+        }
+        return updatedDepartment;
+    }
 }

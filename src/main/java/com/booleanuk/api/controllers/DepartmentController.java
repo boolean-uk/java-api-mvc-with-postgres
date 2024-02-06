@@ -45,4 +45,17 @@ public class DepartmentController {
         }
         return theDepartment;
     }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Department update(@PathVariable(name="id") int id, @RequestBody Department department) throws SQLException {
+        if (department.getName() == null || department.getLocation() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad request");
+        }
+        Department theDepartment = this.departments.update(id, department);
+        if (theDepartment == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+        }
+        return theDepartment;
+    }
 }
