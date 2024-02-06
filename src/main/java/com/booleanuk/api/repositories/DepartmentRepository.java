@@ -7,10 +7,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -60,5 +57,27 @@ public class DepartmentRepository {
             everyone.add(theDepartment);
         }
         return everyone;
+    }
+
+    public Department add(Department department) throws SQLException {
+        String SQL = "INSERT INTO Departments (name, location) VALUES(?, ?)";
+        PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+        statement.setString(1, department.getName());
+        statement.setString(2, department.getLocation());
+        int rowsAffected = statement.executeUpdate();
+        int newId = 0;
+        if (rowsAffected > 0) {
+            try (ResultSet rs = statement.getGeneratedKeys()) {
+                if (rs.next()) {
+                    newId = rs.getInt(1);
+                }
+            } catch (Exception e) {
+                System.out.println("Oops: " + e);
+            }
+            department.setId(newId);
+        } else {
+            department = null;
+        }
+        return department;
     }
 }
