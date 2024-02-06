@@ -46,19 +46,19 @@ public class EmployeeRepository {
 
     public List<Employee> getAll() throws SQLException  {
         List<Employee> everyone = new ArrayList<>();
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Employees");
+        PreparedStatement statement = this.connection.prepareStatement("SELECT employees.id, employees.name, employees.job_name AS jobName, salaries.grade AS salaryGrade, departments.name AS department FROM Employees JOIN departments ON employees.department_id = departments.id JOIN salaries ON employees.salary_id = salaries.id");
 
         ResultSet results = statement.executeQuery();
 
         while (results.next()) {
-            Employee theEmployee = new Employee(results.getInt("id"), results.getString("name"), results.getString("job_name"), results.getString("salary_grade"), results.getString("department"));
+            Employee theEmployee = new Employee(results.getInt("id"), results.getString("name"), results.getString("jobName"), results.getString("salaryGrade"), results.getString("department"));
             everyone.add(theEmployee);
         }
         return everyone;
     }
 
     public Employee add(Employee employee) throws SQLException {
-        String SQL = "INSERT INTO Employees (name, job_name, salary_grade, department) VALUES(?, ?, ?, ?)";
+        String SQL = "INSERT INTO Employees (name, job_name, salary_id, department_id) VALUES(?, ?, (SELECT id FROM salaries WHERE grade LIKE ?), (SELECT id FROM departments WHERE name LIKE ?))";
         PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());
@@ -82,12 +82,12 @@ public class EmployeeRepository {
     }
 
     public Employee get(int id) throws SQLException {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Employees WHERE id = ?");
+        PreparedStatement statement = this.connection.prepareStatement("SELECT employees.id, employees.name, employees.job_name AS jobName, salaries.grade AS salaryGrade, departments.name AS department FROM Employees JOIN departments ON employees.department_id = departments.id JOIN salaries ON employees.salary_id = salaries.id WHERE employees.id = ?");
         statement.setInt(1, id);
         ResultSet results = statement.executeQuery();
         Employee employee = null;
         if (results.next()) {
-            employee = new Employee(results.getInt("id"), results.getString("name"), results.getString("job_name"), results.getString("salary_grade"), results.getString("department"));
+            employee = new Employee(results.getInt("id"), results.getString("name"), results.getString("jobName"), results.getString("salaryGrade"), results.getString("department"));
         }
         return employee;
     }
@@ -96,8 +96,8 @@ public class EmployeeRepository {
         String SQL = "UPDATE Employees " +
                 "SET name = ? ," +
                 "job_name = ? ," +
-                "salary_grade = ? ," +
-                "department = ? " +
+                "salary_id = (SELECT id FROM salaries WHERE grade LIKE ?) ," +
+                "department_id = (SELECT id FROM departments WHERE name LIKE ?) " +
                 "WHERE id = ? ";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
         statement.setString(1, employee.getName());
@@ -118,7 +118,7 @@ public class EmployeeRepository {
         PreparedStatement statement = this.connection.prepareStatement(SQL);
         Employee deletedEmployee = this.get(id);
 
-        statement.setLong(1, id);
+        statement.setInt(1, id);
         int rowsAffected = statement.executeUpdate();
         if (rowsAffected == 0) {
             deletedEmployee = null;
