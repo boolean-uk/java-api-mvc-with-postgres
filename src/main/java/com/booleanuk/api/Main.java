@@ -13,11 +13,11 @@ public class Main {
         EmployeeRepository empRepo = new EmployeeRepository();
         try {
             System.out.println(empRepo.getOne(2));
-            System.out.println(empRepo.add(
+            System.out.println(empRepo.update(8,
                     new Employee(735,
-                            "Peepy",
-                            "Peanut Shaped Plushie",
-                            "3",
+                            "Suklet",
+                            "Star Shaped Plushie",
+                            "6",
                             "Crime")
             ));
         } catch (Exception e)    {
