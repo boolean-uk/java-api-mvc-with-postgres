@@ -101,4 +101,49 @@ public class EmployeeRepository {
         }
         return deletedEmployee;
     }
+
+    public Employee createOne(Employee employee) throws SQLException {
+        String _SQL = "INSERT INTO employees (name, job_name, salary_grade, department) VALUES (?, ?, ?, ?)";
+        PreparedStatement statement = this.connection.prepareStatement(_SQL);
+        statement.setString(1, employee.getName());
+        statement.setString(2, employee.getJob_name());
+        statement.setString(3, employee.getSalary_grade());
+        statement.setString(4, employee.getDepartment());
+        int rowsAffected = statement.executeUpdate();
+        int newId = -1;
+        if (rowsAffected > 0) {
+            try(ResultSet rs = statement.getGeneratedKeys()) {
+                if (rs.next()) {
+                    newId = rs.getInt(1);
+                }
+            } catch (Exception e) {
+                System.out.println("Oh nos: " + e);
+            }
+            employee.setId(newId);
+        } else {
+            employee = null;
+        }
+        return employee;
+    }
+
+    public Employee updateOne(int id, Employee employee) throws SQLException {
+        String _SQL = "UPDATE employees " +
+                "SET name = ?, " +
+                "job_name = ?, " +
+                "salary_grade = ?, " +
+                "department = ? " +
+                "WHERE id = ?";
+        PreparedStatement statement = this.connection.prepareStatement(_SQL);
+        statement.setString(1, employee.getName());
+        statement.setString(2, employee.getJob_name());
+        statement.setString(3, employee.getSalary_grade());
+        statement.setString(4, employee.getDepartment());
+        statement.setInt(5, id);
+        int rowsAffected = statement.executeUpdate();
+        Employee updatedEmployee = null;
+        if (rowsAffected > 0) {
+            updatedEmployee = this.getOne(id);
+        }
+        return updatedEmployee;
+    }
 }

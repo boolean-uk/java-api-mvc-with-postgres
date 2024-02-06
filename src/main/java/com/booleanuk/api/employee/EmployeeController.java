@@ -38,4 +38,22 @@ public class EmployeeController {
         }
         return employee;
     }
+
+    @PostMapping
+    public Employee createOne(@RequestBody Employee e) throws SQLException {
+        Employee employee = this.employees.createOne(e);
+        if (employee == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer says no!");
+        }
+        return employee;
+    }
+
+    @PutMapping("/{id}")
+    public Employee updateOne(@PathVariable int id, @RequestBody Employee e) throws SQLException {
+        Employee employee = this.employees.updateOne(id, e);
+        if (employee == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer says no!");
+        }
+        return employee;
+    }
 }
