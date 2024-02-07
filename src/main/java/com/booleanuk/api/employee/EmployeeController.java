@@ -47,7 +47,12 @@ public class EmployeeController {
         if (toBeUpdated == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employees matching that id were found");
         }
-        return employees.update(id, employee);
+
+        Employee updatedEmployee = employees.update(id, employee);
+        if (updatedEmployee == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not update the employee, please check all required fields are correct.");
+        }
+        return updatedEmployee;
     }
 
     @DeleteMapping("/{id}")

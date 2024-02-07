@@ -1,8 +1,6 @@
 package com.booleanuk.api.employee;
 
 import org.postgresql.ds.PGSimpleDataSource;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
@@ -13,7 +11,6 @@ import java.util.List;
 import java.util.Properties;
 
 public class EmployeeRepository {
-    DataSource dataSource;
     String dbUser;
     String dbURL;
     String dbPassword;
@@ -104,8 +101,6 @@ public class EmployeeRepository {
         Employee updatedEmployee = null;
         if (rowsAffected > 0) {
             updatedEmployee = this.get(id);
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not update the employee, please check all required fields are correct.");
         }
         return updatedEmployee;
     }
@@ -114,8 +109,7 @@ public class EmployeeRepository {
         String SQL = "DELETE FROM Employees WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
 
-        Employee deletedEmployee = null;
-        deletedEmployee = this.get(id);
+        Employee deletedEmployee = this.get(id);
 
         statement.setLong(1, id);
         int rowsAffected = statement.executeUpdate();

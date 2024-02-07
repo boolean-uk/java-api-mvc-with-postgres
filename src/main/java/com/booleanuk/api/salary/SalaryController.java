@@ -47,7 +47,11 @@ public class SalaryController {
         if (toBeUpdated == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No salary grades matching that id were found");
         }
-        return salaries.update(id, salary);
+        Salary updatedSalary = salaries.update(id, salary);
+        if (updatedSalary == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not update the salary, please check all required fields are correct.");
+        }
+        return updatedSalary;
     }
 
     @DeleteMapping("/{id}")

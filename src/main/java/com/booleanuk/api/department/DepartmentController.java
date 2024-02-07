@@ -48,7 +48,12 @@ public class DepartmentController {
         if (toBeUpdated == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No departments matching that id were found");
         }
-        return departments.update(id, department);
+
+        Department updatedDepartment = departments.update(id, department);
+        if (updatedDepartment == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not update the department, please check all required fields are correct.");
+        }
+        return updatedDepartment;
     }
 
     @DeleteMapping("/{id}")

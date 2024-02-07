@@ -1,8 +1,6 @@
 package com.booleanuk.api.salary;
 
 import org.postgresql.ds.PGSimpleDataSource;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
@@ -13,7 +11,6 @@ import java.util.List;
 import java.util.Properties;
 
 public class SalaryRepository {
-    DataSource dataSource;
     String dbUser;
     String dbURL;
     String dbPassword;
@@ -86,8 +83,6 @@ public class SalaryRepository {
         Salary updatedSalary = null;
         if (rowsAffected > 0) {
             updatedSalary = this.get(id);
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not update the salary, please check all required fields are correct.");
         }
         return updatedSalary;
     }
@@ -96,8 +91,7 @@ public class SalaryRepository {
         String SQL = "DELETE FROM Salaries WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
 
-        Salary deletedSalary = null;
-        deletedSalary = this.get(id);
+        Salary deletedSalary = this.get(id);
 
         statement.setLong(1, id);
         int rowsAffected = statement.executeUpdate();

@@ -1,9 +1,6 @@
 package com.booleanuk.api.department;
 
-import com.booleanuk.api.department.Department;
 import org.postgresql.ds.PGSimpleDataSource;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
@@ -14,7 +11,6 @@ import java.util.List;
 import java.util.Properties;
 
 public class DepartmentRepository {
-    DataSource dataSource;
     String dbUser;
     String dbURL;
     String dbPassword;
@@ -85,8 +81,6 @@ public class DepartmentRepository {
         Department updatedDepartment = null;
         if (rowsAffected > 0) {
             updatedDepartment = this.get(id);
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not update the department, please check all required fields are correct.");
         }
         return updatedDepartment;
     }
@@ -95,8 +89,7 @@ public class DepartmentRepository {
         String SQL = "DELETE FROM Departments WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
 
-        Department deletedDepartment = null;
-        deletedDepartment = this.get(id);
+        Department deletedDepartment = this.get(id);
 
         statement.setLong(1, id);
         int rowsAffected = statement.executeUpdate();
