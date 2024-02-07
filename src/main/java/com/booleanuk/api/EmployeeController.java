@@ -16,6 +16,17 @@ public class EmployeeController {
         this.employees = new EmployeeRepository();
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee create(@RequestBody Employee employee) throws SQLException{
+        Employee theEmployee = employees.add(employee);
+
+        if (theEmployee == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to create the specified employee.");
+        }
+        return theEmployee;
+    }
+
     @GetMapping
     public List<Employee> getAll() throws SQLException{
         return employees.getAll();
@@ -30,17 +41,6 @@ public class EmployeeController {
         }
 
         return employee;
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Employee create(@RequestBody Employee employee) throws SQLException{
-        Employee theEmployee = employees.add(employee);
-
-        if (theEmployee == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to create the specified employee.");
-        }
-        return theEmployee;
     }
 
     @PutMapping("/{id}")

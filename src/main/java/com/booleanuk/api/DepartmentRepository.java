@@ -1,5 +1,7 @@
 package com.booleanuk.api;
 
+import org.postgresql.ds.PGSimpleDataSource;
+
 import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -8,9 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import org.postgresql.ds.PGSimpleDataSource;
 
-public class EmployeeRepository {
+public class DepartmentRepository {
     private DataSource dataSource;
     private String dbUser;
     private String dbURL;
@@ -18,72 +19,64 @@ public class EmployeeRepository {
     private String bdDatabase;
     private Connection connection;
 
-    public EmployeeRepository() throws SQLException {
+    public DepartmentRepository() throws SQLException {
         getDatabaseCredentials();
         dataSource = createDataSource();
         connection = dataSource.getConnection();
     }
 
-    public List<Employee> getAll() throws SQLException{
-        List<Employee> employees = new ArrayList<>();
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM employees;");
+    public List<Department> getAll() throws SQLException{
+        List<Department> dpts = new ArrayList<>();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM departments;");
         ResultSet results = statement.executeQuery();
 
         while (results.next()){
-            Employee theEmployee = new Employee(
+            Department theDepartment = new Department(
                     results.getInt("id"),
                     results.getString("name"),
-                    results.getString("job_name"),
-                    results.getString("salary_grade"),
-                    results.getString("department")
+                    results.getString("location")
             );
-            employees.add(theEmployee);
+            dpts.add(theDepartment);
         }
 
-        return employees;
+        return dpts;
     }
 
-    public Employee getOne(int id) throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM employees WHERE id = ?;");
+    public Department getOne(int id) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM departments WHERE id = ?;");
         statement.setInt(1, id);
         ResultSet results = statement.executeQuery();
-        Employee employee = null;
+        Department department = null;
 
         if (results.next()){
-            employee = new Employee(
+            department = new Department(
                     results.getInt("id"),
                     results.getString("name"),
-                    results.getString("job_name"),
-                    results.getString("salary_grade"),
-                    results.getString("department")
+                    results.getString("location")
             );
         }
 
-        return employee;
+        return department;
     }
 
-    public Employee update(int id, Employee employee) throws SQLException{
-        String sql = "UPDATE employees " +
+    public Department update(int id, Department department) throws SQLException{
+        String sql = "UPDATE departments " +
                 "SET name = ?, " +
-                "job_name = ?, " +
-                "salary_grade = ?, " +
-                "department = ? " +
+                "location = ?, " +
                 "WHERE id = ?;";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
-        statement.setInt(5, id);
+        statement.setString(1, department.getName());
+        statement.setString(2, department.getLocation());
+        statement.setInt(3, id);
         statement.executeUpdate();
 
         return getOne(id);
     }
 
-    public Employee delete(int id) throws SQLException{
-        String sql = "DELETE FROM employees WHERE id = ?;";
+    public Department delete(int id) throws SQLException{
+        String sql = "DELETE FROM departments WHERE id = ?;";
         PreparedStatement statement = connection.prepareStatement(sql);
-        Employee deleted = getOne(id);
+        Department deleted = getOne(id);
 
         statement.setInt(1, id);
         statement.executeUpdate();
@@ -91,16 +84,14 @@ public class EmployeeRepository {
         return deleted;
     }
 
-    public Employee add(Employee employee) throws SQLException{
-        String SQL = "INSERT INTO employees " +
-                "(name, job_name, salary_grade, department) " +
-                "VALUES (?, ?, ?, ?);";
+    public Department add(Department department) throws SQLException{
+        String SQL = "INSERT INTO departments " +
+                "(name, location) " +
+                "VALUES (?, ?);";
         PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
 
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setString(1, department.getName());
+        statement.setString(2, department.getLocation());
 
         int rowsAffected = statement.executeUpdate();
         int newId = 0;
@@ -113,21 +104,11 @@ public class EmployeeRepository {
             } catch (Exception e) {
                 System.out.println("Oops: " + e);
             }
-            employee.setId(newId);
+            department.setId(newId);
         } else {
-            employee = null;
+            department = null;
         }
-        return employee;
-    }
-
-    public Employee findEmployeeFromName(String name) throws SQLException{
-        for (Employee employee : getAll()){
-            if (employee.getName().equals(name)){
-                return employee;
-            }
-        }
-
-        return null;
+        return department;
     }
 
     private void getDatabaseCredentials(){
