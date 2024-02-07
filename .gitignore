@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Personal Settings ###
+*.properties
+report.html.html
+report.html.json
+application.yml
