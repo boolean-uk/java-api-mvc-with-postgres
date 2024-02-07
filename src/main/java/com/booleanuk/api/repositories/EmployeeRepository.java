@@ -1,12 +1,11 @@
-package com.booleanuk.api;
+package com.booleanuk.api.repositories;
 
 
+import com.booleanuk.api.models.Employee;
 import org.postgresql.ds.PGSimpleDataSource;
 
-import javax.print.DocFlavor;
 import javax.sql.DataSource;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
