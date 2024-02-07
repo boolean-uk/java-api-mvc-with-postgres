@@ -16,6 +16,7 @@ public class EmployeeController {
         this.employeeRepository = new EmployeeRepository();
     }
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Employee create(@RequestBody Employee employee) throws SQLException{
         Employee employee1 = this.employeeRepository.create(employee);
         if (employee1 == null) {
@@ -25,10 +26,12 @@ public class EmployeeController {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<Employee> getAll() throws SQLException {
         return this.employeeRepository.getAll();
     }
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Employee getOne(@PathVariable int id) throws SQLException {
         Employee employee = this.employeeRepository.getOne(id);
         if (employee == null) {
@@ -37,6 +40,7 @@ public class EmployeeController {
         return employee;
     }
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
     public Employee update(@PathVariable int id, @RequestBody Employee employee) throws SQLException {
         Employee toBeUpdated = this.employeeRepository.getOne(id);
         if (toBeUpdated == null) {
@@ -45,6 +49,7 @@ public class EmployeeController {
         return this.employeeRepository.update(id, employee);
     }
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Employee delete(@PathVariable int id) throws SQLException {
         Employee toBeDeleted = this.employeeRepository.getOne(id);
         if (toBeDeleted == null) {
