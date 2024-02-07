@@ -1,3 +1,5 @@
+Java API using JDBC and ElephantSQL. Run _flyway migrate_ -> set database url/name/password to the application.yml settings file -> run spring application 
+
 # Java API Exercise
 
 ## Learning Objectives
