@@ -3,6 +3,8 @@ package com.booleanuk.api.repository;
 import com.booleanuk.api.model.Salary;
 import com.booleanuk.api.util.UtilClass;
 import org.postgresql.ds.PGSimpleDataSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
@@ -90,7 +92,14 @@ public class SalaryRepository {
         statement.setString(1, salary.getGrade());
         statement.setInt(2, salary.getMinSalary());
         statement.setInt(3, salary.getMaxSalary());
-        int rowsAffected = statement.executeUpdate();
+
+        int rowsAffected = 0;
+        try {
+            rowsAffected = statement.executeUpdate();
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Grade already exists");
+        }
+
         String newGrade = "";
         if (rowsAffected > 0) {
             try (ResultSet rs = statement.getGeneratedKeys()) {

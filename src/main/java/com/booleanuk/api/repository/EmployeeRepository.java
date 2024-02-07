@@ -54,8 +54,8 @@ public class EmployeeRepository {
         String SQL = "UPDATE Employee " +
                 "SET name = ? ," +
                 "jobName = ? ," +
-                "salaryGrade = ? ," +
-                "department = ? " +
+                "grade = ? ," +
+                "departmentId = ? " +
                 "WHERE employeeId = ? ";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
         statement.setString(1, employee.getName());
@@ -88,7 +88,7 @@ public class EmployeeRepository {
     }
 
     public Employee add(Employee employee) throws SQLException {
-        String SQL = "INSERT INTO Employee(name, jobName, salaryGrade, department) VALUES(?, ?, ?, ?)";
+        String SQL = "INSERT INTO Employee(name, jobName, grade, departmentId) VALUES(?, ?, ?, ?)";
         PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, employee.getName());
         statement.setString(2, employee.getJobName());

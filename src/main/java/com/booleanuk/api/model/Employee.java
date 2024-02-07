@@ -9,14 +9,14 @@ public class Employee {
     private int id;
     private String name;
     private String jobName;
-    private String salaryGrade;
+    private String grade;
     private int departmentId;
 
-    public Employee(int id, String name, String jobName, String salaryGrade, int departmentId) {
+    public Employee(int id, String name, String jobName, String grade, int departmentId) {
         this.id = id;
         this.name = name;
         this.jobName = jobName;
-        this.salaryGrade = salaryGrade;
+        this.grade = grade;
         this.departmentId = departmentId;
     }
 
@@ -45,14 +45,14 @@ public class Employee {
     }
 
     public String getSalaryGrade() {
-        return salaryGrade;
+        return grade;
     }
 
-    public void setSalaryGrade(String salaryGrade) throws InputMismatchException {
-        if(Integer.parseInt(salaryGrade) > 100 || Integer.parseInt(salaryGrade) < 0) {
-            throw new InputMismatchException("SalaryGrade higher than 100 or less than 0");
+    public void setSalaryGrade(String grade) throws InputMismatchException {
+        if(Integer.parseInt(grade) > 100 || Integer.parseInt(grade) < 0) {
+            throw new InputMismatchException("Grade higher than 100 or less than 0");
         }
-        this.salaryGrade = salaryGrade;
+        this.grade = grade;
     }
 
     public int getDepartmentId() {

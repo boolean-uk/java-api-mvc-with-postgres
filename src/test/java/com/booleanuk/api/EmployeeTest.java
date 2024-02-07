@@ -11,7 +11,7 @@ public class EmployeeTest {
 
     @Test
     public void testInit() {
-        Employee employee = new Employee(1,"name", "jobname", "salary", "department");
+        Employee employee = new Employee(1,"name", "jobname", "2", 1);
 
 
         Assertions.assertThrows(InputMismatchException.class, () -> employee.setSalaryGrade(String.valueOf(101)));

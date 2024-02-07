@@ -1,22 +1,22 @@
 package com.booleanuk.api.model;
 
 public class Department {
-    private int departmentId;
+    private int id;
     private String name;
     private String location;
 
-    public Department(int departmentId, String name, String location) {
-        this.departmentId = departmentId;
+    public Department(int id, String name, String location) {
+        this.id = id;
         this.name = name;
         this.location = location;
     }
 
-    public int getDepartmentId() {
-        return departmentId;
+    public int getId() {
+        return id;
     }
 
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
+    public void setId(int departmentId) {
+        this.id = departmentId;
     }
 
     public String getName() {

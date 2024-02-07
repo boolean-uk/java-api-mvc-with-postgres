@@ -84,11 +84,11 @@ public class DepartmentRepository {
     }
 
     public Department add(Department department) throws SQLException {
-        String SQL = "INSERT INTO Department(departmentId, name, location) VALUES(?, ?, ?)";
+        String SQL = "INSERT INTO Department(name, location) VALUES(?, ?)";
         PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-        statement.setInt(1, department.getDepartmentId());
-        statement.setString(2, department.getName());
-        statement.setString(3, department.getLocation());
+        statement.setString(1, department.getName());
+        statement.setString(2, department.getLocation());
+
         int rowsAffected = statement.executeUpdate();
         int id = 0;
         if (rowsAffected > 0) {
@@ -99,7 +99,7 @@ public class DepartmentRepository {
             } catch (Exception e) {
                 System.out.println(e);
             }
-            department.setDepartmentId(id);
+            department.setId(id);
         } else {
             department = null;
         }

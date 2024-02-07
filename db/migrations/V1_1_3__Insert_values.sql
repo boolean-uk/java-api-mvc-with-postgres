@@ -18,20 +18,20 @@ VALUES
 
 
 INSERT INTO Department
-    (departmentId, name, location)
+    (name, location)
 VALUES
-    (1, 'Oslo1', 'Oslo'),
-    (2, 'Oslo2', 'Oslo'),
-    (3, 'Oslo3', 'Oslo'),
-    (4, 'Australia1', 'Australia'),
-    (5, 'Australia2', 'Australia'),
-    (6, 'Australia3', 'Australia'),
-    (7, 'Australia4', 'Australia'),
-    (8, 'Stockholm1', 'Stockholm'),
-    (9, 'Stockholm1', 'StockholmStockholm'),
-    (10, 'Stockholm1', 'Stockholm'),
-    (11, 'California1', 'California'),
-    (12, 'California2', 'California');
+    ('Oslo1', 'Oslo'),
+    ('Oslo2', 'Oslo'),
+    ('Oslo3', 'Oslo'),
+    ('Australia1', 'Australia'),
+    ('Australia2', 'Australia'),
+    ('Australia3', 'Australia'),
+    ('Australia4', 'Australia'),
+    ('Stockholm1', 'Stockholm'),
+    ('Stockholm1', 'StockholmStockholm'),
+    ('Stockholm1', 'Stockholm'),
+    ('California1', 'California'),
+    ('California2', 'California');
 
 INSERT INTO Employee
     (name, jobName, grade, departmentId)
