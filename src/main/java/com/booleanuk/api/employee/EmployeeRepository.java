@@ -105,7 +105,7 @@ public class EmployeeRepository {
     }
 
     public Employee update(int id, Employee employee) throws SQLException {
-        String SQL = "UPDATE employee " + "SET name = ?, " + "jobName = ?, " + "salaryGrade = ?, " + "department = ?, " + "WHERE id = ?";
+        String SQL = "UPDATE employee " + "SET name = ?, " + "jobName = ?, " + "salaryGrade = ?, " + "department = ? " + "WHERE id = ?";
         PreparedStatement preparedStatement = this.connection.prepareStatement(SQL);
         preparedStatement.setString(1, employee.getName());
         preparedStatement.setString(2, employee.getJobName());
