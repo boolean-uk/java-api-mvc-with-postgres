@@ -32,6 +32,10 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
+### Personal Settings ###
+*.properties
+report.html.html
+report.html.json
 
 ### VS Code ###
 .vscode/
