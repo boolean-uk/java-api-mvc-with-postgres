@@ -1,17 +1,20 @@
-package com.booleanuk.api.employee;
+package com.booleanuk.api.salaryGrade;
+
 
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-
-public class EmployeeRepository {
+public class SalaryGradeRepository {
     DataSource datasource;
     String dbUser;
     String dbURL;
@@ -19,81 +22,78 @@ public class EmployeeRepository {
     String dbDatabase;
     Connection connection;
 
-    public EmployeeRepository() throws SQLException {
+    public SalaryGradeRepository() throws SQLException {
         this.getDatabaseCredentials();
         this.datasource = this.createDataSource();
         this.connection = this.datasource.getConnection();
     }
 
 
-    public List<Employee> getALl() throws SQLException{
-        List<Employee> employees = new ArrayList<>();
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Employees");
+    public List<SalaryGrade> getALl() throws SQLException{
+        List<SalaryGrade> salaryGrades = new ArrayList<>();
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM SalaryGrades");
         ResultSet results = statement.executeQuery();
 
         while (results.next()) {
-            Employee theEmployee = new Employee(results.getInt("id"), results.getString("name"),
-                    results.getString("jobName"), results.getString("SalaryGrade"), results.getString("department"));
-            employees.add(theEmployee);
+            SalaryGrade theSalaryGrade = new SalaryGrade(results.getInt("id"), results.getString("grade"),
+                    results.getInt("minsalary"), results.getInt("maxsalary"));
+            salaryGrades.add(theSalaryGrade);
         }
-        return employees;
+        return salaryGrades;
     }
 
-    public Employee get(int id) throws SQLException{
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM Employees WHERE id= ?");
+    public SalaryGrade get(int id) throws SQLException{
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM SalaryGrades WHERE id= ?");
         statement.setInt(1, id);
         ResultSet results = statement.executeQuery();
-        Employee employee = null;
+        SalaryGrade salaryGrade = null;
         if (results.next()) {
-            employee = new Employee(results.getInt("id"), results.getString("name"),
-                    results.getString("jobName"), results.getString("SalaryGrade"), results.getString("department"));
+            salaryGrade = new SalaryGrade(results.getInt("id"), results.getString("grade"),
+                    results.getInt("minsalary"), results.getInt("maxsalary"));
         }
-        return employee;
+        return salaryGrade;
     }
 
-    public Employee update(int id, Employee employee) throws SQLException{
-        String SQL = "UPDATE Employees " +
-                "SET name = ?, " +
-                "jobName = ?, " +
-                "Salarygrade = ?, " +
-                "department = ? " +
+    public SalaryGrade update(int id, SalaryGrade salaryGrade) throws SQLException{
+        String SQL = "UPDATE SalaryGrades " +
+                "SET grade = ?, " +
+                "minsalary = ?, " +
+                "maxsalary = ? " +
                 "WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
-        statement.setInt(5, id);
+        statement.setString(1, salaryGrade.getGrade());
+        statement.setInt(2, salaryGrade.getMinSalary());
+        statement.setInt(3, salaryGrade.getMaxSalary());
+        statement.setInt(4, id);
         int rowsAffected = statement.executeUpdate();
-        Employee updatedEmployee = null;
+        SalaryGrade updatedSalaryGrade = null;
         System.out.println(rowsAffected);
         if (rowsAffected > 0){
-            updatedEmployee = this.get(id);
+            updatedSalaryGrade = this.get(id);
         }
-        return updatedEmployee;
+        return updatedSalaryGrade;
     }
 
-    public Employee delete(int id) throws SQLException {
-        String SQL = "DELETE FROM Employees WHERE id = ?";
+    public SalaryGrade delete(int id) throws SQLException {
+        String SQL = "DELETE FROM SalaryGrades WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        Employee deletedEmployee = null;
-        deletedEmployee = this.get(id);
+        SalaryGrade deletedSalaryGrade = null;
+        deletedSalaryGrade = this.get(id);
 
         statement.setInt(1, id);
         int rowsAffected = statement.executeUpdate();
         if (rowsAffected == 0){
-            deletedEmployee = null;
+            deletedSalaryGrade = null;
         }
-        return deletedEmployee;
+        return deletedSalaryGrade;
     }
 
-    public Employee add(Employee employee) throws SQLException{
-        String SQL = "INSERT INTO Employees (name, jobName, SalaryGrade, department) VALUES (?, ?, ?, ?)";
+    public SalaryGrade add(SalaryGrade salaryGrade) throws SQLException{
+        String SQL = "INSERT INTO SalaryGrades (grade, minsalary, maxsalary) VALUES (?, ?, ?)";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setString(1, salaryGrade.getGrade());
+        statement.setInt(2, salaryGrade.getMinSalary());
+        statement.setInt(3, salaryGrade.getMaxSalary());
         int rowsAffected = statement.executeUpdate();
         int newId = -1;
         if(rowsAffected > 0){
@@ -104,11 +104,11 @@ public class EmployeeRepository {
             } catch (Exception e){
                 System.out.println("Oh no: " + e);
             }
-            employee.setId(newId);
+            salaryGrade.setId(newId);
         } else {
-            employee = null;
+            salaryGrade = null;
         }
-        return employee;
+        return salaryGrade;
     }
 
     private void getDatabaseCredentials() {
@@ -131,7 +131,3 @@ public class EmployeeRepository {
         return dataSource;
     }
 }
-
-
-
-

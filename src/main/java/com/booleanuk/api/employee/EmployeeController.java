@@ -20,6 +20,7 @@ public class EmployeeController {
         return this.employees.getALl();
     }
 
+
     @GetMapping("/{id}")
     public Employee getOne(@PathVariable int id) throws SQLException{
         Employee employee = this.employees.get(id);
@@ -29,7 +30,7 @@ public class EmployeeController {
         }
         return employee;
     }
-
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Employee create(@RequestBody Employee employee) throws SQLException{
         Employee employeeToAdd = this.employees.add(employee);
@@ -39,6 +40,7 @@ public class EmployeeController {
         return employeeToAdd;
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("/{id}")
     public Employee update(@PathVariable int id, @RequestBody Employee employee) throws SQLException{
         this.getOne(id);
