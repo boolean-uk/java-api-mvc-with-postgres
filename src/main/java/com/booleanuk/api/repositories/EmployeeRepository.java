@@ -1,7 +1,6 @@
 package com.booleanuk.api.repositories;
 
 import com.booleanuk.api.models.Employee;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @Repository
 public class EmployeeRepository {
     private final JdbcTemplate jdbcTemplate;
