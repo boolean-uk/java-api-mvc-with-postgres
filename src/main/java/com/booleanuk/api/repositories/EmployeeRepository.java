@@ -42,13 +42,13 @@ public class EmployeeRepository {
         parameters.put("name", employee.getName());
         parameters.put("job_name", employee.getJobName());
         parameters.put("salary_grade", employee.getSalaryGrade());
-        parameters.put("department", employee.getDepartmentId());
+        parameters.put("department_id", employee.getDepartmentId());
 
         return (int) simpleJdbcInsert.executeAndReturnKey(parameters);
     }
 
     public void updateEmployee(int id, Employee employee) {
-        String sql = "UPDATE employee SET name = ?, job_name = ?, salary_grade = ?, department = ? WHERE id = ?";
+        String sql = "UPDATE employee SET name = ?, job_name = ?, salary_grade = ?, department_id = ? WHERE id = ?";
         jdbcTemplate.update(sql,
                 employee.getName(),
                 employee.getJobName(),

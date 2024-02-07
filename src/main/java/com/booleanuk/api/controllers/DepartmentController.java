@@ -34,10 +34,7 @@ public class DepartmentController {
     public Department addDepartment(@RequestBody Department department) {
         try {
             log.info("Adding new " + department);
-            if (Stream.of(department.getDepartmentName(), department.getDepartmentLocation())
-                    .anyMatch(field -> field == null || field.isBlank())) {
-                throw new IllegalArgumentException("Required fields are missing/empty.");
-            }
+            checkValidDepartmentObject(department);
             int id = repository.addDepartment(department);
             return repository.getDepartment(id);
         } catch (Exception e) {
@@ -61,10 +58,7 @@ public class DepartmentController {
     public Department updateDepartment(@PathVariable int id, @RequestBody Department department) {
         try {
             log.info("Updating Department(id=" + id + ") with values from " + department);
-            if (Stream.of(department.getDepartmentName(), department.getDepartmentLocation())
-                    .anyMatch(field -> field == null || field.isBlank())) {
-                throw new IllegalArgumentException("Required fields are missing/empty.");
-            }
+            checkValidDepartmentObject(department);
             repository.updateDepartment(id, department);
             return repository.getDepartment(id);
         } catch (EmptyResultDataAccessException e) {
@@ -83,6 +77,14 @@ public class DepartmentController {
             return deletedDepartment;
         } catch (EmptyResultDataAccessException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No departments with id= " + id + " found");
+        }
+    }
+
+    private void checkValidDepartmentObject(Department department) {
+        // Check that values are not null
+        if (Stream.of(department.getDepartmentName(), department.getDepartmentLocation())
+                .anyMatch(field -> field == null || field.isBlank())) {
+            throw new IllegalArgumentException("Required fields are missing/empty.");
         }
     }
 }

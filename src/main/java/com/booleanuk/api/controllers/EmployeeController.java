@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -34,10 +35,7 @@ public class EmployeeController {
     public Employee addEmployee(@RequestBody Employee employee) {
         try {
             log.info("Adding new " + employee);
-            if (Stream.of(employee.getName(), employee.getJobName(), employee.getSalaryGrade())
-                    .anyMatch(field -> field == null || field.isBlank())) {
-                throw new IllegalArgumentException("Required fields are missing/empty.");
-            }
+            checkValidEmployeeObject(employee);
             int id = repository.addEmployee(employee);
             // Should return employee object with id according to spec
             return repository.getEmployee(id);
@@ -62,10 +60,7 @@ public class EmployeeController {
     public Employee updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
         try {
             log.info("Updating Employee(id=" + id + ") with values from " + employee);
-            if (Stream.of(employee.getName(), employee.getJobName(), employee.getSalaryGrade())
-                    .anyMatch(field -> field == null || field.isBlank())) {
-                throw new IllegalArgumentException("Required fields are missing/empty.");
-            }
+            checkValidEmployeeObject(employee);
             repository.updateEmployee(id, employee);
             return repository.getEmployee(id);
         } catch (EmptyResultDataAccessException e) {
@@ -84,6 +79,17 @@ public class EmployeeController {
             return deletedEmployee;
         } catch (EmptyResultDataAccessException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employees with id= " + id + " found");
+        }
+    }
+
+    private void checkValidEmployeeObject(Employee employee) {
+        // Check that values are not null
+        if (Stream.of(employee.getName(), employee.getJobName(), employee.getSalaryGrade(), employee.getDepartmentId()).anyMatch(Objects::isNull)) {
+            throw new IllegalArgumentException("Required fields are missing.");
+        }
+        // Check that salary grade exists
+        if (employee.getSalaryGrade() < 1 || 9 < employee.getSalaryGrade()) {
+            throw new IllegalArgumentException("Salary grade " + employee.getSalaryGrade() + " does not exist.");
         }
     }
 }
