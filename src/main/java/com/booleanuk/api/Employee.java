@@ -35,22 +35,6 @@ public class Employee {
         return department;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
-    }
-
-    public void setSalaryGrade(String salaryGrade) {
-        this.salaryGrade = salaryGrade;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
     public void setId(int id){
         this.id = id;
     }
