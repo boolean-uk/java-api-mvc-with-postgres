@@ -65,9 +65,9 @@ public class EmployeeRepository {
     public Employee update(int id, Employee employee) throws SQLException{
         String SQL = "UPDATE employees " +
                 "SET name = ?, "+
-                "SET jobName = ?, "+
-                "SET salaryGrade = ?, "+
-                "SET department = ?" +
+                "jobName = ?, "+
+                "salaryGrade = ?, "+
+                "department = ? " +
                 "WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
         statement.setString(1, employee.getName());
@@ -75,6 +75,7 @@ public class EmployeeRepository {
         statement.setString(3, employee.getSalaryGrade());
         statement.setString(4, employee.getDepartment());
         statement.setInt(5, id);
+
         int rowsAffected = statement.executeUpdate();
         Employee updatedEmployee = null;
         if (rowsAffected > 0){
@@ -137,7 +138,7 @@ public class EmployeeRepository {
 
     private DataSource createDataSource(){
         String url = "jdbc:postgresql://" +this.dbUrl+ ":5432/" +this.dbDatabase+
-                "?user=" +this.dbUser+ "&password" +this.dbPassword;
+                "?user=" +this.dbUser+ "&password=" +this.dbPassword;
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setURL(url);
         return dataSource;

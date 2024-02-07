@@ -21,22 +21,22 @@ public class Employee {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
 
     public String getJobName() {
-        return jobName;
+        return this.jobName;
     }
 
 
     public String getSalaryGrade() {
-        return salaryGrade;
+        return this.salaryGrade;
     }
 
 
     public String getDepartment() {
-        return department;
+        return this.department;
     }
 
 
