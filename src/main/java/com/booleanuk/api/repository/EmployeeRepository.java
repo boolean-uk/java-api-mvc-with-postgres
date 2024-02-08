@@ -35,7 +35,7 @@ public class EmployeeRepository {
             this.dbPassword = prop.getProperty("db.password");
             this.dbDatabase = prop.getProperty("db.database");
         } catch(Exception e) {
-            System.out.println("Oops: " + e);
+            System.out.println("Oopsi: " + e);
         }
     }
 
