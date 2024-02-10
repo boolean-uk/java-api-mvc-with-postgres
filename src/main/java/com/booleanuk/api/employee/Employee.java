@@ -1,4 +1,4 @@
-package com.booleanuk.api;
+package com.booleanuk.api.employee;
 
 import javax.print.DocFlavor;
 
@@ -6,23 +6,23 @@ public class Employee {
     private long id;
     private String name;
     private String jobName;
-    private String salaryGrade;
-    private String department;
+    private int salaryID;
+    private int departmentID;
 
-    public Employee(long id, String name, String jobName, String salaryGrade, String department) {
+    public Employee(long id, String name, String jobName, int salaryID, int departmentID) {
         this.id = id;
         this.name = name;
         this.jobName = jobName;
-        this.salaryGrade = salaryGrade;
-        this.department = department;
+        this.salaryID = salaryID;
+        this.departmentID = departmentID;
     }
     public String toString() {
         String result = "";
         result += this.id + " - ";
         result += this.name + " - ";
         result += this.jobName + " - ";
-        result += this.salaryGrade + " - ";
-        result += this.department;
+        result += this.salaryID + " - ";
+        result += this.departmentID;
         return result;
     }
     public long getId(){
@@ -40,11 +40,11 @@ public class Employee {
         return jobName;
     }
 
-    public String getSalaryGrade() {
-        return salaryGrade;
+    public int getSalaryID() {
+        return salaryID;
     }
 
-    public String getDepartment() {
-        return department;
+    public int getDepartmentID() {
+        return departmentID;
     }
 }
