@@ -1,7 +1,5 @@
 package com.booleanuk.api.employee;
 
-import javax.print.DocFlavor;
-
 public class Employee {
     private long id;
     private String name;

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.booleanuk.api.employee.Employee;
 import org.postgresql.ds.PGSimpleDataSource;
 
 public class EmployeeRepository {

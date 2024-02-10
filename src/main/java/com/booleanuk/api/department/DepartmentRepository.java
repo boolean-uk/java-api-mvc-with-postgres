@@ -106,37 +106,6 @@ public class DepartmentRepository {
         }
         return deletedDepartment;
     }
-//public Department delete(long id) throws SQLException {
-//    String departmentQuery = "select id from employees where department_id = ?";
-//    String deleteDepartmentQuery = "delete from departments where id = ?";
-//
-//    // Check if there are any employees associated with the department
-//    try (PreparedStatement checkStatement = this.connection.prepareStatement(departmentQuery)) {
-//        checkStatement.setLong(1, id);
-//        ResultSet resultSet = checkStatement.executeQuery();
-//
-//        // If there are associated employees, handle the references
-//        if (resultSet.next()) {
-//            String updateEmployeesQuery = "update employees set department_id = null where department_id = ?";
-//            try (PreparedStatement updateStatement = this.connection.prepareStatement(updateEmployeesQuery)) {
-//                updateStatement.setLong(1, id);
-//                updateStatement.executeUpdate();
-//            }
-//        }
-//    }
-//
-//    // deletion of the department
-//    try (PreparedStatement deleteStatement = this.connection.prepareStatement(deleteDepartmentQuery)) {
-//        deleteStatement.setLong(1, id);
-//        int rowsAffected = deleteStatement.executeUpdate();
-//
-//        if (rowsAffected > 0) {
-//            return get(id);
-//        }
-//    }
-//
-//    return null;
-//}
 
     public Department add(Department department) throws SQLException {
         String SQL = "insert into departments ( name, location ) values( ?, ? )";
