@@ -87,6 +87,27 @@ public class EmployeeRepository {
         }
     }
 
+    public void updateEmployee(int id, Employee employee) {
+        try {
+            PreparedStatement statement = query(
+                    """
+                    UPDATE Employee
+                    SET name = ?, jobName = ?, salaryGrade = ?, department = ?
+                    WHERE id = ?
+                    """
+            );
+            statement.setString(1, employee.getName());
+            statement.setString(2, employee.getJobName());
+            statement.setString(3, employee.getSalaryGrade());
+            statement.setString(4, employee.getDepartment());
+            statement.setInt(5, id);
+
+            statement.executeUpdate();
+        } catch (SQLException sqlException) {
+            System.out.println("Failed to update employee in db: " + sqlException);
+        }
+    }
+
     private PreparedStatement query(String sqlQuery) {
         PreparedStatement statement = null;
         try {

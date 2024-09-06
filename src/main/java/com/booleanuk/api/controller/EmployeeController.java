@@ -41,4 +41,10 @@ public class EmployeeController {
     public Employee getOneEmployee(@PathVariable int id) {
         return this.repository.getOneEmployee(id);
     }
+
+    @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
+        this.repository.updateEmployee(id, employee);
+    }
 }
