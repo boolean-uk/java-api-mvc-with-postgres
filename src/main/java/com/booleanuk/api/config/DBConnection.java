@@ -14,16 +14,23 @@ import java.util.Properties;
 public class DBConnection {
     private final DBConfig dbConfiguration;
     private Connection dbConnection;
+    private DataSource dataSource;
 
     public DBConnection() throws SQLException {
         this.dbConfiguration = new DBConfig();
         this.insertDBCredentials();
-        this.dbConnection = this.dbConfiguration.getDataSource().getConnection();
+        this.dataSource = this.createDataSource();
+        this.dbConnection = this.dataSource.getConnection();
     }
 
     private void insertDBCredentials() {
         try (InputStream input = new FileInputStream("src/main/resources/config.properties")) {
-            addProperties(input);
+            Properties properties = new Properties();
+            properties.load(input);
+            dbConfiguration.setDbUser(properties.getProperty("db.user"));
+            dbConfiguration.setDbURL(properties.getProperty("db.url"));
+            dbConfiguration.setDbPassword(properties.getProperty("db.password"));
+            dbConfiguration.setDbDatabase(properties.getProperty("db.database"));
         }
         catch (Exception e) {
             System.out.println("Failed to set db properties: " + e.getCause());
@@ -31,12 +38,7 @@ public class DBConnection {
     }
 
     private void addProperties(InputStream input) throws IOException {
-        Properties properties = new Properties();
-        properties.load(input);
-        dbConfiguration.setDbUser(properties.getProperty("db.user"));
-        dbConfiguration.setDbURL(properties.getProperty("db.url"));
-        dbConfiguration.setDbPassword(properties.getProperty("db.password"));
-        dbConfiguration.setDbDatabase(properties.getProperty("db.database"));
+
     }
 
     private DataSource createDataSource() {
@@ -50,7 +52,7 @@ public class DBConnection {
                 dbConfiguration.getDbPassword();
 
         final PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        dataSource.setURL(url);
+        dataSource.setUrl(url);
         return dataSource;
     }
 }
