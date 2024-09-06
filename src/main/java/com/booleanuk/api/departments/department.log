@@ -1,0 +1,24 @@
+Sep 06, 2024 12:38:16 PM com.booleanuk.api.departments.DepartmentRepository getAll
+INFO: Attempting to get all departments.
+Sep 06, 2024 12:38:16 PM com.booleanuk.api.departments.DepartmentRepository getAll
+INFO: Departments successfully fetched.
+Sep 06, 2024 12:38:21 PM com.booleanuk.api.departments.DepartmentRepository get
+INFO: Department successfully fetched by id.
+Sep 06, 2024 12:38:23 PM com.booleanuk.api.departments.DepartmentRepository get
+INFO: No departments with that id were found.
+Sep 06, 2024 12:38:26 PM com.booleanuk.api.departments.DepartmentRepository add
+INFO: Department successfully added
+Sep 06, 2024 12:38:33 PM com.booleanuk.api.departments.DepartmentRepository get
+INFO: No departments with that id were found.
+Sep 06, 2024 12:38:35 PM com.booleanuk.api.departments.DepartmentRepository get
+INFO: Department successfully fetched by id.
+Sep 06, 2024 12:38:35 PM com.booleanuk.api.departments.DepartmentRepository get
+INFO: Department successfully fetched by id.
+Sep 06, 2024 12:38:35 PM com.booleanuk.api.departments.DepartmentRepository update
+INFO: Department with name "something" successfully changed name to "hello"
+Sep 06, 2024 12:38:35 PM com.booleanuk.api.departments.DepartmentRepository get
+INFO: Department successfully fetched by id.
+Sep 06, 2024 12:38:40 PM com.booleanuk.api.departments.DepartmentRepository get
+INFO: Department successfully fetched by id.
+Sep 06, 2024 12:38:40 PM com.booleanuk.api.departments.DepartmentRepository delete
+INFO: Department with name: "hello" deleted.
