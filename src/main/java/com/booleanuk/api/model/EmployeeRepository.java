@@ -39,6 +39,34 @@ public class EmployeeRepository {
         return allEmployees;
     }
 
+    public Employee getOneEmployee(int id) {
+        try {
+            PreparedStatement statement = query(
+                    """
+                            SELECT *
+                            FROM EMPLOYEE
+                            WHERE id = ?
+                            """
+            );
+            statement.setInt(1, id);
+
+            ResultSet results = statement.executeQuery();
+            if (results.next()) {
+                return new Employee(
+                        results.getInt("id"),
+                        results.getString("name"),
+                        results.getString("jobName"),
+                        results.getString("salaryGrade"),
+                        results.getString("department")
+                );
+            }
+        }
+        catch (SQLException sqlException) {
+            System.out.println("Failed to get one employee from db: " + sqlException);
+        }
+        return null;
+    }
+
     private PreparedStatement query(String sqlQuery) {
         PreparedStatement statement = null;
         try {
