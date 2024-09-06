@@ -108,6 +108,22 @@ public class EmployeeRepository {
         }
     }
 
+    public void deleteEmployee(int id) {
+        try {
+            PreparedStatement statement = query(
+                    """
+                            DELETE FROM EMPLOYEE
+                            WHERE id = ?
+                            """
+            );
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        }
+        catch (SQLException sqlException) {
+            System.out.println("Failed to delete employee with id: " + id + " from the db: " + sqlException);
+        }
+    }
+
     private PreparedStatement query(String sqlQuery) {
         PreparedStatement statement = null;
         try {

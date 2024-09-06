@@ -47,4 +47,9 @@ public class EmployeeController {
     public void updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
         this.repository.updateEmployee(id, employee);
     }
+
+    @DeleteMapping("{id}")
+    public void deleteEmployee(@PathVariable int id) {
+        this.repository.deleteEmployee(id);
+    }
 }
