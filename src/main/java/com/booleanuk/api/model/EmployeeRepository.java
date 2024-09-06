@@ -67,6 +67,26 @@ public class EmployeeRepository {
         return null;
     }
 
+    public void addEmployee(Employee employee) {
+        try {
+            PreparedStatement statement = query(
+                    """
+                            INSERT INTO EMPLOYEE (name, jobName, salaryGrade, department)
+                            VALUES (?, ?, ?, ?)
+                            """
+            );
+            statement.setString(1, employee.getName());
+            statement.setString(2, employee.getJobName());
+            statement.setString(3, employee.getSalaryGrade());
+            statement.setString(4, employee.getDepartment());
+
+            statement.executeUpdate();
+        }
+        catch (SQLException sqlException) {
+            System.out.println("Failed to add employee to db: " + sqlException);
+        }
+    }
+
     private PreparedStatement query(String sqlQuery) {
         PreparedStatement statement = null;
         try {

@@ -2,10 +2,8 @@ package com.booleanuk.api.controller;
 
 import com.booleanuk.api.model.Employee;
 import com.booleanuk.api.model.EmployeeRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,6 +16,12 @@ public class EmployeeController {
 
     public EmployeeController() {
         this.repository = new EmployeeRepository();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createEmployee(@RequestBody Employee employee) {
+        this.repository.addEmployee(employee);
     }
 
     @GetMapping
