@@ -1,18 +1,16 @@
 package com.booleanuk.api;
+import com.booleanuk.api.model.Employee;
+import com.booleanuk.api.model.EmployeeRepository;
 
-import com.booleanuk.api.config.DBConnection;
 import java.sql.SQLException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
-        try {
-            DBConnection connection = new DBConnection();
-            System.out.println("Connected!");
-            System.out.println(connection);
-        }
-        catch (SQLException sqlException) {
-            System.out.println("Failed to connect: " + sqlException.getMessage());
+        EmployeeRepository repository = new EmployeeRepository();
+
+        for (Employee employee : repository.getAll()) {
+            System.out.println(employee);
         }
 
     }
