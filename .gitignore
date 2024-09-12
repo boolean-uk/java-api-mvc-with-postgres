@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+###flyway blocker###
+
+flyway.conf
+*.properties
+report.html
+report.json
