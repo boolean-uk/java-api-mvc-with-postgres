@@ -1,0 +1,14 @@
+# Copy and set these field in a local application.yml settings file
+spring:
+  datasource:
+    url: <jdbc:postgresql://your-database-url:5432/your-database-name>
+    username: <name>
+    password: <password>
+
+server:
+  port: 4000
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: never
+    include-exception: false

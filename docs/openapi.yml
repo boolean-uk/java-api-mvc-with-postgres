@@ -181,17 +181,17 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/AllSalaries'
 
-    /salaries/{id}:
+    /salaries/{grade}:
         get:
             tags:
                 - salaries
             summary: Get a salary grade
-            description: Get a salary grade by ID
+            description: Get a salary grade
             operationId: getSpecificSalary
             parameters:
-                - name: id
+                - name: grade
                   in: path
-                  description: The ID of the salary grade to get
+                  description: The salary grade to get
                   required: true
                   schema:
                       type: integer
@@ -212,12 +212,12 @@ paths:
             tags:
                 - salaries
             summary: Update a salary grade
-            description: Update an existing salary grade by ID
+            description: Update an existing salary grade
             operationId: updateSalary
             parameters:
-                - name: id
+                - name: grade
                   in: path
-                  description: The ID of the salary grade to update
+                  description: The salary grade to update
                   required: true
                   schema:
                       type: integer
@@ -252,9 +252,9 @@ paths:
             description: Remove a salary grade from our list of salary grades
             operationId: deleteSalary
             parameters:
-                - name: id
+                - name: grade
                   in: path
-                  description: The ID of the salary grade to delete
+                  description: The salary grade to delete
                   required: true
                   schema:
                       type: integer
@@ -266,7 +266,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/Salary'
                 '404':
-                    description: No salary grade matching that id was found
+                    description: No salary grade was found
                     content:
                         application/json:
                             schema:
@@ -405,7 +405,7 @@ components:
     schemas:
         CreateEmployee:
             type: object
-            required: [name, jobName, salaryGrade, department]
+            required: [name, jobName, salaryGrade, departmentId]
             properties:
                 name:
                     type: string
@@ -414,11 +414,11 @@ components:
                     type: string
                     example: "Java Developer"
                 salaryGrade:
-                    type: string
-                    example: "8"
+                    type: integer
+                    example: 8
                 department:
-                    type: string
-                    example: "Software Development"
+                    type: integer
+                    example: 2
         Employee:
             type: object
             properties:
@@ -432,11 +432,11 @@ components:
                     type: string
                     example: "Java Developer"
                 salaryGrade:
-                    type: string
-                    example: "8"
+                    type: integer
+                    example: 8
                 department:
-                    type: string
-                    example: "Software Development"
+                    type: integer
+                    example: 2
         AllEmployees:
             type: array
             items:
@@ -446,8 +446,8 @@ components:
             required: [grade, minSalary, maxSalary]
             properties:
                 grade:
-                    type: string
-                    example: "8"
+                    type: integer
+                    example: 10
                 minSalary:
                     type: integer
                     example: 25000
@@ -458,8 +458,8 @@ components:
             type: object
             properties:
                 grade:
-                    type: string
-                    example: "8"
+                    type: integer
+                    example: 10
                 minSalary:
                     type: integer
                     example: 25000
