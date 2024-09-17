@@ -5,6 +5,12 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Personal Settings ###
+flyway.conf
+*.properties
+report.html.html
+report.html.json
+
 ### STS ###
 .apt_generated
 .classpath
@@ -35,3 +41,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Personal ###
+src/main/resources/
