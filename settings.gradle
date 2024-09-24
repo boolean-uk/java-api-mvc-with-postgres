@@ -1,1 +1,3 @@
 rootProject.name = 'java.api.mvc.with.postgres'
+include 'db'
+
