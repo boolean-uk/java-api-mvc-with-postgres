@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS Employees(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(250) NOT NULL,
+    job_name VARCHAR(250) NOT NULL,
+    salary_grade VARCHAR(10) NOT NULL,
+    department VARCHAR(50) NOT NULL
+)
