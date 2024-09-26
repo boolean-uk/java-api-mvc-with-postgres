@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS Departments (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(250) NOT NULL UNIQUE,
+    location VARCHAR(250) NOT NULL
+);
