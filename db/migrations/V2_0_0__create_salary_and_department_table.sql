@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS salary(
+id SERIAL PRIMARY KEY,
+grade TEXT NOT NULL,
+minSalary INTEGER,
+maxSalary INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS department(
+id SERIAL PRIMARY KEY,
+name TEXT NOT NULL,
+location TEXT
+);
