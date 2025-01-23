@@ -1,0 +1,2 @@
+ALTER TABLE IF EXISTS employees
+DROP COLUMN department;
