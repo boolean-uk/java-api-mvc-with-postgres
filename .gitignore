@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+application.yml
+*.properties
+report.html.html
+report.html.json
