@@ -30,7 +30,11 @@ public class EmployeeController {
     @GetMapping("{id}")
     public Employee getOneEmployee(@PathVariable int id)throws SQLException{
 
-        return employeeRepository.getEmployee(id);
+        Employee em = employeeRepository.getEmployee(id);
+        if(em==null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Could not find employee with that id");
+
+        return em;
     }
 
 
@@ -54,10 +58,13 @@ public class EmployeeController {
         Employee em = employeeRepository.getEmployee(id);
 
         if(em == null)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Could not find employee");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Could not find employee with that id");
 
-        em = this.employeeRepository.update(id,employee);
-        return em;
+        if(employee.getJobName()==null || employee.getSalaryGrade() == 0 || employee.getDepartment() == 0)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Could not update employee");
+
+
+        return this.employeeRepository.update(id,employee);
 
     }
 
@@ -68,8 +75,7 @@ public class EmployeeController {
     public Employee deleteEmployee(@PathVariable int id)throws SQLException{
 
         if (employeeRepository.getEmployee(id)==null)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No employee matching ID");
-
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employee matching ID");
 
         return employeeRepository.delete(id);
 
