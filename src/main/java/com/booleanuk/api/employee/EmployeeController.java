@@ -27,7 +27,7 @@ public class EmployeeController {
         Employee employee = this.employeeRepository.getOne(id);
 
         if (employee == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employee with that Id");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employee with this id");
         }
         return employee;
     }
@@ -35,26 +35,41 @@ public class EmployeeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Employee create(@RequestBody Employee employee) throws SQLException {
-        if (employeeRepository.getAll().contains(employee)) {
+        Employee newOne = this.employeeRepository.add(employee);
+        if (newOne == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not create new employee with this information");
+        }
+
+        else if (employeeRepository.getAll().contains(employee)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The employee exists already");
         }
-        employeeRepository.add(employee);
-        return employee;
+        else {
+            throw new ResponseStatusException(HttpStatus.CREATED, "New employee created successfully");
+        }
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Employee update(@PathVariable (name = "id") int id, @RequestBody Employee employee) throws SQLException {
-        return this.employeeRepository.update(id, employee);
+        //return this.employeeRepository.update(id, employee);
+        Employee updatedOne = this.employeeRepository.update(id, employee);
+        if (updatedOne == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employee with this id");
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.CREATED, "Employee updated successfully");
+        }
     }
 
     @DeleteMapping("/{id}")
     public Employee delete(@PathVariable int id) throws SQLException {
-        Employee employee = this.employeeRepository.getOne(id);
+        Employee deletedOne = this.employeeRepository.delete(id);
 
-        if (employee == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+        if (deletedOne == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employee with this id");
         }
-        return this.employeeRepository.delete(id);
+        else {
+            throw new ResponseStatusException(HttpStatus.OK, "Employee deleted successfully");
+        }
     }
 }
