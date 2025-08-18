@@ -116,7 +116,8 @@ public class EmployeeRepository {
         statement.setString(2, employee.getJobName());
         statement.setString(3, employee.getSalaryGrade());
         statement.setString(4, employee.getDepartment());
-        statement.setLong(5, id);
+        statement.setInt(5, id);
+
         int rowsAffected = statement.executeUpdate();
         Employee updatedEmployee = null;
         if (rowsAffected > 0) {
