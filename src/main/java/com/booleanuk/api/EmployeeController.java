@@ -27,7 +27,7 @@ public class EmployeeController {
 
         // extensions
         if (employee == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No customer with that id found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employee with that id found");
         }
         return employee;
     }
@@ -39,7 +39,7 @@ public class EmployeeController {
 
         // extensions
         if (theEmployee == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to create the specified Customer");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to create the specified employee");
         }
         return theEmployee;
     }
@@ -51,7 +51,7 @@ public class EmployeeController {
 
         // extension
         if (toBeUpdated == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given employee does not exist");
         }
         return this.employeeRepository.update(id, employee);
     }
@@ -63,7 +63,7 @@ public class EmployeeController {
 
         // extension
         if (toBeDeleted == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given employee dies not exist");
         }
         return this.employeeRepository.delete(id);
     }
