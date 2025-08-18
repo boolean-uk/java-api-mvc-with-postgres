@@ -125,7 +125,6 @@ public class EmployeeRepository {
         }
         return this.get(id);
 
-
     }
 
     public Employee delete(int id) throws SQLException {
