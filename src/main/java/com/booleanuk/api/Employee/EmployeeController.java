@@ -2,6 +2,7 @@ package com.booleanuk.api.Employee;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -28,7 +29,12 @@ public class EmployeeController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Employee addEmployee(@RequestBody Employee employee) throws SQLException {
-        return this.repository.add(employee);
+        try {
+            return this.repository.add(employee);
+        } catch (Exception e) {
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Could not create a new salary grade, please check all required fields are correct");
+        }
     }
 
     @PutMapping("{id}")

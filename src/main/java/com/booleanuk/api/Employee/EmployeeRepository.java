@@ -1,6 +1,8 @@
 package com.booleanuk.api.Employee;
 
 import org.postgresql.ds.PGSimpleDataSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
@@ -95,6 +97,8 @@ public class EmployeeRepository {
                     results.getString("salaryGrade"),
                     results.getString("department")
             );
+        }else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No employees with that id were found");
         }
         return employee;
     }
@@ -106,20 +110,22 @@ public class EmployeeRepository {
                 "salaryGrade = ? ," +
                 "department = ? " +
                 "WHERE id = ? ";
-        PreparedStatement statement = this.connection.prepareStatement(SQL);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
-        statement.setInt(5, id);
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(SQL);
+            statement.setString(1, employee.getName());
+            statement.setString(2, employee.getJobName());
+            statement.setString(3, employee.getSalaryGrade());
+            statement.setString(4, employee.getDepartment());
+            statement.setInt(5, id);
 
-        int rowsAffected = statement.executeUpdate();
-        Employee updatedEmployee = null;
-
-        if (rowsAffected>0){
-            updatedEmployee = this.get(id);
+            int rowsAffected = statement.executeUpdate();
+            Employee updatedEmployee = null;
+        }  catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "could not update the employee, please check all required fields are correct");
         }
-        return updatedEmployee;
+        return this.get(id);
+
+
     }
 
     public Employee delete(int id) throws SQLException {
