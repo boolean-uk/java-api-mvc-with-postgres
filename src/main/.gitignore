@@ -1,0 +1,5 @@
+### Personal ###
+resources/
+*.properties
+resources/application.properties
+resources/config.properties

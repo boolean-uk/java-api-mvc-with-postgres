@@ -1,0 +1,5 @@
+
+CREATE TABLE IF NOT EXISTS salaries(
+    id SERIAL PRIMARY KEY,
+    salaryGrade TEXT NOT NULL
+);
