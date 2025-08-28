@@ -1,0 +1,9 @@
+[flyway]
+environment = "local"
+locations = ["filesystem:C:/Users/HHakan/IdeaProjects/java-api-mvc-with-postgres/"]  # Path to your migration scripts
+
+[environments.local]
+url = "jdbc:postgresql://localhost:64538/mvc"  # JDBC URL for localhost PostgreSQL
+user = "admin"
+password = "admin"
+defaultSchema = true
