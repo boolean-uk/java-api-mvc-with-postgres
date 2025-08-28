@@ -1,0 +1,9 @@
+[flyway]
+environment = "local"
+locations = ["filesystem:/C:/Users/Andre/GitHub/ExperisAcademy/java-api-mvc-with-postgres/migrations"]  # Path to your migration scripts
+
+[environments.local]
+url = "jdbc:postgresql://localhost:6520/test"  # JDBC URL for localhost PostgreSQL
+user = "admin"
+password = "admin"
+defaultSchema = true
