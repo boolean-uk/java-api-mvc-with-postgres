@@ -1,0 +1,10 @@
+[flyway]
+environment = "local"
+locations = ["filesystem:C:/Users/AChamo/Projects/java-api-mvc-with-postgres/db"]  # Path to your migration scripts
+
+[environments.local]
+url = "jdbc:postgresql://localhost:54954/mvc-w-psg"  # JDBC URL for localhost PostgreSQL
+user = "admin"
+password = "admin"
+defaultSchema = true
+
