@@ -28,7 +28,7 @@ paths:
                     description: Successfully created a new Employee
                     content:
                         application/json:
-                            schema:
+                          schema:
                                 $ref: '#/components/schemas/Employee'
         get:
             tags:
