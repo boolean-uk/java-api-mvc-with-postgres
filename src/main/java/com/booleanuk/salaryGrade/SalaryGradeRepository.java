@@ -1,6 +1,8 @@
-package com.booleanuk.employee;
+package com.booleanuk.salaryGrade;
 
+import com.booleanuk.employee.Employee;
 import org.postgresql.ds.PGSimpleDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.Properties;
 
 @Repository
-public class EmployeeRepository {
+public class SalaryGradeRepository {
     private DataSource dataSource;
     private String dbUser;
     private String dbURL;
@@ -21,7 +23,7 @@ public class EmployeeRepository {
     private String dbDatabase;
     private Connection connection;
 
-    public EmployeeRepository(DataSource dataSource, String dbUser, String dbURL, String dbPassword, String dbDatabase) throws SQLException {
+    public SalaryGradeRepository(DataSource dataSource, String dbUser, String dbURL, String dbPassword, String dbDatabase) throws SQLException {
         this.getDatabaseCredentials();
         this.dataSource = this.createDataSource();
         this.connection = this.dataSource.getConnection();
@@ -49,47 +51,39 @@ public class EmployeeRepository {
         }
     }
 
-    public List<Employee> getAll() throws SQLException  {
-        List<Employee> everyone = new ArrayList<>();
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM EMPLOYEES");
+    public List<SalaryGrade> getAll() throws SQLException  {
+        List<SalaryGrade> everyone = new ArrayList<>();
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM SALARY_GRADES");
 
         ResultSet results = statement.executeQuery();
 
         while (results.next()) {
-            Employee theEmployee = new Employee(
+            SalaryGrade theSalaryGrade = new SalaryGrade(
                     results.getInt("id"),
-                    results.getString("name"),
-                    results.getString("jobname"),
-                    results.getString("salarygrade"),
-                    results.getString("department"));
-            everyone.add(theEmployee);
+                    results.getString("grade"));
+            everyone.add(theSalaryGrade);
         }
         return everyone;
     }
 
-    public Employee getOne(int id) throws SQLException  {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM EMPLOYEES WHERE id = ?");
+    public SalaryGrade getOne(int id) throws SQLException  {
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM SALARY_GRADES WHERE id = ?");
         statement.setInt(1, id);
         ResultSet results = statement.executeQuery();
-        Employee employee = null;
+        SalaryGrade theSalaryGrade = null;
         if (results.next()) {
-            employee = new Employee(
+            theSalaryGrade = new SalaryGrade(
                     results.getInt("id"),
-                    results.getString("name"),
-                    results.getString("jobname"),
-                    results.getString("salarygrade"),
-                    results.getString("department"));
+                    results.getString("grade"));
+
         }
-        return employee;
+        return theSalaryGrade;
     }
 
-    public Employee add(Employee employee) throws SQLException {
-        String SQL = "INSERT INTO Employees(name, jobname, salarygrade, department) VALUES(?, ?, ?, ?)";
+    public SalaryGrade add(SalaryGrade salaryGrade) throws SQLException {
+        String SQL = "INSERT INTO SALARYGRADES(grade) VALUES(?)";
         PreparedStatement statement = this.connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
+        statement.setString(1, salaryGrade.getGrade());
         int rowsAffected = statement.executeUpdate();
         int newId = 0;
         if (rowsAffected > 0) {
@@ -100,48 +94,41 @@ public class EmployeeRepository {
             } catch (Exception e) {
                 System.out.println("Oops: " + e);
             }
-            employee.setId(newId);
+            salaryGrade.setId(newId);
         } else {
-            employee = null;
+            salaryGrade = null;
         }
-        return employee;
+        return salaryGrade;
     }
 
-    public Employee delete(int id) throws SQLException {
-        // Get the employee we're deleting before we delete them
-        Employee deletedEmployee = null;
-        deletedEmployee = this.getOne(id);
+    public SalaryGrade delete(int id) throws SQLException {
+        SalaryGrade deletedSalaryGrade = null;
+        deletedSalaryGrade = this.getOne(id);
 
-        String SQL = "DELETE FROM Emloyee WHERE id = ?";
+        String SQL = "DELETE FROM SALARYGRADES WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
 
         statement.setLong(1, id);
         int rowsAffected = statement.executeUpdate();
         if (rowsAffected == 0) {
-            //Reset the employee we're deleting if we didn't delete them
-            deletedEmployee = null;
+            deletedSalaryGrade = null;
         }
-        return deletedEmployee;
+        return deletedSalaryGrade;
     }
 
-    public Employee update(int id, Employee employee) throws SQLException {
-        String SQL = "UPDATE Employees " +
-                "SET name = ? ," +
-                "jobname = ? ," +
-                "salarygrade = ? ," +
-                "department = ? " +
-                "WHERE id = ? ";
+    public SalaryGrade update(int id, SalaryGrade salaryGrade) throws SQLException {
+        String SQL = "UPDATE SALARYGRADES SET grade = ? WHERE id = ?";
         PreparedStatement statement = this.connection.prepareStatement(SQL);
-        statement.setString(1, employee.getName());
-        statement.setString(2, employee.getJobName());
-        statement.setString(3, employee.getSalaryGrade());
-        statement.setString(4, employee.getDepartment());
-        statement.setLong(5, id);
+        statement.setString(1, salaryGrade.getGrade());
+        statement.setLong(2, id);
         int rowsAffected = statement.executeUpdate();
-        Employee updatedEmployee = null;
+        SalaryGrade updatedSalaryGrade = null;
         if (rowsAffected > 0) {
-            updatedEmployee = this.getOne(id);
+            updatedSalaryGrade = this.getOne(id);
         }
-        return updatedEmployee;
+        return updatedSalaryGrade;
     }
+
+
+
 }

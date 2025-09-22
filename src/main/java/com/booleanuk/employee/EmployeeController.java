@@ -1,7 +1,10 @@
 package com.booleanuk.employee;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.booleanuk.employee.EmployeeRepository;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -9,6 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping("employees")
 public class EmployeeController {
+
+    @Autowired
     private EmployeeRepository employeeRepository;
 
     public EmployeeController(EmployeeRepository employeeRepository) {
